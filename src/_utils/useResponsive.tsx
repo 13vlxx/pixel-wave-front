@@ -1,20 +1,23 @@
 import { useEffect, useState } from 'react';
 
-const useResponsive = () => {
-    const [screenSize, setScreenSize] = useState('');
+export enum ScreenSizeEnum {
+    MOBILE = 'mobile',
+    TABLET = 'tablet',
+    DEKSTOP = 'dekstop',
+    XL_DEKSTOP = 'xl_dekstop',
+}
+
+export const useResponsive = () => {
+    const [screenSize, setScreenSize] = useState<ScreenSizeEnum>(ScreenSizeEnum.MOBILE);
 
     useEffect(() => {
         const checkScreenSize = () => {
             const width = window.innerWidth;
 
-            if (width < 640) {
-                setScreenSize('mobile');
-            } else if (width >= 640 && width < 768) {
-                setScreenSize('tablet');
-            } else if (width >= 768 && width < 1024) {
-                setScreenSize('dekstop');
-            } else if (width >= 1024) {
-                setScreenSize('xl_dekstop');
+            if (width < 820) {
+                setScreenSize(ScreenSizeEnum.MOBILE);
+            } else {
+                setScreenSize(ScreenSizeEnum.DEKSTOP);
             }
         };
 

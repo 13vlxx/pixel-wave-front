@@ -29,7 +29,7 @@
       "@models/*": ["src/models/*"],
       "@screens/*": ["src/screens/*"],
       "@stores/*": ["src/stores/*"],
-      "@utils/*": ["src/utils/*"],
+      "@utils/*": ["src/_utils/*"],
     }
   },
   "include": ["src"],

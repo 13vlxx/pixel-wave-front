@@ -19,7 +19,7 @@ export default defineConfig({
       "@models": path.resolve(__dirname, "src/models"),
       "@screens": path.resolve(__dirname, "src/screens"),
       "@stores": path.resolve(__dirname, "src/stores"),
-      "@utils": path.resolve(__dirname, "src/utils"),
+      "@utils": path.resolve(__dirname, "src/_utils"),
     },
   },
 });
