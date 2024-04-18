@@ -5,25 +5,34 @@ import { toast } from "sonner";
 export default function DemoScreen() {
     const { screenSize } = useResponsive();
 
-    const toggleTheme = () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
 
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
+
+    const handleToast = () => {
+        toast("Valider les changements ?", {
+            duration: 5000,
+            action: {
+                label: 'Valider',
+                onClick: () => {
+                    toast('Changements validés', {
+                        duration: 5000,
+                    });
+                },
+            },
+
+        });
     }
 
     if (screenSize === ScreenSizeEnum.MOBILE)
         return (
             <div>
-                <button onClick={() => toast.info("Erreur")}>Toast</button>
+                <button onClick={handleToast}>Toast</button>
             </div>
         )
 
     return (
         <div>
             <h1>Demo</h1>
-            <button onClick={toggleTheme}>Change theme</button>
+            <button>Change theme</button>
             <BsAirplane className="text-9xl" />
         </div>
     )

@@ -14,7 +14,7 @@ export const useResponsive = () => {
         const checkScreenSize = () => {
             const width = window.innerWidth;
 
-            if (width < 820) {
+            if (width < 768) {
                 setScreenSize(ScreenSizeEnum.MOBILE);
             } else {
                 setScreenSize(ScreenSizeEnum.DEKSTOP);
