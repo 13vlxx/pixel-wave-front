@@ -2,6 +2,7 @@ import { AuthNavbarLayout } from '@layouts/auth-navbar.layout'
 import DemoScreen from '@screens/demo.screen'
 import { useEffect } from 'react'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { Toaster } from 'sonner'
 import { PagesAuth } from './_utils/router/routes'
 
 const authRouter = createBrowserRouter([
@@ -38,6 +39,7 @@ function App() {
 
   return (
     <>
+      <Toaster richColors theme="light" />
       <RouterProvider router={authRouter || unauthRouter} />
     </>
   )

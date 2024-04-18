@@ -1,11 +1,11 @@
-import { ScreenSizeEnum, useResponsive } from "@utils/useResponsive";
-import { BsAirplane } from "react-icons/bs";
+import { Modal } from "@layouts/modal.layout";
+import { useResponsive } from "@utils/useResponsive";
+import { useState } from "react";
 import { toast } from "sonner";
 
 export default function DemoScreen() {
-    const { screenSize } = useResponsive();
-
-
+    const { isMobile } = useResponsive();
+    const [showModal, setShowModal] = useState(false);
 
     const handleToast = () => {
         toast("Valider les changements ?", {
@@ -22,18 +22,40 @@ export default function DemoScreen() {
         });
     }
 
-    if (screenSize === ScreenSizeEnum.MOBILE)
+    const toggleShowModal = () => {
+        setShowModal(!showModal);
+    }
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    }
+
+    if (isMobile)
         return (
             <div>
-                <button onClick={handleToast}>Toast</button>
+                <div className="px-4 flex flex-col gap-2">
+                    <button className="border-accent" onClick={handleToast}>Toast</button>
+                    <button className="border-accent" onClick={toggleShowModal}>Show modal</button>
+                </div>
+                {showModal && (
+                    <Modal handleClose={handleCloseModal}>
+                        <h1>Alex</h1>
+                    </Modal>
+                )}
             </div>
         )
 
     return (
-        <div>
-            <h1>Demo</h1>
-            <button>Change theme</button>
-            <BsAirplane className="text-9xl" />
-        </div>
+        <>
+            <div className="px-4 flex flex-col gap-2 w-fit">
+                <button className="border-accent" onClick={handleToast}>Toast</button>
+                <button className="border-accent" onClick={toggleShowModal}>Show modal</button>
+            </div>
+            {showModal && (
+                <Modal title="Modale" handleClose={handleCloseModal}>
+                    <h1>Hello</h1>
+                </Modal>
+            )}
+        </>
     )
 }

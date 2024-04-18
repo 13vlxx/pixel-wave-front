@@ -1,24 +1,14 @@
 import { useEffect, useState } from 'react';
 
-export enum ScreenSizeEnum {
-    MOBILE = 'mobile',
-    TABLET = 'tablet',
-    DEKSTOP = 'dekstop',
-    XL_DEKSTOP = 'xl_dekstop',
-}
-
 export const useResponsive = () => {
-    const [screenSize, setScreenSize] = useState<ScreenSizeEnum>(ScreenSizeEnum.MOBILE);
+    const [isMobile, setIsMobile] = useState<boolean>(false);
 
     useEffect(() => {
         const checkScreenSize = () => {
             const width = window.innerWidth;
+            const mobileThreshold = 768;
 
-            if (width < 768) {
-                setScreenSize(ScreenSizeEnum.MOBILE);
-            } else {
-                setScreenSize(ScreenSizeEnum.DEKSTOP);
-            }
+            setIsMobile(width < mobileThreshold);
         };
 
         checkScreenSize();
@@ -27,5 +17,5 @@ export const useResponsive = () => {
         return () => window.removeEventListener('resize', checkScreenSize);
     }, []);
 
-    return { screenSize };
+    return { isMobile };
 };

@@ -3,27 +3,33 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   daisyui: {
     themes: [
-      "light",
       {
-        DarkMode: {
-          primary: "#FF0000",
+        light: {
+          primary: "#FFFFFF",
+          secondary: "#1A202C",
+          accent: "#1A202C",
+          neutral: "#ff0fc4",
+          "base-100": "#FFFFFF",
+          "base-content": "#141b27",
+          success: "#00bc62",
+          warning: "#ff9400",
+          error: "#ff626e",
+        },
+      },
+      {
+        dark: {
+          primary: "#1A202C",
           secondary: "#FFFFFF",
-          accent: "#ff0fc4",
+          accent: "#C043FF",
           neutral: "#ff0fc4",
           "base-100": "#1A202C",
-          "base-content": "#ff0fc4",
+          "base-content": "#C043FF",
+          success: "#00bc62",
+          warning: "#ff9400",
+          error: "#ff626e",
         },
       },
     ],
-  },
-  theme: {
-    extend: {
-      colors: {
-        primary: "#FF0000",
-        secondary: "#00FF00",
-        tertiary: "#0000FF",
-      },
-    },
   },
   // eslint-disable-next-line no-undef
   plugins: [require("daisyui")],
