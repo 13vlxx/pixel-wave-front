@@ -3,7 +3,7 @@ import { useResponsive } from "@utils/useResponsive";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export default function DemoScreen() {
+const DemoScreen = () => {
     const { isMobile } = useResponsive();
     const [showModal, setShowModal] = useState(false);
 
@@ -33,7 +33,7 @@ export default function DemoScreen() {
     if (isMobile)
         return (
             <div>
-                <div className="px-4 flex flex-col gap-2">
+                <div className="flex flex-col gap-2">
                     <button className="border-accent" onClick={handleToast}>Toast</button>
                     <button className="border-accent" onClick={toggleShowModal}>Show modal</button>
                 </div>
@@ -47,15 +47,17 @@ export default function DemoScreen() {
 
     return (
         <>
-            <div className="px-4 flex flex-col gap-2 w-fit">
+            <div className="flex flex-col gap-2 w-fit">
                 <button className="border-accent" onClick={handleToast}>Toast</button>
                 <button className="border-accent" onClick={toggleShowModal}>Show modal</button>
             </div>
             {showModal && (
-                <Modal title="Modale" handleClose={handleCloseModal}>
+                <Modal title="Modale" isFullscreen handleClose={handleCloseModal}>
                     <h1>Hello</h1>
                 </Modal>
             )}
         </>
     )
 }
+
+export default DemoScreen;

@@ -5,28 +5,28 @@ export default {
     themes: [
       {
         light: {
-          primary: "#FFFFFF",
-          secondary: "#1A202C",
-          accent: "#1A202C",
-          neutral: "#ff0fc4",
-          "base-100": "#FFFFFF",
-          "base-content": "#141b27",
-          success: "#00bc62",
-          warning: "#ff9400",
-          error: "#ff626e",
+          primary: "#FFFFFF", //blanc
+          secondary: "#1A202C", //noir
+          accent: "#1A202C", //noir
+          neutral: "#ff0fc4", //rose
+          "base-100": "#FFFFFF", //blanc
+          "base-content": "#1A202C", //gris
+          success: "#00bc62", //vert
+          warning: "#ff9400", //orange
+          error: "#ff626e", //rouge
         },
       },
       {
         dark: {
-          primary: "#1A202C",
-          secondary: "#FFFFFF",
-          accent: "#C043FF",
-          neutral: "#ff0fc4",
-          "base-100": "#1A202C",
-          "base-content": "#C043FF",
-          success: "#00bc62",
-          warning: "#ff9400",
-          error: "#ff626e",
+          primary: "#1A202C", //noir
+          secondary: "#FFFFFF", //blanc
+          accent: "#C043FF", //violet
+          neutral: "#ff0fc4", //rose
+          "base-100": "#1A202C", //noir
+          "base-content": "#C043FF", //violet
+          success: "#00bc62", //vert
+          warning: "#ff9400", //orange
+          error: "#ff626e", //rouge
         },
       },
     ],

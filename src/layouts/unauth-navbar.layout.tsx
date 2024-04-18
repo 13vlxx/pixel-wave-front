@@ -1,13 +1,16 @@
+import AuthForm from "@components/forms/auth.form";
+import { AuthModal } from "@components/modals/auth.modal";
 import { PagesAuth } from "@utils/router/routes";
 import { useState } from "react";
 import { BsSunFill } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
-import { FaBell, FaMoon } from "react-icons/fa";
+import { FaMoon } from "react-icons/fa";
 import { LuTestTube2 } from "react-icons/lu";
 import { Outlet, useNavigate } from "react-router-dom";
 
-export const AuthNavbarLayout = () => {
+export const UnauthNavbarLayout = () => {
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+    const [showAuthModal, setShowAuthModal] = useState(false);
     const navigate = useNavigate();
 
     const toggleTheme = () => {
@@ -16,6 +19,10 @@ export const AuthNavbarLayout = () => {
 
         document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
+    }
+
+    const toggleShowAuthModal = () => {
+        setShowAuthModal(!showAuthModal);
     }
 
     const handleNavigate = (destination: PagesAuth) => {
@@ -32,13 +39,17 @@ export const AuthNavbarLayout = () => {
                         <FaMoon onClick={toggleTheme} className="cursor-pointer text-3xl" /> :
                         <BsSunFill onClick={toggleTheme} className="cursor-pointer text-3xl" />
                     }
-                    <FaBell name="notifications" className="text-3xl cursor-pointer" onClick={() => handleNavigate(PagesAuth.NOTIFICATIONS)} />
-                    <CgProfile name="profile" className="text-3xl cursor-pointer" onClick={() => handleNavigate(PagesAuth.PROFILE)} />
+                    <CgProfile name="profile" className="text-3xl cursor-pointer" onClick={toggleShowAuthModal} />
                 </nav>
             </header>
             <div className="px-4">
                 <Outlet />
             </div>
+            {showAuthModal && (
+                <AuthModal isFullscreen handleClose={toggleShowAuthModal}>
+                    <AuthForm />
+                </AuthModal>
+            )}
         </>
     )
 }
