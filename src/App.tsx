@@ -1,3 +1,5 @@
+import DemoScreen from '@screens/demo.screen'
+import { useEffect } from 'react'
 import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { Toaster } from 'sonner'
 import { PagesAuth } from './_utils/router/routes'
@@ -9,7 +11,7 @@ const authRouter = createBrowserRouter([
     errorElement: <div>404</div>,
     children: [
       { index: true, element: <div>Home</div> },
-      { path: PagesAuth.DEMO, element: <div>Demo</div> },
+      { path: PagesAuth.DEMO, element: <DemoScreen /> },
     ]
   }
 ])
@@ -21,12 +23,19 @@ const unauthRouter = createBrowserRouter([
     errorElement: <div>404</div>,
     children: [
       { index: true, element: <div>Home</div> },
-      { path: PagesAuth.DEMO, element: <div>Demo</div> },
+      { path: PagesAuth.DEMO, element: <DemoScreen /> },
     ]
   }
 ])
 
 function App() {
+  useEffect(() => {
+    const preferredTheme = localStorage.getItem('theme');
+    if (preferredTheme) {
+      document.documentElement.setAttribute('data-theme', preferredTheme);
+    }
+  }, []);
+
   return (
     <>
       <Toaster />
