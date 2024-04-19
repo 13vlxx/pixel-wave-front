@@ -1,3 +1,4 @@
+import { HandleRequestError } from "@utils/handle-request-error";
 import axios, { AxiosRequestConfig } from "axios";
 
 const config: AxiosRequestConfig = {
@@ -7,8 +8,6 @@ const config: AxiosRequestConfig = {
 export const PixelWaveAxios = axios.create(config);
 
 PixelWaveAxios.interceptors.response.use(undefined, (error) => {
-  if (error.response?.status === 401) {
-    console.log("Unauthorized");
-  }
+  HandleRequestError(error);
   return Promise.reject(error);
 });

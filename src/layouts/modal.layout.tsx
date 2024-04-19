@@ -9,11 +9,11 @@ export interface ModalProps {
 }
 
 export const Modal = (props: ModalProps) => {
-    const { title, isFullscreen, children, handleClose } = props;
+    const { title, children, handleClose } = props;
     const { isMobile } = useResponsive();
 
 
-    if (isMobile || isFullscreen)
+    if (isMobile)
         return (
             <div className="bg-base-100 min-h-screen absolute top-0 left-0 min-w-full z-50">
                 <div className="flex justify-end">

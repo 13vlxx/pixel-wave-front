@@ -1,4 +1,5 @@
 import { Modal } from "@layouts/modal.layout";
+import { useAuthStore } from "@stores/auth/auth.store";
 import { useResponsive } from "@utils/useResponsive";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -6,6 +7,7 @@ import { toast } from "sonner";
 const DemoScreen = () => {
     const { isMobile } = useResponsive();
     const [showModal, setShowModal] = useState(false);
+    const { logout } = useAuthStore()
 
     const handleToast = () => {
         toast("Valider les changements ?", {
@@ -30,12 +32,17 @@ const DemoScreen = () => {
         setShowModal(false);
     }
 
+    const toggleLogout = () => {
+        logout();
+    }
+
     if (isMobile)
         return (
             <div>
                 <div className="flex flex-col gap-2">
                     <button className="border-accent" onClick={handleToast}>Toast</button>
                     <button className="border-accent" onClick={toggleShowModal}>Show modal</button>
+                    <button className="border-accent" onClick={toggleLogout}>Logout</button>
                 </div>
                 {showModal && (
                     <Modal handleClose={handleCloseModal}>

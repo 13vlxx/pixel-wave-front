@@ -3,6 +3,7 @@ import { UnauthNavbarLayout } from '@layouts/unauth-navbar.layout'
 import NotificationsScreen from '@screens/auth/notifications.screen'
 import ProfileScreen from '@screens/auth/profile.screen'
 import DemoScreen from '@screens/demo.screen'
+import { useAuthStore } from '@stores/auth/auth.store'
 import { useEffect } from 'react'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { Toaster } from 'sonner'
@@ -35,6 +36,8 @@ const unauthRouter = createBrowserRouter([
 ])
 
 function App() {
+  const { token } = useAuthStore()
+
   useEffect(() => {
     const preferredTheme = localStorage.getItem('theme');
     if (preferredTheme) {
@@ -45,7 +48,7 @@ function App() {
   return (
     <>
       <Toaster richColors theme="light" />
-      <RouterProvider router={unauthRouter} />
+      <RouterProvider router={token ? authRouter : unauthRouter} />
     </>
   )
 }
