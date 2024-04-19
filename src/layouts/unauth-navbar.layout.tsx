@@ -1,4 +1,4 @@
-import AuthForm from "@components/forms/auth.form";
+import AuthForm from "@components/forms/auth/auth.form";
 import { AuthModal } from "@components/modals/auth.modal";
 import { PagesAuth } from "@utils/router/routes";
 import { useState } from "react";

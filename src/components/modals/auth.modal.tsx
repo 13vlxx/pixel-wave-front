@@ -14,8 +14,8 @@ export const AuthModal = (props: AuthModalProps) => {
 
     if (isMobile || isFullscreen)
         return (
-            <div className="bg-base-100 min-h-screen absolute top-0 left-0 min-w-full z-50">
-                <div className="flex justify-end items-center">
+            <div className="bg-base-100 min-h-dvh absolute top-0 left-0 min-w-full z-50">
+                <div className="relative top-0 flex justify-end items-center">
                     <h1 className="mx-auto text-3xl font-semibold">PixelWave</h1>
                     <IoCloseSharp className="text-5xl cursor-pointer" onClick={handleClose} />
                 </div>

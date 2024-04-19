@@ -52,7 +52,7 @@ const DemoScreen = () => {
                 <button className="border-accent" onClick={toggleShowModal}>Show modal</button>
             </div>
             {showModal && (
-                <Modal title="Modale" isFullscreen handleClose={handleCloseModal}>
+                <Modal title="Modale" handleClose={handleCloseModal}>
                     <h1>Hello</h1>
                 </Modal>
             )}

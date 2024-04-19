@@ -29,7 +29,7 @@ export const Modal = (props: ModalProps) => {
         <div
             className="bg-black/50 min-h-screen absolute top-0 left-0 min-w-full z-50 flex items-center justify-center"
             onClick={handleClose}>
-            <div className="bg-white w-2/5 rounded-md p-4 text-black" onClick={(event) => event.stopPropagation()}>
+            <div className="bg-white w-2/5 max-w-[500px] rounded-md p-4 text-black" onClick={(event) => event.stopPropagation()}>
                 <div className="flex justify-center items-center">
                     <h1 className="mx-auto capitalize text-lg">{title}</h1>
                     <IoCloseSharp className="text-4xl cursor-pointer" onClick={handleClose} />
