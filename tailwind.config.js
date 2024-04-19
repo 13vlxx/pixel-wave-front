@@ -8,7 +8,7 @@ export default {
           primary: "#FFFFFF", //blanc
           secondary: "#1A202C", //noir
           accent: "#1A202C", //noir
-          neutral: "#ff0fc4", //rose
+          neutral: "#1A202C", //noir
           "base-100": "#FFFFFF", //blanc
           "base-content": "#1A202C", //gris
           success: "#00bc62", //vert
