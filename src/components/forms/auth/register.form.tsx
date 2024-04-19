@@ -16,12 +16,11 @@ export const RegisterForm = (props: RegisterFormProps) => {
                 <input type="text" placeholder="Pseudo" className="input input-bordered" />
                 <input type="email" placeholder="Email" className="input input-bordered" />
                 <input type="password" placeholder="Password" className="input input-bordered" />
-                <input type="password" placeholder="Confirm password" className="input input-bordered" />
                 <button className="btn btn-accent">S'inscrire</button>
             </form>
             <div className="flex justify-between">
                 <span
-                    className="flex justify-center items-center gap-2 cursor-pointer"
+                    className="underline flex justify-center items-center gap-2 cursor-pointer"
                     onClick={() => handleChangeState(AuthFormEnum.LOGIN)}>
                     <FaArrowLeftLong /> Retour
                 </span>

@@ -17,8 +17,8 @@ export const LoginForm = (props: LoginFormProps) => {
                 <button className="btn btn-accent">Se connecter</button>
             </form>
             <div className="flex justify-between">
-                <span className="cursor-pointer" onClick={() => handleChangeState(AuthFormEnum.REGISTER)}>Pas de compte ?</span>
-                <span className="cursor-pointer" onClick={() => handleChangeState(AuthFormEnum.FORGOTTEN_PASSWORD)}>Mot de passe oublié ?</span>
+                <span className="underline cursor-pointer" onClick={() => handleChangeState(AuthFormEnum.REGISTER)}>Pas de compte ?</span>
+                <span className="underline cursor-pointer" onClick={() => handleChangeState(AuthFormEnum.FORGOTTEN_PASSWORD)}>Mot de passe oublié ?</span>
             </div>
         </div >
     )

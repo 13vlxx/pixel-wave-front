@@ -1,4 +1,5 @@
 import { AuthFormEnum } from "@utils/enums/auth-form.enum";
+import { FaArrowLeftLong } from "react-icons/fa6";
 
 interface ForgottenPasswordFormProps {
     handleChangeState: (state: AuthFormEnum) => void;
@@ -15,8 +16,11 @@ export const ForgottenPasswordForm = (props: ForgottenPasswordFormProps) => {
                 <button className="btn btn-accent">Envoyer</button>
             </form>
             <div className="flex justify-between">
-                <span className="cursor-pointer" onClick={() => handleChangeState(AuthFormEnum.LOGIN)}>Retour</span>
-                <span className="cursor-pointer" onClick={() => handleChangeState(AuthFormEnum.REGISTER)}>Pas de compte ?</span>
+                <span
+                    className="underline flex justify-center items-center gap-2 cursor-pointer"
+                    onClick={() => handleChangeState(AuthFormEnum.LOGIN)}>
+                    <FaArrowLeftLong /> Retour
+                </span>
             </div>
         </div>
     )
