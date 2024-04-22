@@ -20,13 +20,20 @@ export enum FieldValidationType {
   BOOLEAN = "BOOLEAN",
 }
 
+const passwordSecurityRegex = /^(?=.*\d)(?=.*[A-Z]).{6,}$/;
+
 export const fieldsValidation = {
   [FieldValidationType.REQUIRED_BOOLEAN]: boolean().required(),
   [FieldValidationType.STRING]: string(),
   [FieldValidationType.REQUIRED_STRING]: string().nullable().required("Ce champ est requis"),
   [FieldValidationType.EMAIL]: string().email("errors:field.fieldEmail"),
   [FieldValidationType.REQUIRED_EMAIL]: string().required("Email requis").email("Email invalide"),
-  [FieldValidationType.REQUIRED_PASSWORD]: string().required("Mot de passe requis"),
+  [FieldValidationType.REQUIRED_PASSWORD]: string()
+    .required("Mot de passe requis")
+    .matches(
+      passwordSecurityRegex,
+      "Le mot de passe doit contenir au moins 6 caractères, une majuscule et un chiffre"
+    ),
   [FieldValidationType.NUMBER]: number(),
 };
 

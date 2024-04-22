@@ -1,13 +1,14 @@
 import { AuthNavbarLayout } from '@layouts/auth-navbar.layout'
 import { UnauthNavbarLayout } from '@layouts/unauth-navbar.layout'
-import NotificationsScreen from '@screens/auth/notifications.screen'
+import NotificationsScreen from '@screens/auth/notifications/notifications.screen'
 import ProfileScreen from '@screens/auth/profile.screen'
 import DemoScreen from '@screens/demo.screen'
+import ResetPasswordScreen from '@screens/unauth/reset-password.screen'
 import { useAuthStore } from '@stores/auth/auth.store'
 import { useEffect } from 'react'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { Toaster } from 'sonner'
-import { PagesAuth } from './_utils/router/routes'
+import { PagesAuth, PagesUnauth } from './_utils/router/routes'
 
 const authRouter = createBrowserRouter([
   {
@@ -30,6 +31,7 @@ const unauthRouter = createBrowserRouter([
     errorElement: <div>404</div>,
     children: [
       { index: true, element: <div>Home</div> },
+      { path: PagesUnauth.RESET_PASSWORD, element: <ResetPasswordScreen /> },
       { path: PagesAuth.DEMO, element: <DemoScreen /> },
     ]
   }

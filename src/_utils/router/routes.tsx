@@ -9,6 +9,7 @@ export enum PagesAuth {
 
 export enum PagesUnauth {
     HOME = '/',
+    RESET_PASSWORD = '/reset-password',
     DEMO = '/demo',
 }
 

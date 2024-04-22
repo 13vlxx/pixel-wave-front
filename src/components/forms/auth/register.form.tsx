@@ -16,7 +16,7 @@ const RegisterDataSchema = object().shape({
     email: fieldsValidation.REQUIRED_EMAIL,
     pseudo: fieldsValidation.REQUIRED_STRING,
     password: fieldsValidation.REQUIRED_PASSWORD,
-
+    cgu: fieldsValidation.REQUIRED_BOOLEAN
 })
 
 export type RegisterDataValidationType = InferType<typeof RegisterDataSchema>
@@ -36,18 +36,27 @@ export const RegisterForm = (props: RegisterFormProps) => {
             const { email, password } = formData
             AuthRequest.loginUser({ email, password }).then((x) => {
                 login(x)
-                toast.success("Registration successfully completed !")
+                toast.success("Inscription réussie avec succes !")
             })
         })
     })
 
     return (
-        <div className="flex flex-col justify-center w-1/2 min-w-[360px] pr-2 h-[700px] text-accent" >
-            <h1 className="text-xl font-semibold">S'inscrire</h1>
+        <div className="flex flex-col justify-center h-[600px] text-accent md:w-1/2 md:min-w-[360px] md:h-[700px]">
+            <div className="flex items-baseline justify-between font-semibold pb-1">
+                <h1 className="text-xl">S'inscrire</h1>
+                <p className="select-none px-2 rounded-full bg-accent text-primary tooltip tooltip-left" data-tip="Le mot de passe doit contenir une majuscule, un chiffre et 6 caracteres">?</p>
+            </div>
             <form className="flex flex-col gap-4">
                 <input {...register("pseudo")} type="text" placeholder="Pseudo" className="input input-bordered" />
-                <input {...register("email")} type="email" placeholder="Email" className="input input-bordered" />
-                <input {...register("password")} type="password" placeholder="Password" className="input input-bordered" />
+                <input {...register("email")} type="email" placeholder="Adresse email" className="input input-bordered" />
+                <input {...register("password")} type="password" placeholder="Mot de passe" className="input input-bordered" />
+                <div className="form-control">
+                    <label className="cursor-pointer label flex items-center justify-start gap-2">
+                        <input {...register("cgu")} type="checkbox" className="checkbox checkbox-accent" />
+                        <span className="label-text">J'accepte les conditions d'utilisation</span>
+                    </label>
+                </div>
                 <button onClick={onSubmit} disabled={!isValid} className="btn btn-accent">S'inscrire</button>
             </form>
             <div className="flex justify-between mt-2">
