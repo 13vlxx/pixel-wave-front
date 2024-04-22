@@ -38,8 +38,8 @@ export const LoginForm = (props: LoginFormProps) => {
             <div className="flex flex-col justify-center h-[600px] text-accent" >
                 <h1 className="text-xl font-semibold">Se connecter</h1>
                 <form className="flex flex-col gap-4">
-                    <input {...register("email")} placeholder="Email" type="text" className="input input-bordered" />
-                    <input {...register("password")} placeholder="Password" type="password" className="input input-bordered" />
+                    <input {...register("email")} placeholder="Adresse email" type="text" className="input input-bordered" />
+                    <input {...register("password")} placeholder="Mot de passe" type="password" className="input input-bordered" />
                     <button type="submit" disabled={!isValid} onClick={onSubmit} className="btn btn-accent">Se connecter</button>
                 </form>
                 <div className="flex justify-between mt-2">

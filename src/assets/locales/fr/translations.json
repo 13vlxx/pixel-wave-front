@@ -1,0 +1,15 @@
+{
+    "global":{
+        "send":"Envoyer"
+    },
+    "auth":{
+        "login":"Se connecter",
+        "register":"S'inscrire",
+        "email":"Adresse email",
+        "password":"Mot de passe",
+        "no_account":"Pas de compte ?",
+        "forgotten_password":"Mot de passe oublié ?",
+        "username":"Nom d'utilisateur",
+        "back":"Retour"
+    }
+}
