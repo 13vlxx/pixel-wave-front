@@ -15,3 +15,7 @@ export interface AuthenticatedResponseDto {
   user: GetUserDto;
   token: string;
 }
+
+export interface ForgotPasswordDto {
+  email: string;
+}
