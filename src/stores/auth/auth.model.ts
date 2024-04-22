@@ -19,3 +19,8 @@ export interface AuthenticatedResponseDto {
 export interface ForgotPasswordDto {
   email: string;
 }
+
+export interface ResetPasswordDto {
+  code: string;
+  password: string;
+}

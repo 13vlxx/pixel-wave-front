@@ -1,5 +1,11 @@
 import { PixelWaveAxios } from "@api/Axios";
-import { AuthenticatedResponseDto, ForgotPasswordDto, LoginDto, RegisterDto } from "./auth.model";
+import {
+  AuthenticatedResponseDto,
+  ForgotPasswordDto,
+  LoginDto,
+  RegisterDto,
+  ResetPasswordDto,
+} from "./auth.model";
 
 export default {
   loginUser: (login: LoginDto) =>
@@ -9,7 +15,7 @@ export default {
       (res) => res.data
     ),
   sendRecoveryPasswordEmail: (forgotPasswordDto: ForgotPasswordDto) =>
-    PixelWaveAxios.post("/auth/forgot-password", forgotPasswordDto).then((res) => res.data),
-  resetPassword: (password: string, token: string) =>
-    PixelWaveAxios.post("/auth/reset-password", { password, token }).then((res) => res.data),
+    PixelWaveAxios.post("/auth/forgot-password", forgotPasswordDto),
+  resetPassword: (resetPasswordDto: ResetPasswordDto) =>
+    PixelWaveAxios.post("/auth/reset-password", resetPasswordDto),
 };

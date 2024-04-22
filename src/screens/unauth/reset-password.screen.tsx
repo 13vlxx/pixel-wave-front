@@ -1,7 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import AuthRequest from "@stores/auth/auth.request";
 import { fieldsValidation } from "@utils/yup.utils";
 import dayjs from "dayjs";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { useSearchParam } from "react-use";
 import { toast } from "sonner";
 import { InferType, object } from "yup";
@@ -15,6 +18,11 @@ type ResetPassowrdValidationType = InferType<typeof ResetPassowrdSchema>
 const ResetPasswordScreen = () => {
     const token = useSearchParam("token")
     const expire = useSearchParam("expire")
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!token || !expire) navigate("/")
+    })
 
     const {
         register,
@@ -23,10 +31,11 @@ const ResetPasswordScreen = () => {
     } = useForm<ResetPassowrdValidationType>({ resolver: yupResolver(ResetPassowrdSchema), mode: "all" })
 
     const onSubmit = handleSubmit((formData) => {
-        toast(formData.password + token)
+        AuthRequest.resetPassword({ code: token!, password: formData.password }).then(() => {
+            navigate("/")
+            toast.success("Mot de passe réinitialisé avec succès !")
+        })
     })
-
-    console.log(Date.now())
 
     if (expire && parseInt(expire) < dayjs().unix())
         return (
