@@ -46,7 +46,7 @@ export const UnauthNavbarLayout = () => {
                 <Outlet />
             </div>
             {showAuthModal && (
-                <AuthModal isFullscreen handleClose={toggleShowAuthModal}>
+                <AuthModal handleClose={toggleShowAuthModal}>
                     <AuthForm />
                 </AuthModal>
             )}

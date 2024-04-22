@@ -2,17 +2,16 @@ import { useResponsive } from "@utils/useResponsive";
 import { IoCloseSharp } from "react-icons/io5";
 
 export interface AuthModalProps {
-    isFullscreen?: boolean;
     children: React.ReactNode;
     handleClose: () => void;
 }
 
 export const AuthModal = (props: AuthModalProps) => {
-    const { isFullscreen, children, handleClose } = props;
+    const { children, handleClose } = props;
     const { isMobile } = useResponsive();
 
 
-    if (isMobile || isFullscreen)
+    if (isMobile)
         return (
             <div className="bg-base-100 min-h-dvh absolute top-0 left-0 min-w-full z-50">
                 <div className="relative top-0 flex justify-end items-center">
@@ -26,18 +25,18 @@ export const AuthModal = (props: AuthModalProps) => {
         )
 
     return (
-        <div
-            className="bg-black/50 min-h-screen absolute top-0 left-0 min-w-full z-50 flex items-center justify-center"
-            onClick={handleClose}>
-            <div className="bg-white w-2/5 rounded-md p-4 text-black" onClick={(event) => event.stopPropagation()}>
-                <div className="flex justify-center items-center">
-                    <h1 className="mx-auto capitalize text-lg">PixelWave</h1>
-                    <IoCloseSharp className="text-4xl cursor-pointer" onClick={handleClose} />
-                </div>
-                <div className="flex justify-center items-center">
+        <div className="bg-base-100 absolute top-0 left-0 w-full p-4" onClick={(event) => event.stopPropagation()}>
+            <h1 className="absolute capitalize text-lg">PixelWave</h1>
+            <IoCloseSharp className="absolute z-50 right-0 text-4xl cursor-pointer text-accent" onClick={handleClose} />
+            <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center flex-1">
                     {children}
                 </div>
+                <div className="flex-1"></div>
+                <div className="absolute top-0 right-0 bg-blue-600 w-1/2 h-screen">
+                    <img src="https://source.unsplash.com/random/800x600" alt="auth" className="w-full h-full object-cover" />
+                </div>
             </div>
-        </div>
+        </div >
     )
 }
