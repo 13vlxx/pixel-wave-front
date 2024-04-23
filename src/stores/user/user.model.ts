@@ -12,3 +12,9 @@ export interface GetUserDto {
   role: UserRole;
   createdAt: Date;
 }
+
+export interface LiteUserDto {
+  id: string;
+  pseudo: string;
+  profilePicture: string;
+}

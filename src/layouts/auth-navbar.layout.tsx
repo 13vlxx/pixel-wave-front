@@ -26,7 +26,7 @@ export const AuthNavbarLayout = () => {
         <>
             <header className="navbar flex justify-between px-10 shadow-md md:px-20 shadow-accent mb-4">
                 <h1 className="text-2xl font-semibold cursor-pointer" onClick={() => navigate(PagesAuth.HOME)}>PixelWave</h1>
-                <nav className="flex gap-2">
+                <nav className="flex gap-4">
                     <LuTestTube2 className="text-3xl cursor-pointer" onClick={() => handleNavigate(PagesAuth.DEMO)} />
                     {theme === 'light' ?
                         <FaMoon onClick={toggleTheme} className="cursor-pointer text-3xl" /> :
