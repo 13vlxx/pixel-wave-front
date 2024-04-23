@@ -24,7 +24,7 @@ export const AuthNavbarLayout = () => {
 
     return (
         <>
-            <header className="navbar flex justify-between px-10 shadow-md md:px-20 shadow-accent mb-4">
+            <header className="sticky top-0 navbar bg-primary flex justify-between px-10 shadow-md md:px-20 shadow-accent/30 mb-4 z-50">
                 <h1 className="text-2xl font-semibold cursor-pointer" onClick={() => navigate(PagesAuth.HOME)}>PixelWave</h1>
                 <nav className="flex gap-4">
                     <LuTestTube2 className="text-3xl cursor-pointer" onClick={() => handleNavigate(PagesAuth.DEMO)} />
@@ -36,7 +36,7 @@ export const AuthNavbarLayout = () => {
                     <CgProfile name="profile" className="text-3xl cursor-pointer" onClick={() => handleNavigate(PagesAuth.PROFILE)} />
                 </nav>
             </header>
-            <div className="px-4">
+            <div>
                 <Outlet />
             </div>
         </>

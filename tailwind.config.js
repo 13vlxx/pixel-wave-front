@@ -21,7 +21,7 @@ export default {
           primary: "#1A202C", //noir
           secondary: "#FFFFFF", //blanc
           accent: "#C043FF", //violet #9966CC
-          neutral: "#ff0fc4", //rose
+          neutral: "#BFC9CA", //rose
           "base-100": "#1A202C", //noir
           "base-content": "#C043FF", //violet
           success: "#00bc62", //vert
