@@ -20,7 +20,7 @@ export default {
         dark: {
           primary: "#1A202C", //noir
           secondary: "#FFFFFF", //blanc
-          accent: "#C043FF", //violet
+          accent: "#C043FF", //violet #9966CC
           neutral: "#ff0fc4", //rose
           "base-100": "#1A202C", //noir
           "base-content": "#C043FF", //violet

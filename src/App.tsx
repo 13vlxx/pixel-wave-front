@@ -2,6 +2,7 @@ import { AuthNavbarLayout } from '@layouts/auth-navbar.layout'
 import { UnauthNavbarLayout } from '@layouts/unauth-navbar.layout'
 import NotificationsScreen from '@screens/auth/notifications/notifications.screen'
 import ProfileScreen from '@screens/auth/profile.screen'
+import HomeScreen from '@screens/common/home/home.screen'
 import DemoScreen from '@screens/demo.screen'
 import ResetPasswordScreen from '@screens/unauth/reset-password.screen'
 import { useAuthStore } from '@stores/auth/auth.store'
@@ -16,7 +17,7 @@ const authRouter = createBrowserRouter([
     element: <AuthNavbarLayout />,
     errorElement: <div>404</div>,
     children: [
-      { index: true, element: <div>Home</div> },
+      { index: true, element: <HomeScreen /> },
       { path: PagesAuth.NOTIFICATIONS, element: <NotificationsScreen /> },
       { path: PagesAuth.PROFILE, element: <ProfileScreen /> },
       { path: PagesAuth.DEMO, element: <DemoScreen /> },
@@ -30,7 +31,7 @@ const unauthRouter = createBrowserRouter([
     element: <UnauthNavbarLayout />,
     errorElement: <div>404</div>,
     children: [
-      { index: true, element: <div>Home</div> },
+      { index: true, element: <HomeScreen /> },
       { path: PagesUnauth.RESET_PASSWORD, element: <ResetPasswordScreen /> },
       { path: PagesAuth.DEMO, element: <DemoScreen /> },
     ]

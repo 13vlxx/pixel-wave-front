@@ -1,3 +1,4 @@
+import { useAuthStore } from "@stores/auth/auth.store";
 import { HandleRequestError } from "@utils/handle-request-error";
 import axios, { AxiosRequestConfig } from "axios";
 
@@ -6,6 +7,12 @@ const config: AxiosRequestConfig = {
 };
 
 export const PixelWaveAxios = axios.create(config);
+
+PixelWaveAxios.interceptors.request.use((config) => {
+  if (useAuthStore.getState().token)
+    config.headers.Authorization = `Bearer ${useAuthStore.getState().token}`;
+  return config;
+});
 
 PixelWaveAxios.interceptors.response.use(undefined, (error) => {
   HandleRequestError(error);

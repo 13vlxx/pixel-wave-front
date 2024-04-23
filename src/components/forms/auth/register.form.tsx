@@ -16,7 +16,6 @@ const RegisterDataSchema = object().shape({
     email: fieldsValidation.REQUIRED_EMAIL,
     pseudo: fieldsValidation.REQUIRED_STRING,
     password: fieldsValidation.REQUIRED_PASSWORD,
-    cgu: fieldsValidation.REQUIRED_BOOLEAN
 })
 
 export type RegisterDataValidationType = InferType<typeof RegisterDataSchema>
@@ -51,12 +50,6 @@ export const RegisterForm = (props: RegisterFormProps) => {
                 <input {...register("pseudo")} type="text" placeholder="Pseudo" className="input input-bordered" />
                 <input {...register("email")} type="email" placeholder="Adresse email" className="input input-bordered" />
                 <input {...register("password")} type="password" placeholder="Mot de passe" className="input input-bordered" />
-                <div className="form-control">
-                    <label className="cursor-pointer label flex items-center justify-start gap-2">
-                        <input {...register("cgu")} type="checkbox" className="checkbox checkbox-accent" />
-                        <span className="label-text">J'accepte les conditions d'utilisation</span>
-                    </label>
-                </div>
                 <button onClick={onSubmit} disabled={!isValid} className="btn btn-accent">S'inscrire</button>
             </form>
             <div className="flex justify-between mt-2">
