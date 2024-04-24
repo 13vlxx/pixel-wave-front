@@ -39,7 +39,7 @@ export const LoginForm = (props: LoginFormProps) => {
 
     if (isMobile)
         return (
-            <div className="flex flex-col justify-center h-[600px] text-accent">
+            <div className="flex flex-col justify-center h-[600px]">
                 <h1 className="text-xl font-semibold">Se connecter</h1>
                 <form className="flex flex-col gap-4">
                     <input {...register("email")} placeholder="Adresse email" type="text" className="input input-bordered" />
@@ -54,7 +54,7 @@ export const LoginForm = (props: LoginFormProps) => {
         )
 
     return (
-        <div className="flex flex-col justify-center w-1/2 min-w-[360px] pr-2 h-[700px] text-accent" >
+        <div className="flex flex-col justify-center w-1/2 min-w-[360px] pr-2 h-[700px]" >
             <h1 className="text-xl font-semibold">Se connecter</h1>
             <form className="flex flex-col gap-4">
                 <input {...register("email")} placeholder="Adresse email" type="text" className="input input-bordered" />

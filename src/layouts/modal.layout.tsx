@@ -27,7 +27,7 @@ export const Modal = (props: ModalProps) => {
 
     return (
         <div
-            className="bg-black/50 min-h-screen absolute top-0 left-0 min-w-full z-50 flex items-center justify-center"
+            className="bg-base-100 min-h-screen absolute top-0 left-0 min-w-full z-50 flex items-center justify-center"
             onClick={handleClose}>
             <div className="bg-white w-2/5 max-w-[500px] rounded-md p-4 text-black" onClick={(event) => event.stopPropagation()}>
                 <div className="flex justify-center items-center">

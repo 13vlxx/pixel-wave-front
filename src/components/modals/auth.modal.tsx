@@ -25,9 +25,9 @@ export const AuthModal = (props: AuthModalProps) => {
         )
 
     return (
-        <div className="bg-base-100 absolute top-0 left-0 w-full p-4" onClick={(event) => event.stopPropagation()}>
+        <div className="bg-base-100 h-screen absolute top-0 left-0 w-full p-4" onClick={(event) => event.stopPropagation()}>
             <h1 className="absolute capitalize text-lg">PixelWave</h1>
-            <IoCloseSharp className="absolute z-50 right-0 text-4xl cursor-pointer text-accent" onClick={handleClose} />
+            <IoCloseSharp className="absolute z-50 right-0 text-4xl cursor-pointer" onClick={handleClose} />
             <div className="flex justify-center items-center">
                 <div className="flex justify-center items-center flex-1">
                     {children}

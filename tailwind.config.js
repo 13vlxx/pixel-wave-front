@@ -18,12 +18,12 @@ export default {
       },
       {
         dark: {
-          primary: "#1A202C", //noir
+          primary: "#272727", //noir
           secondary: "#FFFFFF", //blanc
           accent: "#C043FF", //violet #9966CC
-          neutral: "#BFC9CA", //rose
-          "base-100": "#1A202C", //noir
-          "base-content": "#C043FF", //violet
+          neutral: "#323232", //gris
+          "base-100": "#272727", //noir
+          "base-content": "#FFFFFF", //violet
           success: "#00bc62", //vert
           warning: "#ff9400", //orange
           error: "#ff626e", //rouge

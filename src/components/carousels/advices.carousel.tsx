@@ -14,21 +14,19 @@ const AdvicesCarousel = (props: AdvicesCarouselProps) => {
                 <div className="carousel-item"></div>
                 {
                     advices.map((x) => (
-                        <>
-                            <div key={x.user.id + x.game.id}
-                                className="ml-4 overflow-scroll carousel-item text-center bg-neutral w-1/2 flex flex-col max-h-[200px] items-center rounded-md p-2 justify-center">
-                                <div className="avatar">
-                                    <div className="w-12 rounded-full">
-                                        <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                                    </div>
-                                </div>
-                                <div>
-                                    <p className="text-sm text-ellipsis">{x.note}/20</p>
-                                    <p className="text-sm text-ellipsis line-clamp-1">{x.game.name}</p>
-                                    <p className="text-[12px] text-ellipsis line-clamp-2">{x.advice}</p>
+                        <div key={x.user.id + x.game.id}
+                            className="ml-4 overflow-scroll carousel-item text-center bg-neutral w-1/2 flex flex-col max-h-[200px] items-center rounded-md p-2 justify-center">
+                            <div className="avatar">
+                                <div className="w-12 rounded-full">
+                                    <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                                 </div>
                             </div>
-                        </>
+                            <div>
+                                <p className="text-sm text-ellipsis">{x.note}/20</p>
+                                <p className="text-sm text-ellipsis line-clamp-1">{x.game.name}</p>
+                                <p className="text-[12px] text-ellipsis line-clamp-2">{x.advice}</p>
+                            </div>
+                        </div>
                     ))
                 }
                 <div className="carousel-item ml-4"></div>

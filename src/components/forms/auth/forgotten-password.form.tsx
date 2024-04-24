@@ -42,7 +42,7 @@ export const ForgottenPasswordForm = (props: ForgottenPasswordFormProps) => {
     });
 
     return (
-        <div className="flex flex-col justify-center h-[600px] text-accent md:w-1/2 md:min-w-[360px] md:h-[700px]">
+        <div className="flex flex-col justify-center h-[600px] md:w-1/2 md:min-w-[360px] md:h-[700px]">
             <h1 className="text-xl font-semibold">Mot de passe oublié</h1>
             <form className="flex flex-col gap-4">
                 <input {...register("email")} type="email" placeholder="Adresse email" className="input input-bordered" />

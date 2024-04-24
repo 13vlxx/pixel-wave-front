@@ -41,10 +41,10 @@ export const RegisterForm = (props: RegisterFormProps) => {
     })
 
     return (
-        <div className="flex flex-col justify-center h-[600px] text-accent md:w-1/2 md:min-w-[360px] md:h-[700px]">
+        <div className="flex flex-col justify-center h-[600px] md:w-1/2 md:min-w-[360px] md:h-[700px]">
             <div className="flex items-baseline justify-between font-semibold pb-1">
                 <h1 className="text-xl">S'inscrire</h1>
-                <p className="select-none px-2 rounded-full bg-accent text-primary tooltip tooltip-left" data-tip="Le mot de passe doit contenir une majuscule, un chiffre et 6 caracteres">?</p>
+                <p className="select-none px-2 rounded-full bg-accent tooltip tooltip-left" data-tip="Le mot de passe doit contenir une majuscule, un chiffre et 6 caracteres">?</p>
             </div>
             <form className="flex flex-col gap-4">
                 <input {...register("pseudo")} type="text" placeholder="Pseudo" className="input input-bordered" />

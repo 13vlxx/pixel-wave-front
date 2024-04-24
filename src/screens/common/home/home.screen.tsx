@@ -21,7 +21,7 @@ const HomeScreen = () => {
             <GamesCarousel title="Jeux du moment >" games={games} />
             <GamesCarousel title="Prochaines sorties >" games={games} />
             <AdvicesCarousel advices={advices} />
-            <div className="bg-neutral p-4 flex items-center justify-center flex-col gap-2">
+            <div className="bg-neutral p-4 flex items-center justify-center flex-col gap-2 cursor-pointer">
                 <p>Envie de discuter avec d'autres joueurs ?</p>
                 <span className="link link-accent flex items-center gap-2">Consulter les posts <FaArrowRight /></span>
             </div>
