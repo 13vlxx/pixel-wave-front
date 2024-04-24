@@ -24,7 +24,7 @@ const HomeScreen = () => {
     }, []);
 
     return (
-        <div>
+        <div className="mt-4">
             <GamesCarousel title="Jeux du moment" games={games} />
             <GamesCarousel title="Prochaines sorties" games={games} />
             <AdvicesCarousel advices={advices} />

@@ -2,15 +2,17 @@ import { useLocation } from "react-router-dom";
 
 export enum PagesAuth {
     HOME = '/',
-    PROFILE = '/profile',
-    NOTIFICATIONS = '/notifications',
-    DEMO = '/demo',
+    GAME = 'game',
+    PROFILE = 'profile',
+    NOTIFICATIONS = 'notifications',
+    DEMO = 'demo',
 }
 
 export enum PagesUnauth {
     HOME = '/',
-    RESET_PASSWORD = '/reset-password',
-    DEMO = '/demo',
+    GAME = 'game',
+    RESET_PASSWORD = 'reset-password',
+    DEMO = 'demo',
 }
 
 export const useRouteMatch = (patterns: readonly string[] = []) => {
