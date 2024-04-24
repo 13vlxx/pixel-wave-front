@@ -44,7 +44,7 @@ export const LoginForm = (props: LoginFormProps) => {
                 <form className="flex flex-col gap-4">
                     <input {...register("email")} placeholder="Adresse email" type="text" className="input input-bordered" />
                     <input {...register("password")} placeholder="Mot de passe" type="password" className="input input-bordered" />
-                    <button type="submit" disabled={!isValid} onClick={onSubmit} className="btn btn-accent">Se connecter</button>
+                    <button type="submit" disabled={!isValid} onClick={onSubmit} className="btn btn-outline btn-accent">Se connecter</button>
                 </form>
                 <div className="flex justify-between mt-2">
                     <span className="underline cursor-pointer" onClick={() => handleChangeState(AuthFormEnum.REGISTER)}>Pas de compte ?</span>
@@ -59,7 +59,7 @@ export const LoginForm = (props: LoginFormProps) => {
             <form className="flex flex-col gap-4">
                 <input {...register("email")} placeholder="Adresse email" type="text" className="input input-bordered" />
                 <input {...register("password")} placeholder="Mot de passe" type="password" className="input input-bordered" />
-                <button type="submit" disabled={!isValid} onClick={onSubmit} className="btn btn-accent">Se connecter</button>
+                <button type="submit" disabled={!isValid} onClick={onSubmit} className="btn btn-outline btn-accent">Se connecter</button>
             </form>
             <div className="flex justify-between mt-2">
                 <span className="underline cursor-pointer" onClick={() => handleChangeState(AuthFormEnum.REGISTER)}>Pas de compte ?</span>

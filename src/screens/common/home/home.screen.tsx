@@ -25,8 +25,8 @@ const HomeScreen = () => {
 
     return (
         <div>
-            <GamesCarousel title="Jeux du moment >" games={games} />
-            <GamesCarousel title="Prochaines sorties >" games={games} />
+            <GamesCarousel title="Jeux du moment" games={games} />
+            <GamesCarousel title="Prochaines sorties" games={games} />
             <AdvicesCarousel advices={advices} />
             <div className="bg-neutral p-4 flex items-center justify-center flex-col gap-2 cursor-pointer">
                 <p>Envie de discuter avec d'autres joueurs ?</p>

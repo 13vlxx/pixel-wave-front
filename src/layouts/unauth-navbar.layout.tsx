@@ -1,7 +1,7 @@
 import AuthForm from "@components/forms/auth/auth.form";
 import { AuthModal } from "@components/modals/auth.modal";
 import { PagesAuth } from "@utils/router/routes";
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { BsSunFill } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { FaMoon } from "react-icons/fa";
@@ -23,15 +23,27 @@ export const UnauthNavbarLayout = () => {
 
     const toggleShowAuthModal = () => {
         setShowAuthModal(!showAuthModal);
+
+        if (!showAuthModal) {
+            document.body.classList.add('modal-open');
+        } else {
+            document.body.classList.remove('modal-open');
+        }
     }
 
     const handleNavigate = (destination: PagesAuth) => {
         navigate(destination);
     }
 
+    useLayoutEffect(() => {
+        return () => {
+            document.body.classList.remove('modal-open');
+        }
+    }, [])
+
     return (
-        <>
-            <header className="sticky top-0 navbar bg-base-200 flex justify-between px-10 shadow-md md:px-20 shadow-secondary/30 mb-4 z-1">
+        <   >
+            <header className="sticky top-0 navbar bg-base-200 flex justify-between px-10 shadow-md md:px-20 shadow-accent/30 mb-4 z-10">
                 <h1 className="text-2xl font-semibold cursor-pointer" onClick={() => navigate(PagesAuth.HOME)}>PixelWave</h1>
                 <nav className="flex gap-4">
                     <LuTestTube2 className="text-3xl cursor-pointer" onClick={() => handleNavigate(PagesAuth.DEMO)} />
