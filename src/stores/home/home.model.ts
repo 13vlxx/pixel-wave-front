@@ -3,6 +3,8 @@ import { LiteUserDto } from "@stores/user/user.model";
 export interface HomepageDto {
   games: LiteGameDto[];
   advices: AdviceDto[];
+  categories: CategoryDto[];
+  platforms: PlatformDto[];
 }
 
 export interface GameDto {
@@ -24,11 +26,13 @@ export interface LiteGameDto {
 export interface CategoryDto {
   id: string;
   name: string;
+  logo: string;
 }
 
 export interface PlatformDto {
   id: string;
   name: string;
+  logo: string;
 }
 
 export interface AdviceDto {

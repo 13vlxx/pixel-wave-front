@@ -6,11 +6,12 @@ export default {
       {
         light: {
           primary: "#FFFFFF", //blanc
-          secondary: "#1A202C", //noir
-          accent: "#1A202C", //noir
-          neutral: "#BFC9CA", //gris
+          secondary: "#272727", //noir
+          accent: "#C043FF", //noir
+          neutral: "#E7E8E7", //gris
           "base-100": "#FFFFFF", //blanc
-          "base-content": "#1A202C", //gris
+          "base-200": "#E7E8E7", //blanc
+          "base-content": "#272727", //gris
           success: "#00bc62", //vert
           warning: "#ff9400", //orange
           error: "#ff626e", //rouge
@@ -23,6 +24,7 @@ export default {
           accent: "#C043FF", //violet #9966CC
           neutral: "#323232", //gris
           "base-100": "#272727", //noir
+          "base-200": "#0F0F0F", //noir
           "base-content": "#FFFFFF", //violet
           success: "#00bc62", //vert
           warning: "#ff9400", //orange
