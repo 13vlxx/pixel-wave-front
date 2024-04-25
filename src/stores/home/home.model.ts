@@ -26,13 +26,13 @@ export interface LiteGameDto {
 export interface CategoryDto {
   id: string;
   name: string;
-  logo: string;
+  image: string;
 }
 
 export interface PlatformDto {
   id: string;
   name: string;
-  logo: string;
+  image: string;
 }
 
 export interface AdviceDto {
