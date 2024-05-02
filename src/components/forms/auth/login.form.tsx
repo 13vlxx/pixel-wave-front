@@ -28,7 +28,13 @@ export const LoginForm = (props: LoginFormProps) => {
         register,
         handleSubmit,
         formState: { isValid },
-    } = useForm<RegisterDataValidationType>({ resolver: yupResolver(LoginDataSchema), mode: "all" })
+    } = useForm<RegisterDataValidationType>({
+        resolver: yupResolver(LoginDataSchema), mode: "all", defaultValues: {
+            email: "test@gmail.com",
+            password: "Test1234**"
+
+        }
+    })
 
     const onSubmit = handleSubmit((formData) => {
         AuthRequest.loginUser(formData).then((x) => {
