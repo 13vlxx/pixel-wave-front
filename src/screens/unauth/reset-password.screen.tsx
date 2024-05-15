@@ -43,7 +43,7 @@ const ResetPasswordScreen = () => {
         )
 
     return (
-        <div className="flex flex-col justify-center h-[600px] mx-auto text-accent md:max-w-md">
+        <div className="flex flex-col justify-center h-[600px] mx-auto md:max-w-md">
             <h1 className="text-xl font-semibold self-center pb-4">Réinitialisation du mot de passe</h1>
             <form className="flex flex-col gap-4">
                 <input {...register("password")} placeholder="Nouveau mot de passe" type="password" className="input input-bordered" />

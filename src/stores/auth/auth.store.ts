@@ -1,4 +1,4 @@
-import { UserStore } from "@stores/user/user.store";
+import { useUserStore } from "@stores/user/user.store";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { AuthenticatedResponseDto } from "./auth.model";
@@ -12,7 +12,7 @@ interface AuthAction {
   logout: () => void;
 }
 
-const getToken = () => JSON.parse(localStorage.getItem("token") as string);
+const getToken = () => JSON.parse(localStorage.getItem("pw-token") as string);
 
 export const useAuthStore = create<AuthState & AuthAction>()(
   persist(
@@ -20,16 +20,16 @@ export const useAuthStore = create<AuthState & AuthAction>()(
       token: getToken()?.state.token,
       login: (auth: AuthenticatedResponseDto) => {
         set({ token: auth.token });
-        UserStore.setState({ user: auth.user });
+        useUserStore.setState({ id: auth.user.id });
       },
       logout: () => {
         set({ token: undefined });
-        UserStore.setState({ user: undefined });
+        useUserStore.setState({ id: undefined });
         window.location.replace("/");
       },
     }),
     {
-      name: "token",
+      name: "pw-token",
       storage: createJSONStorage(() => localStorage),
       partialize: ({ token }) => ({ token }),
     }

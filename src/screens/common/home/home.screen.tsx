@@ -3,7 +3,7 @@ import CategoriesCarousel from "@components/carousels/categories.carousel";
 import GamesCarousel from "@components/carousels/games.carousel";
 import PlatformsCarousel from "@components/carousels/platforms.carousel";
 import Footer from "@components/footer.component";
-import { AdviceDto, CategoryDto, LiteGameDto, PlatformDto } from "@stores/home/home.model";
+import { AdviceDto, CategoryDto, LiteGameDto, PlatformDto } from "@stores/game/game.model";
 import HomeRequest from "@stores/home/home.request";
 import { useEffect, useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
