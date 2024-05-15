@@ -14,7 +14,7 @@ const NewsList = (props: NewsListProps) => {
             {
                 news.map(x => (
                     <div className="w-screen" key={x.id}>
-                        <div className="flex gap-2">
+                        <div className="flex gap-2 hover:bg-neutral">
                             <img className="w-32 rounded-md" src={x.logo} alt={x.title} />
                             <div className="flex flex-col">
                                 {

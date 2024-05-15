@@ -7,15 +7,30 @@ import { useEffect, useState } from "react";
 import { IoStar } from "react-icons/io5";
 import { MdOutlineIosShare } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 const GameDetailsScreen = () => {
     const { name } = useParams();
-    const [game, setGame] = useState<GameDto>();
     const navigate = useNavigate();
+    const [game, setGame] = useState<GameDto>();
 
     useEffect(() => {
         GameRequest.getGameDetails(name!).then(setGame).catch(() => navigate('/'));
     }, [name, navigate]);
+
+    const handleShareGame = () => {
+        if (navigator.share) {
+            navigator.share({
+                title: game?.name,
+                text: game?.description,
+                url: window.location.href
+            }).then(() => toast.success('Jeu partagé avec succès'))
+                .catch((error) => console.log('Error sharing', error));
+        } else {
+            navigator.clipboard.writeText(window.location.href).then(() => toast.success('Lien copié avec succès'))
+                .catch((error) => console.log('Error copying link', error));
+        }
+    }
 
     if (game)
         return (
@@ -24,7 +39,7 @@ const GameDetailsScreen = () => {
                 <div className="px-4 flex items-center mt-1 gap-2">
                     <h1 className="text-2xl font-bold flex-1 overflow-hidden">{game.name}</h1>
                     <IoStar className="size-8" />
-                    <MdOutlineIosShare className="size-8" />
+                    <MdOutlineIosShare onClick={handleShareGame} className="size-8" />
                 </div>
                 <div className="px-4">
                     <div className="w-full h-px bg-neutral mt-1" />
