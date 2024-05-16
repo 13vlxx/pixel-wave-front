@@ -1,4 +1,3 @@
-import CircleLoader from "@components/loaders/circle-loader.component";
 import { yupResolver } from "@hookform/resolvers/yup";
 import AuthRequest from "@stores/auth/auth.request";
 import { AuthFormEnum } from "@utils/enums/auth-form.enum";
@@ -47,7 +46,7 @@ export const ForgottenPasswordForm = (props: ForgottenPasswordFormProps) => {
             <form className="flex flex-col gap-4">
                 <input {...register("email")} type="email" placeholder="Adresse email" className="input input-bordered" />
                 <button disabled={!isValid || isLoading} onClick={onSubmit} className="btn btn-outline btn-accent">
-                    {isLoading ? <CircleLoader /> : "Envoyer"}
+                    {isLoading ? <span className="loading loading-spinner text-secondary"></span> : "Envoyer"}
                 </button>
             </form>
             <div className="flex justify-between mt-2">

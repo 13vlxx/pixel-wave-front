@@ -44,3 +44,8 @@ export interface LiteGameDto {
   name: string;
   logo: string;
 }
+
+export interface CreateAdviceDto {
+  advice: string;
+  note: number;
+}

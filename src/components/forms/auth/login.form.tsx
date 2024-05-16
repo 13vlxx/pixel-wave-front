@@ -3,9 +3,9 @@ import AuthRequest from "@stores/auth/auth.request";
 import { useAuthStore } from "@stores/auth/auth.store";
 import { AuthFormEnum } from "@utils/enums/auth-form.enum";
 import { useResponsive } from "@utils/useResponsive";
+import { fieldsValidation } from "@utils/yup.utils";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { fieldsValidation } from "src/_utils/yup.utils";
 import { InferType, object } from "yup";
 
 interface LoginFormProps {

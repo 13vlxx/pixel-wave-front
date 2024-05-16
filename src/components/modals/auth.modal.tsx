@@ -33,9 +33,7 @@ export const AuthModal = (props: AuthModalProps) => {
                     {children}
                 </div>
                 <div className="flex-1"></div>
-                <div className="absolute top-0 right-0 bg-blue-600 w-1/2 h-screen">
-                    <img src="https://source.unsplash.com/random/800x600" alt="auth" className="w-full h-full object-cover" />
-                </div>
+                <img src="https://source.unsplash.com/random/800x600" alt="auth" className="w-1/2 h-screen object-cover absolute right-0 top-0" />
             </div>
         </div >
     )
