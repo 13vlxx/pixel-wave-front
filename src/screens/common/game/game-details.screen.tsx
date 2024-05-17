@@ -2,6 +2,7 @@ import AdvicesCarousel from "@components/carousels/advices.carousel";
 import ImagesCarousel from "@components/carousels/images.carousel";
 import GameAdviceForm from "@components/forms/game/game-advice.form";
 import NewsList from "@components/lists/news.list";
+import { Modal } from "@layouts/modal.layout";
 import AdviceRequest from "@stores/advice/advice.request";
 import { useAuthStore } from "@stores/auth/auth.store";
 import { AdviceDto, GameDto } from "@stores/game/game.model";
@@ -23,15 +24,17 @@ const GameDetailsScreen = () => {
 
     useEffect(() => {
         GameRequest.getGameDetails(name!).then(setGame)
-    }, [name]);
+    }, [name, showAdviceSection]);
 
     useEffect(() => {
-        if (game) {
+        if (game && token) {
             AdviceRequest.checkIfAlreadyPostedAdvice(game.id).then((x) => setAlreadyPostedAdvice(x))
         }
-    });
+    }, [showAdviceSection, game, token]);
 
     const handleShowAdviceSection = () => setShowAdviceSection(true);
+
+    const handleCloseAdviceSection = () => setShowAdviceSection(false)
 
     const handleShareGame = () => {
         if (navigator.share) {
@@ -51,38 +54,48 @@ const GameDetailsScreen = () => {
 
     if (isMobile)
         return (
-            <div>
-                <img className="w-full max-h-72 object-cover" src={game.logo} alt="game logo" />
-                <div className="px-4 flex items-center mt-1 gap-2">
-                    <h1 className="text-2xl font-bold flex-1 overflow-hidden">{game.name}</h1>
-                    {token && <HiMiniPencilSquare className="size-8" />}
-                    <MdOutlineIosShare onClick={handleShareGame} className="size-8" />
-                </div>
-                <div className="px-4">
-                    <div className="w-full h-px bg-neutral mt-1" />
-                </div>
-                <ImagesCarousel title="Images" images={game.media.map((x) => x.path)} />
-                <div className="px-4 flex flex-col gap-2 mb-2">
-                    <div>
-                        <h1 className="font-semibold text-lg">Description</h1>
-                        <p className="">{game.description}</p>
+            <>
+                <div>
+                    <img className="w-full max-h-72 object-cover" src={game.logo} alt="game logo" />
+                    <div className="px-4 flex items-center mt-1 gap-2">
+                        <h1 className="text-2xl font-bold flex-1 overflow-hidden">{game.name}</h1>
+                        {token && <HiMiniPencilSquare onClick={handleShowAdviceSection} className="size-8" />}
+                        <MdOutlineIosShare onClick={handleShareGame} className="size-8" />
                     </div>
-                    <div>
-                        <h1 className="font-semibold text-lg">Disponible sur :</h1>
-                        <div className="flex gap-1 mt-1">
-                            {
-                                game.game_platform.map((x) => (
-                                    <p key={x.platform.id} className="badge badge-outline badge-lg badge-accent bg-neutral uppercase">{x.platform.name}</p>
-                                ))
-                            }
+                    <div className="px-4">
+                        <div className="w-full h-px bg-neutral mt-1" />
+                    </div>
+                    <ImagesCarousel title="Images" images={game.media.map((x) => x.path)} />
+                    <div className="px-4 flex flex-col gap-2 mb-2">
+                        <div>
+                            <h1 className="font-semibold text-lg">Description</h1>
+                            <p className="">{game.description}</p>
+                        </div>
+                        <div>
+                            <h1 className="font-semibold text-lg">Disponible sur :</h1>
+                            <div className="flex gap-1 mt-1">
+                                {
+                                    game.game_platform.map((x) => (
+                                        <p key={x.platform.id} className="badge badge-outline badge-lg badge-accent bg-neutral uppercase">{x.platform.name}</p>
+                                    ))
+                                }
+                            </div>
                         </div>
                     </div>
+                    <AdvicesCarousel hideGameName advices={game.game_advice} />
+                    <div className="px-4">
+                        <NewsList title={`Dernières actualitées concernant ${game.name}`} news={game.news} />
+                    </div>
                 </div>
-                <AdvicesCarousel hideGameName advices={game.game_advice} />
-                <div className="px-4">
-                    <NewsList title={`Dernières actualitées concernant ${game.name}`} news={game.news} />
-                </div>
-            </div>
+                {showAdviceSection && <Modal handleClose={handleCloseAdviceSection}>
+                    <GameAdviceForm
+                        game={game}
+                        handleClose={handleCloseAdviceSection}
+                        advice={alreadyPostedAdvice}
+                    />
+                </Modal>
+                }
+            </>
         )
 
     const LeftSide = (
@@ -151,7 +164,7 @@ const GameDetailsScreen = () => {
             <div className="flex-1 mt-2">
                 {showAdviceSection ? <GameAdviceForm
                     game={game}
-                    handleClose={() => setShowAdviceSection(false)}
+                    handleClose={handleCloseAdviceSection}
                     advice={alreadyPostedAdvice}
                 />
                     : RightSide}

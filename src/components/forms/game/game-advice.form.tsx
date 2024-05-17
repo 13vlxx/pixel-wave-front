@@ -1,6 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AdviceDto, GameDto } from "@stores/game/game.model";
 import GameRequest from "@stores/game/game.request";
+import { useResponsive } from "@utils/useResponsive";
 import { fieldsValidation } from "@utils/yup.utils";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -27,6 +28,7 @@ export type NewAdviceValidationType = InferType<typeof NewAdviceSchema>;
 const GameAdviceForm = (props: GameAdviceFormProps) => {
     const { game, handleClose, advice } = props;
     const [note, setNote] = useState(advice?.note || 1);
+    const { isMobile } = useResponsive();
 
     const {
         register,
@@ -52,6 +54,33 @@ const GameAdviceForm = (props: GameAdviceFormProps) => {
         GameRequest.createAdvice(formData, game.id).then(() => toast.success("Avis ajouté avec succès"))
         handleClose();
     })
+
+    if (isMobile)
+        return (
+            <>
+                <h1 className="text-center text-lg font-bold">{advice ? "Modification de votre avis" : "Donnez votre avis"}</h1>
+                <div className="h-full flex flex-col justify-center gap-2">
+                    <textarea {...register("advice")} placeholder={`Que pensez vous de ${game.name}`} className="p-2 flex-1 textarea textarea-lg textarea-bordered w-full border-secondary resize-none"></textarea>
+                    <p className="font-bold">Donnez une note :</p>
+                    <div className="grid grid-cols-10 gap-2">
+                        {
+                            notes.map((x) => (
+                                <kbd key={x} onClick={() => handleSetNote(x)} className={`kbd cursor-pointer ${note >= x && "bg-yellow-400"} mask mask-star-2`}></kbd>
+                            ))
+                        }
+                    </div>
+                    <div>
+                        <button onClick={onSubmit} disabled={!isValid} className="btn btn-outline btn-sm btn-accent w-full">Envoyer</button>
+                    </div>
+                    <span
+                        className="underline flex items-center gap-2 cursor-pointer"
+                        onClick={handleClose}>
+                        <FaArrowLeftLong /> Retour
+                    </span>
+                    <input className="hidden" {...register("note")} type="number" value={note} />
+                </div>
+            </>
+        )
 
     return (
         <>

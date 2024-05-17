@@ -26,7 +26,7 @@ const AdvicesCarousel = (props: AdvicesCarouselProps) => {
                                     </div>
                                 </div>
                                 <div>
-                                    <p className="text-sm text-ellipsis">{x.note}/20</p>
+                                    <p className="text-sm text-ellipsis">{x.note}/5</p>
                                     {
                                         !hideGameName && <p className="text-sm text-ellipsis line-clamp-1">{x.game.name}</p>
                                     }
