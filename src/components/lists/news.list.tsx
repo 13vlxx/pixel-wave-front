@@ -12,7 +12,7 @@ const NewsList = (props: NewsListProps) => {
         <div className="">
             <h1 className="font-semibold text-lg line-clamp-1 text-ellipsis">{title}</h1>
             {
-                news.map(x => (
+                news.length ? news.map(x => (
                     <div className="w-full h-min cursor-pointer" key={x.id}>
                         <div className="flex gap-2 hover:bg-neutral">
                             <img className="w-32 h-16 rounded-md" src={x.logo} alt={x.title} />
@@ -28,6 +28,8 @@ const NewsList = (props: NewsListProps) => {
                         <div className="w-full h-px bg-neutral my-2" />
                     </div>
                 ))
+                    :
+                    <span>Aucune actualité pour l'instant</span>
             }
         </div>
     )

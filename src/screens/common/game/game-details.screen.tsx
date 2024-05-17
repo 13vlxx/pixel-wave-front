@@ -124,13 +124,17 @@ const GameDetailsScreen = () => {
             <img className="w-full object-cover rounded-lg" src={game.logo} alt="game logo" />
             <div className="flex items-center mt-1 gap-2">
                 <h1 className="text-2xl font-bold flex-1 overflow-hidden">{game.name}</h1>
-                <div onClick={handleToggleFavorite}>
+                <div className="tooltip" data-tip="Favoris" onClick={handleToggleFavorite}>
                     {
                         token && <Heart isFavorite={isFavorite} toggleFavorite={handleToggleFavorite} /> || <Heart isFavorite={false} />
                     }
                 </div>
-                <PiPencilSimpleBold onClick={handleShowAdviceSection} className="size-8 cursor-pointer" />
-                <MdOutlineIosShare onClick={handleShareGame} className="size-8 cursor-pointer" />
+                <div className="tooltip" data-tip="Donner son avis">
+                    <PiPencilSimpleBold onClick={handleShowAdviceSection} className="size-8 cursor-pointer" />
+                </div>
+                <div className="tooltip" data-tip="Partager le jeu">
+                    <MdOutlineIosShare onClick={handleShareGame} className="size-8 cursor-pointer" data-tip="Partager le jeu" />
+                </div>
             </div>
             <div>
                 <div className="w-full h-px bg-neutral mt-1" />
@@ -160,7 +164,7 @@ const GameDetailsScreen = () => {
             <h1 className="text-lg font-bold flex-1 overflow-hidden">Avis des joueurs</h1>
             <div className="grid grid-cols-2 gap-4 mb-2 flex-wrap">
                 {
-                    game.game_advice.map((x) => (
+                    game.game_advice.length ? game.game_advice.map((x) => (
                         <div key={x.user.id + x.game.id}
                             className="overflow-scroll min-w-[100px] text-center bg-neutral flex-col max-h-[200px] items-center rounded-md p-2 justify-start">
                             <div className="avatar">
@@ -174,6 +178,8 @@ const GameDetailsScreen = () => {
                             </div>
                         </div>
                     ))
+                        :
+                        <span>Aucun avis pour l'instant</span>
                 }
             </div>
             <NewsList title={`Dernières actualitées concernant ${game.name}`} news={game.news} />

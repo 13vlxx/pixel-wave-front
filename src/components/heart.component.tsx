@@ -9,7 +9,7 @@ const Heart = (props: HeartProps) => {
     const { isFavorite, toggleFavorite } = props;
     return (
         <div onClick={toggleFavorite}>
-            {isFavorite ? <FaHeart className="size-7 cursor-pointer" /> : <FaRegHeart className="size-7 cursor-pointer" />}
+            {isFavorite ? <FaHeart className="size-8 cursor-pointer" /> : <FaRegHeart className="size-8 cursor-pointer" />}
         </div>
     )
 }

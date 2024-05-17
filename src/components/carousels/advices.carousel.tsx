@@ -17,7 +17,7 @@ const AdvicesCarousel = (props: AdvicesCarouselProps) => {
                 <div className="carousel flex">
                     <div className="carousel-item"></div>
                     {
-                        advices.map((x) => (
+                        advices.length ? advices.map((x) => (
                             <div key={x.user.id + x.game.id}
                                 className="ml-4 overflow-scroll carousel-item text-center bg-neutral w-1/2 max-w-[200px] flex flex-col max-h-[200px] items-center rounded-md p-2 justify-center">
                                 <div className="avatar">
@@ -34,6 +34,8 @@ const AdvicesCarousel = (props: AdvicesCarouselProps) => {
                                 </div>
                             </div>
                         ))
+                            :
+                            <span className="px-4">Aucun avis pour l'instant</span>
                     }
                     <div className="carousel-item ml-4"></div>
                 </div >
