@@ -9,7 +9,8 @@ import { toast } from "sonner";
 import { InferType, object } from "yup";
 
 interface GameAdviceFormProps {
-    advice: AdviceDto | null;
+    advice?: AdviceDto | null;
+    isForUpdate?: boolean;
     game: GameDto;
     handleClose: () => void;
 
@@ -25,7 +26,7 @@ export type NewAdviceValidationType = InferType<typeof NewAdviceSchema>;
 
 const GameAdviceForm = (props: GameAdviceFormProps) => {
     const { game, handleClose, advice } = props;
-    const [note, setNote] = useState(1);
+    const [note, setNote] = useState(advice?.note || 1);
 
     const {
         register,
@@ -33,7 +34,10 @@ const GameAdviceForm = (props: GameAdviceFormProps) => {
         setValue,
         formState: { isValid },
     } = useForm<NewAdviceValidationType>({
-        resolver: yupResolver(NewAdviceSchema), mode: "all"
+        resolver: yupResolver(NewAdviceSchema), mode: "all", defaultValues: {
+            advice: advice?.advice,
+            note: advice?.note
+        }
     })
 
     const notes = Array.from({ length: 5 }, (_, i) => i + 1);
@@ -44,37 +48,14 @@ const GameAdviceForm = (props: GameAdviceFormProps) => {
     }
 
     const onSubmit = handleSubmit((formData) => {
+        if (advice) return GameRequest.updateAdvice(formData, game.id).then(() => toast.success("Avis modifié avec succès")).then(handleClose)
         GameRequest.createAdvice(formData, game.id).then(() => toast.success("Avis ajouté avec succès"))
         handleClose();
     })
 
-    if (advice)
-        return (
-            <>
-                <div key={advice.user.id + advice.game.id}
-                    className="ml-4 overflow-scroll carousel-item text-center bg-neutral w-full flex flex-col max-h-[200px] items-center rounded-md p-2 justify-center">
-                    <div className="avatar">
-                        <div className="w-12 rounded-full">
-                            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-                        </div>
-                    </div>
-                    <div>
-                        <p className="text-sm text-ellipsis font-bold">{advice.user.pseudo}</p>
-                        <p className="text-sm text-ellipsis">{advice.note}/5</p>
-                        <p className="text-[12px] text-ellipsis line-clamp-2">{advice.advice}</p>
-                    </div>
-                </div>
-                <span
-                    className="underline flex items-center gap-2 cursor-pointer"
-                    onClick={handleClose}>
-                    <FaArrowLeftLong /> Retour
-                </span>
-            </>
-        )
-
     return (
         <>
-            <h1 className="text-lg font-bold">Donnez votre avis</h1>
+            <h1 className="text-lg font-bold">{advice ? "Modification de votre avis" : "Donnez votre avis"}</h1>
             <div className="h-full flex flex-col justify-center gap-2">
                 <textarea {...register("advice")} placeholder={`Que pensez vous de ${game.name}`} className="p-2 h-full textarea textarea-lg textarea-bordered w-full border-secondary resize-none"></textarea>
                 <p className="font-bold">Donnez une note :</p>
@@ -85,7 +66,9 @@ const GameAdviceForm = (props: GameAdviceFormProps) => {
                         ))
                     }
                 </div>
-                <button onClick={onSubmit} disabled={!isValid} className="btn btn-outline btn-sm btn-accent w-full">Envoyer</button>
+                <div>
+                    <button onClick={onSubmit} disabled={!isValid} className="btn btn-outline btn-sm btn-accent w-full">Envoyer</button>
+                </div>
                 <span
                     className="underline flex items-center gap-2 cursor-pointer"
                     onClick={handleClose}>

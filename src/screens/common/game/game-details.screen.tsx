@@ -16,7 +16,7 @@ import { toast } from "sonner";
 const GameDetailsScreen = () => {
     const { name } = useParams();
     const { isMobile } = useResponsive();
-    const [game, setGame] = useState<GameDto>();
+    const [game, setGame] = useState<GameDto | null>(null);
     const [showAdviceSection, setShowAdviceSection] = useState(false);
     const [alreadyPostedAdvice, setAlreadyPostedAdvice] = useState<AdviceDto | null>(null);
     const { token } = useAuthStore();
@@ -47,7 +47,7 @@ const GameDetailsScreen = () => {
         }
     }
 
-    if (!game) return <h1>Game not found</h1>;
+    if (!game) return <span className="mx-auto block loading loading-spinner loading-lg"></span>;
 
     if (isMobile)
         return (
@@ -149,7 +149,12 @@ const GameDetailsScreen = () => {
             </div>
             <div className="divider divider-horizontal"></div>
             <div className="flex-1 mt-2">
-                {showAdviceSection ? <GameAdviceForm game={game} handleClose={() => setShowAdviceSection(false)} advice={alreadyPostedAdvice} /> : RightSide}
+                {showAdviceSection ? <GameAdviceForm
+                    game={game}
+                    handleClose={() => setShowAdviceSection(false)}
+                    advice={alreadyPostedAdvice}
+                />
+                    : RightSide}
             </div>
         </div>
     )

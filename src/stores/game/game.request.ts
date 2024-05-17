@@ -7,4 +7,7 @@ export default {
 
   createAdvice: (createAdviceDto: CreateAdviceDto, gameId: string) =>
     PixelWaveAxios.post(`/games/${gameId}/advice`, createAdviceDto).then((res) => res.data),
+
+  updateAdvice: (createAdviceDto: CreateAdviceDto, gameId: string) =>
+    PixelWaveAxios.put(`/games/${gameId}/advice`, createAdviceDto).then((res) => res.data),
 };
