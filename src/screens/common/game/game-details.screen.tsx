@@ -1,6 +1,7 @@
 import AdvicesCarousel from "@components/carousels/advices.carousel";
 import ImagesCarousel from "@components/carousels/images.carousel";
 import GameAdviceForm from "@components/forms/game/game-advice.form";
+import Heart from "@components/heart.component";
 import NewsList from "@components/lists/news.list";
 import { Modal } from "@layouts/modal.layout";
 import AdviceRequest from "@stores/advice/advice.request";
@@ -9,8 +10,8 @@ import { AdviceDto, GameDto } from "@stores/game/game.model";
 import GameRequest from "@stores/game/game.request";
 import { useResponsive } from "@utils/useResponsive";
 import { useEffect, useState } from "react";
-import { HiMiniPencilSquare } from "react-icons/hi2";
 import { MdOutlineIosShare } from "react-icons/md";
+import { PiPencilSimpleBold } from "react-icons/pi";
 import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 
@@ -20,6 +21,7 @@ const GameDetailsScreen = () => {
     const [game, setGame] = useState<GameDto | null>(null);
     const [showAdviceSection, setShowAdviceSection] = useState(false);
     const [alreadyPostedAdvice, setAlreadyPostedAdvice] = useState<AdviceDto | null>(null);
+    const [isFavorite, setIsFavorite] = useState(false);
     const { token } = useAuthStore();
 
     useEffect(() => {
@@ -29,12 +31,18 @@ const GameDetailsScreen = () => {
     useEffect(() => {
         if (game && token) {
             AdviceRequest.checkIfAlreadyPostedAdvice(game.id).then((x) => setAlreadyPostedAdvice(x))
+            GameRequest.checkIfFavorite(game.id).then(setIsFavorite)
         }
     }, [showAdviceSection, game, token]);
 
     const handleShowAdviceSection = () => setShowAdviceSection(true);
 
     const handleCloseAdviceSection = () => setShowAdviceSection(false)
+
+    const handleToggleFavorite = () => {
+        GameRequest.toggleFavorite(game!.id).then((x) => setIsFavorite(x))
+    };
+
 
     const handleShareGame = () => {
         if (navigator.share) {
@@ -59,7 +67,12 @@ const GameDetailsScreen = () => {
                     <img className="w-full max-h-72 object-cover" src={game.logo} alt="game logo" />
                     <div className="px-4 flex items-center mt-1 gap-2">
                         <h1 className="text-2xl font-bold flex-1 overflow-hidden">{game.name}</h1>
-                        {token && <HiMiniPencilSquare onClick={handleShowAdviceSection} className="size-8" />}
+                        <div onClick={handleToggleFavorite}>
+                            {
+                                token && <Heart isFavorite={isFavorite} toggleFavorite={handleToggleFavorite} /> || <Heart isFavorite={false} />
+                            }
+                        </div>
+                        {token && <PiPencilSimpleBold onClick={handleShowAdviceSection} className="size-8" />}
                         <MdOutlineIosShare onClick={handleShareGame} className="size-8" />
                     </div>
                     <div className="px-4">
@@ -104,7 +117,12 @@ const GameDetailsScreen = () => {
             <img className="w-full object-cover rounded-lg" src={game.logo} alt="game logo" />
             <div className="flex items-center mt-1 gap-2">
                 <h1 className="text-2xl font-bold flex-1 overflow-hidden">{game.name}</h1>
-                {token && <HiMiniPencilSquare onClick={handleShowAdviceSection} className="size-8 cursor-pointer" />}
+                <div onClick={handleToggleFavorite}>
+                    {
+                        token && <Heart isFavorite={isFavorite} toggleFavorite={handleToggleFavorite} /> || <Heart isFavorite={false} />
+                    }
+                </div>
+                <PiPencilSimpleBold onClick={handleShowAdviceSection} className="size-8 cursor-pointer" />
                 <MdOutlineIosShare onClick={handleShareGame} className="size-8 cursor-pointer" />
             </div>
             <div>
@@ -144,7 +162,7 @@ const GameDetailsScreen = () => {
                                 </div>
                             </div>
                             <div>
-                                <p className="text-sm text-ellipsis">{x.note}/20</p>
+                                <p className="text-sm text-ellipsis">{x.note}/5</p>
                                 <p className="text-[12px] text-ellipsis line-clamp-2">{x.advice}</p>
                             </div>
                         </div>
