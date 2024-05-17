@@ -1,5 +1,6 @@
 import AuthForm from "@components/forms/auth/auth.form";
 import { AuthModal } from "@components/modals/auth.modal";
+import { useAuthStore } from "@stores/auth/auth.store";
 import { PagesAuth } from "@utils/router/routes";
 import { useLayoutEffect, useState } from "react";
 import { BsSunFill } from "react-icons/bs";
@@ -10,7 +11,7 @@ import { Outlet, useNavigate } from "react-router-dom";
 
 export const UnauthNavbarLayout = () => {
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
-    const [showAuthModal, setShowAuthModal] = useState(false);
+    const { isModalOpen, toggleModal } = useAuthStore();
     const navigate = useNavigate();
 
     const toggleTheme = () => {
@@ -19,16 +20,6 @@ export const UnauthNavbarLayout = () => {
 
         document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
-    }
-
-    const toggleShowAuthModal = () => {
-        setShowAuthModal(!showAuthModal);
-
-        if (!showAuthModal) {
-            document.body.classList.add('modal-open');
-        } else {
-            document.body.classList.remove('modal-open');
-        }
     }
 
     const handleNavigate = (destination: PagesAuth) => {
@@ -51,14 +42,14 @@ export const UnauthNavbarLayout = () => {
                         <FaMoon onClick={toggleTheme} className="cursor-pointer text-3xl" /> :
                         <BsSunFill onClick={toggleTheme} className="cursor-pointer text-3xl" />
                     }
-                    <CgProfile name="profile" className="text-3xl cursor-pointer" onClick={toggleShowAuthModal} />
+                    <CgProfile name="profile" className="text-3xl cursor-pointer" onClick={toggleModal} />
                 </nav>
             </header>
             <div>
                 <Outlet />
             </div>
-            {showAuthModal && (
-                <AuthModal handleClose={toggleShowAuthModal}>
+            {isModalOpen && (
+                <AuthModal handleClose={toggleModal}>
                     <AuthForm />
                 </AuthModal>
             )}

@@ -5,11 +5,13 @@ import { AuthenticatedResponseDto } from "./auth.model";
 
 interface AuthState {
   token?: string;
+  isModalOpen: boolean;
 }
 
 interface AuthAction {
   login: (by: AuthenticatedResponseDto) => void;
   logout: () => void;
+  toggleModal: () => void;
 }
 
 const getToken = () => JSON.parse(localStorage.getItem("pw-token") as string);
@@ -18,20 +20,22 @@ export const useAuthStore = create<AuthState & AuthAction>()(
   persist(
     (set) => ({
       token: getToken()?.state.token,
+      isModalOpen: false,
       login: (auth: AuthenticatedResponseDto) => {
         set({ token: auth.token });
         useUserStore.setState({ id: auth.user.id });
       },
       logout: () => {
-        set({ token: undefined });
+        set({ token: undefined, isModalOpen: false });
         useUserStore.setState({ id: undefined });
         window.location.replace("/");
       },
+      toggleModal: () => set((state) => ({ isModalOpen: !state.isModalOpen })),
     }),
     {
-      name: "pw-token",
+      name: "pw-auth",
       storage: createJSONStorage(() => localStorage),
-      partialize: ({ token }) => ({ token }),
+      partialize: ({ token, isModalOpen }) => ({ token, isModalOpen }),
     }
   )
 );

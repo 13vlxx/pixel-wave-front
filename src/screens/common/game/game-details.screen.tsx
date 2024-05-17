@@ -22,7 +22,7 @@ const GameDetailsScreen = () => {
     const [showAdviceSection, setShowAdviceSection] = useState(false);
     const [alreadyPostedAdvice, setAlreadyPostedAdvice] = useState<AdviceDto | null>(null);
     const [isFavorite, setIsFavorite] = useState(false);
-    const { token } = useAuthStore();
+    const { token, toggleModal } = useAuthStore();
 
     useEffect(() => {
         GameRequest.getGameDetails(name!).then(setGame)
@@ -35,12 +35,19 @@ const GameDetailsScreen = () => {
         }
     }, [showAdviceSection, game, token]);
 
-    const handleShowAdviceSection = () => setShowAdviceSection(true);
+    const handleShowAdviceSection = () => {
+        if (token)
+            setShowAdviceSection(true)
+        else toggleModal();
+    };
 
     const handleCloseAdviceSection = () => setShowAdviceSection(false)
 
     const handleToggleFavorite = () => {
-        GameRequest.toggleFavorite(game!.id).then((x) => setIsFavorite(x))
+        if (token)
+            GameRequest.toggleFavorite(game!.id).then((x) => setIsFavorite(x))
+        else toggleModal();
+
     };
 
 
@@ -72,7 +79,7 @@ const GameDetailsScreen = () => {
                                 token && <Heart isFavorite={isFavorite} toggleFavorite={handleToggleFavorite} /> || <Heart isFavorite={false} />
                             }
                         </div>
-                        {token && <PiPencilSimpleBold onClick={handleShowAdviceSection} className="size-8" />}
+                        <PiPencilSimpleBold onClick={handleShowAdviceSection} className="size-8" />
                         <MdOutlineIosShare onClick={handleShareGame} className="size-8" />
                     </div>
                     <div className="px-4">

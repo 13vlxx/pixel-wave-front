@@ -1,4 +1,5 @@
 import { useResponsive } from "@utils/useResponsive";
+import { useEffect } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 
 export interface AuthModalProps {
@@ -10,6 +11,13 @@ export const AuthModal = (props: AuthModalProps) => {
     const { children, handleClose } = props;
     const { isMobile } = useResponsive();
 
+    useEffect(() => {
+        document.body.classList.add('modal-open');
+
+        return () => {
+            document.body.classList.remove('modal-open');
+        }
+    })
 
     if (isMobile)
         return (
