@@ -1,27 +1,32 @@
 import { useResponsive } from "@utils/useResponsive";
+import { useEffect } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 
 export interface ModalProps {
-    title?: string;
     isFullscreen?: boolean;
     children: React.ReactNode;
     handleClose: () => void;
 }
 
 export const Modal = (props: ModalProps) => {
-    const { title, children, handleClose } = props;
+    const { children, handleClose } = props;
     const { isMobile } = useResponsive();
 
+    useEffect(() => {
+        document.body.classList.add('modal-open');
+
+        return () => {
+            document.body.classList.remove('modal-open');
+        }
+    })
 
     if (isMobile)
         return (
-            <div className="bg-base-100 min-h-screen absolute top-0 left-0 min-w-full z-50">
-                <div className="flex justify-end">
+            <div className="bg-base-100 h-screen fixed top-0 left-0 min-w-full z-10 flex flex-col justify-center px-4 py-20">
+                <div className="absolute top-2 right-4">
                     <IoCloseSharp className="text-5xl cursor-pointer" onClick={handleClose} />
                 </div>
-                <div className="flex justify-center items-center">
-                    {children}
-                </div>
+                {children}
             </div>
         )
 
@@ -31,7 +36,6 @@ export const Modal = (props: ModalProps) => {
             onClick={handleClose}>
             <div className="bg-white w-2/5 max-w-[500px] rounded-md p-4 text-black" onClick={(event) => event.stopPropagation()}>
                 <div className="flex justify-center items-center">
-                    <h1 className="mx-auto capitalize text-lg">{title}</h1>
                     <IoCloseSharp className="text-4xl cursor-pointer" onClick={handleClose} />
                 </div>
                 <div className="flex justify-center items-center">

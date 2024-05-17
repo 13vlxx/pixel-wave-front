@@ -35,6 +35,7 @@ export const fieldsValidation = {
       "Le mot de passe doit contenir au moins 6 caractères, une majuscule et un chiffre"
     ),
   [FieldValidationType.NUMBER]: number(),
+  [FieldValidationType.REQUIRED_NUMBER]: number().required("Ce champ est requis").min(0).max(5),
 };
 
 export type FieldErrorType = string | undefined;

@@ -34,7 +34,7 @@ const unauthRouter = createBrowserRouter([
     errorElement: <div>404</div>,
     children: [
       { index: true, element: <HomeScreen /> },
-      { path: `/${PagesUnauth.GAME}/:game`, element: <GameDetailsScreen /> },
+      { path: `/${PagesUnauth.GAME}/:name`, element: <GameDetailsScreen /> },
       { path: PagesUnauth.RESET_PASSWORD, element: <ResetPasswordScreen /> },
       { path: PagesAuth.DEMO, element: <DemoScreen /> },
     ]

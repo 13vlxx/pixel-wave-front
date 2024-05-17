@@ -7,7 +7,7 @@ export default {
         light: {
           primary: "#FFFFFF", //blanc
           secondary: "#272727", //noir
-          accent: "#C043FF", //noir
+          accent: "#C043FF", //violet
           neutral: "#E7E8E7", //gris
           "base-100": "#FFFFFF", //blanc
           "base-200": "#E7E8E7", //blanc

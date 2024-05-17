@@ -1,15 +1,24 @@
-import { createStore } from "zustand";
-import { GetUserDto } from "./user.model";
+import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 interface UserState {
-  user?: GetUserDto;
+  id?: string;
 }
 
 interface UserActions {
-  setUser: (user: GetUserDto) => void;
+  setUser: (id: string) => void;
 }
 
-export const UserStore = createStore<UserState & UserActions>()((set) => ({
-  user: undefined,
-  setUser: (user: GetUserDto) => set({ user }),
-}));
+export const useUserStore = create<UserState & UserActions>()(
+  persist(
+    (set) => ({
+      id: undefined,
+      setUser: (id: string) => set({ id }),
+    }),
+    {
+      name: "pw-user-id",
+      storage: createJSONStorage(() => localStorage),
+      partialize: ({ id }) => ({ id }),
+    }
+  )
+);

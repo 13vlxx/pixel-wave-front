@@ -1,4 +1,4 @@
-import { PlatformDto } from "@stores/home/home.model";
+import { PlatformDto } from "@stores/game/game.model";
 import { useResponsive } from "@utils/useResponsive";
 
 interface PlatformsCarouselProps {

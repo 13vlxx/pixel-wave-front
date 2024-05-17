@@ -1,4 +1,4 @@
-import { CategoryDto } from "@stores/home/home.model";
+import { CategoryDto } from "@stores/game/game.model";
 import { useResponsive } from "@utils/useResponsive";
 
 interface CategoriesCarouselProps {

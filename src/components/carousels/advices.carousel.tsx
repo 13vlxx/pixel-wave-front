@@ -1,12 +1,13 @@
-import { AdviceDto } from "@stores/home/home.model";
+import { AdviceDto } from "@stores/game/game.model";
 import { useResponsive } from "@utils/useResponsive";
 
 interface AdvicesCarouselProps {
+    hideGameName?: boolean;
     advices: AdviceDto[];
 }
 
 const AdvicesCarousel = (props: AdvicesCarouselProps) => {
-    const { advices } = props;
+    const { hideGameName, advices } = props;
     const { isMobile } = useResponsive()
 
     if (isMobile)
@@ -21,12 +22,14 @@ const AdvicesCarousel = (props: AdvicesCarouselProps) => {
                                 className="ml-4 overflow-scroll carousel-item text-center bg-neutral w-1/2 max-w-[200px] flex flex-col max-h-[200px] items-center rounded-md p-2 justify-center">
                                 <div className="avatar">
                                     <div className="w-12 rounded-full">
-                                        <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                        <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                                     </div>
                                 </div>
                                 <div>
-                                    <p className="text-sm text-ellipsis">{x.note}/20</p>
-                                    <p className="text-sm text-ellipsis line-clamp-1">{x.game.name}</p>
+                                    <p className="text-sm text-ellipsis">{x.note}/5</p>
+                                    {
+                                        !hideGameName && <p className="text-sm text-ellipsis line-clamp-1">{x.game.name}</p>
+                                    }
                                     <p className="text-[12px] text-ellipsis line-clamp-2">{x.advice}</p>
                                 </div>
                             </div>
@@ -47,12 +50,14 @@ const AdvicesCarousel = (props: AdvicesCarouselProps) => {
                             className="overflow-scroll text-center bg-neutral flex flex-col max-h-[200px] items-center rounded-md p-2 justify-center">
                             <div className="avatar">
                                 <div className="w-12 rounded-full">
-                                    <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+                                    <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
                                 </div>
                             </div>
                             <div>
-                                <p className="text-sm text-ellipsis">{x.note}/20</p>
-                                <p className="text-sm text-ellipsis line-clamp-1">{x.game.name}</p>
+                                <p className="text-sm text-ellipsis">{x.note}/5</p>
+                                {
+                                    !hideGameName && <p className="text-sm text-ellipsis line-clamp-1">{x.game.name}</p>
+                                }
                                 <p className="text-[12px] text-ellipsis line-clamp-2">{x.advice}</p>
                             </div>
                         </div>
