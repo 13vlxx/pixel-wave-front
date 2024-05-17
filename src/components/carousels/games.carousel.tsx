@@ -5,7 +5,7 @@ import { IoChevronForwardOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
 interface GamesCarouselProps {
-    title: string;
+    title?: string;
     games: LiteGameDto[];
 }
 

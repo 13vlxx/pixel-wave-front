@@ -1,3 +1,5 @@
+import { LiteGameDto } from "@stores/game/game.model";
+
 export enum UserRole {
   USER = "USER",
   MODERATOR = "MODERATOR",
@@ -17,4 +19,10 @@ export interface LiteUserDto {
   id: string;
   pseudo: string;
   profilePicture: string;
+}
+
+export interface GetUserProfileDto {
+  user: GetUserDto;
+  favoriteGames: LiteGameDto[];
+  posts: [];
 }
