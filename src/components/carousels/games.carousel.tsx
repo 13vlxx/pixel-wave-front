@@ -40,8 +40,8 @@ const GamesCarousel = (props: GamesCarouselProps) => {
             <h1 className="flex items-end font-semibold text-3xl pb-4">{title} <IoChevronForwardOutline /></h1>
             <div className="grid grid-cols-3 gap-4 gap-x-6">
                 {
-                    games.map((x) => (
-                        <div onClick={() => handleNavigate(x.name)} key={x.id} className="cursor-pointer select-none hover:scale-105 transition-all duration-300">
+                    games.map((x, i) => (
+                        <div id={`game-${i}`} onClick={() => handleNavigate(x.name)} key={x.id} className="cursor-pointer select-none hover:scale-105 transition-all duration-300">
                             <img className="object-cover rounded-md" src={x.logo === "default" ? "https://gaming-cdn.com/images/products/16007/380x218/elden-ring-edition-l-ombre-de-l-arbre-monde-shadow-of-the-erdtree-edition-pc-jeu-steam-europe-cover.jpg?v=1715598000" : x.logo} alt={x.name} />
                             <p className="font-medium text-sm capitalize">{x.name}</p>
                         </div>

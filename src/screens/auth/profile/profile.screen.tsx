@@ -3,12 +3,11 @@ import PostsList from "@components/lists/posts.list";
 import { useAuthStore } from "@stores/auth/auth.store";
 import { GetUserProfileDto } from "@stores/user/user.model";
 import UserRequest from "@stores/user/user.request";
-import { PagesUnauth } from "@utils/router/routes";
 import { useResponsive } from "@utils/useResponsive";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { LuLogOut } from "react-icons/lu";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 
@@ -18,15 +17,10 @@ const ProfileScreen = () => {
     const [data, setData] = useState<GetUserProfileDto | null>(null);
     const { isMobile } = useResponsive();
     const { logout } = useAuthStore();
-    const navigate = useNavigate();
 
     useEffect(() => {
         UserRequest.getMe().then(setData)
     }, [id]);
-
-    const handleNavigate = (destination: string) => {
-        navigate(`${PagesUnauth.GAME}/${destination}`)
-    }
 
     const handleLogout = () => {
         toast("Voulez vous vous déconnecter ?", {
@@ -86,10 +80,10 @@ const ProfileScreen = () => {
                         <div className="grid grid-cols-2 gap-4 gap-x-6">
                             {
                                 data.favoriteGames.map((x) => (
-                                    <div onClick={() => handleNavigate(x.name)} key={x.id} className="cursor-pointer select-none hover:scale-105 transition-all duration-300">
+                                    <Link to={`/game/${x.name}`} key={x.id} className="cursor-pointer select-none hover:scale-105 transition-all duration-300">
                                         <img className="object-cover rounded-md" src={x.logo === "default" ? "https://gaming-cdn.com/images/products/16007/380x218/elden-ring-edition-l-ombre-de-l-arbre-monde-shadow-of-the-erdtree-edition-pc-jeu-steam-europe-cover.jpg?v=1715598000" : x.logo} alt={x.name} />
                                         <p className="font-medium text-sm capitalize">{x.name}</p>
-                                    </div>
+                                    </Link>
                                 ))
                             }
                         </div></> || <h2 className="font-semibold">Aucun jeu à afficher</h2>

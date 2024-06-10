@@ -130,7 +130,7 @@ const GameDetailsScreen = () => {
                     }
                 </div>
                 <div className="tooltip" data-tip="Donner son avis">
-                    <PiPencilSimpleBold onClick={handleShowAdviceSection} className="size-8 cursor-pointer" />
+                    <PiPencilSimpleBold data-cy="advice" onClick={handleShowAdviceSection} className="size-8 cursor-pointer" />
                 </div>
                 <div className="tooltip" data-tip="Partager le jeu">
                     <MdOutlineIosShare onClick={handleShareGame} className="size-8 cursor-pointer" data-tip="Partager le jeu" />

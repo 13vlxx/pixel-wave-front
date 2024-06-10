@@ -85,8 +85,8 @@ const GameAdviceForm = (props: GameAdviceFormProps) => {
     return (
         <>
             <h1 className="text-lg font-bold">{advice ? "Modification de votre avis" : "Donnez votre avis"}</h1>
-            <div className="h-full flex flex-col justify-center gap-2">
-                <textarea {...register("advice")} placeholder={`Que pensez vous de ${game.name}`} className="p-2 h-full textarea textarea-lg textarea-bordered w-full border-secondary resize-none"></textarea>
+            <form className="h-full flex flex-col justify-center gap-2">
+                <textarea data-cy="advice-area" {...register("advice")} placeholder={`Que pensez vous de ${game.name}`} className="p-2 h-full textarea textarea-lg textarea-bordered w-full border-secondary resize-none"></textarea>
                 <p className="font-bold">Donnez une note :</p>
                 <div className="grid grid-cols-10 gap-2">
                     {
@@ -96,7 +96,7 @@ const GameAdviceForm = (props: GameAdviceFormProps) => {
                     }
                 </div>
                 <div>
-                    <button onClick={onSubmit} disabled={!isValid} className="btn btn-outline btn-sm btn-accent w-full">Envoyer</button>
+                    <button data-cy="advice-submit" onClick={onSubmit} disabled={!isValid} className="btn btn-outline btn-sm btn-accent w-full">Envoyer</button>
                 </div>
                 <span
                     className="underline flex items-center gap-2 cursor-pointer"
@@ -104,7 +104,7 @@ const GameAdviceForm = (props: GameAdviceFormProps) => {
                     <FaArrowLeftLong /> Retour
                 </span>
                 <input className="hidden" {...register("note")} type="number" value={note} />
-            </div>
+            </form>
         </>
     );
 }
