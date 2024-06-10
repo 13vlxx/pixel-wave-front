@@ -68,8 +68,8 @@ export const LoginForm = (props: LoginFormProps) => {
                 <button type="submit" disabled={!isValid} onClick={onSubmit} className="btn btn-outline btn-accent">Se connecter</button>
             </form>
             <div className="flex justify-between mt-2">
-                <span className="underline cursor-pointer" onClick={() => handleChangeState(AuthFormEnum.REGISTER)}>Pas de compte ?</span>
-                <span className="underline cursor-pointer" onClick={() => handleChangeState(AuthFormEnum.FORGOTTEN_PASSWORD)}>Mot de passe oublié ?</span>
+                <span data-cy="register" className="underline cursor-pointer" onClick={() => handleChangeState(AuthFormEnum.REGISTER)}>Pas de compte ?</span>
+                <span data-cy="forgotten-password" className="underline cursor-pointer" onClick={() => handleChangeState(AuthFormEnum.FORGOTTEN_PASSWORD)}>Mot de passe oublié ?</span>
             </div>
         </div >
     )

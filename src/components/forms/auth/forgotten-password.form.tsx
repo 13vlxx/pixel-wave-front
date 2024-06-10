@@ -45,7 +45,7 @@ export const ForgottenPasswordForm = (props: ForgottenPasswordFormProps) => {
             <h1 className="text-xl font-semibold">Mot de passe oublié</h1>
             <form className="flex flex-col gap-4">
                 <input {...register("email")} type="email" placeholder="Adresse email" className="input input-bordered" />
-                <button disabled={!isValid || isLoading} onClick={onSubmit} className="btn btn-outline btn-accent">
+                <button type="submit" disabled={!isValid || isLoading} onClick={onSubmit} className="btn btn-outline btn-accent">
                     {isLoading ? <span className="loading loading-spinner text-secondary"></span> : "Envoyer"}
                 </button>
             </form>

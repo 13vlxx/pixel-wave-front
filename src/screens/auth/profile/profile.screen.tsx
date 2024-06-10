@@ -112,7 +112,7 @@ const ProfileScreen = () => {
     return (
         <section>
             <header className="relative flex py-4 flex-col items-center border-neutral border-b">
-                <button onClick={handleLogout} className="btn btn-outline btn-accent absolute top-4 right-4">
+                <button data-cy="logout" onClick={handleLogout} className="btn btn-outline btn-accent absolute top-4 right-4">
                     <LuLogOut />
                 </button>
                 <div className="avatar">

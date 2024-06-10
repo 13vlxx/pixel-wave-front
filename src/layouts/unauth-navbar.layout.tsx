@@ -42,7 +42,7 @@ export const UnauthNavbarLayout = () => {
                         <FaMoon onClick={toggleTheme} className="cursor-pointer text-3xl" /> :
                         <BsSunFill onClick={toggleTheme} className="cursor-pointer text-3xl" />
                     }
-                    <CgProfile name="profile" className="text-3xl cursor-pointer" onClick={toggleModal} />
+                    <CgProfile data-cy="auth-modal" name="profile" className="text-3xl cursor-pointer" onClick={toggleModal} />
                 </nav>
             </header>
             <div>
