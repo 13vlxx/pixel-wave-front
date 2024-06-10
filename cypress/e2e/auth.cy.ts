@@ -19,6 +19,20 @@ describe("Auth", () => {
     cy.wait(3000);
   });
 
+  it("should not register", () => {
+    cy.intercept("POST", "http://localhost:3000/api/auth/register").as("register");
+
+    cy.visit("/");
+    cy.get("[data-cy=auth-modal]").click();
+    cy.get('[data-cy="register"]').click();
+    cy.get("input[name='pseudo']").clear().type("admin");
+    cy.get("input[name='email']").clear().type(CypressData.email);
+    cy.get("input[name='password']").clear().type(CypressData.password);
+    cy.get("button[type='submit']").click();
+    cy.wait("@register").its("response.statusCode").should("eq", 409);
+    cy.wait(3000);
+  });
+
   it("should login & logout", () => {
     cy.intercept("POST", "http://localhost:3000/api/auth/login").as("login");
 
@@ -38,19 +52,15 @@ describe("Auth", () => {
     cy.wait(3000);
   });
 
-  it("should send recovery email", () => {
-    cy.intercept("POST", "http://localhost:3000/api/auth/forgot-password").as("recover");
+  it("should not login", () => {
+    cy.intercept("POST", "http://localhost:3000/api/auth/login").as("login");
 
     cy.visit("/");
     cy.get("[data-cy=auth-modal]").click();
-    cy.get('[data-cy="forgotten-password"]').click();
     cy.get("input[name='email']").clear().type(CypressData.email);
-    cy.get(".btn").click();
-    cy.wait("@recover")
-      .its("response.statusCode")
-      .should((statusCode) => {
-        expect([204, 409]).to.include(statusCode);
-      });
+    cy.get("input[name='password']").clear().type(CypressData.new_password);
+    cy.get("button[type='submit']").click();
+    cy.wait("@login").its("response.statusCode").should("eq", 409);
     cy.wait(3000);
   });
 });
