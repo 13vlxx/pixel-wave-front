@@ -21,7 +21,8 @@ const authRouter = createBrowserRouter([
       { index: true, element: <HomeScreen /> },
       { path: `/${PagesUnauth.GAME}/:name`, element: <GameDetailsScreen /> },
       { path: PagesAuth.NOTIFICATIONS, element: <NotificationsScreen /> },
-      { path: PagesAuth.ME, element: <ProfileScreen /> },
+      { path: `${PagesAuth.PROFILE}/me`, element: <ProfileScreen /> },
+      { path: `${PagesAuth.PROFILE}/:id`, element: <ProfileScreen /> },
       { path: PagesAuth.DEMO, element: <DemoScreen /> },
     ]
   }

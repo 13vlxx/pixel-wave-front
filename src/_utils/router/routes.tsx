@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 export enum PagesAuth {
     HOME = '/',
     GAME = 'game',
-    ME = 'me',
+    PROFILE = 'profile',
     NOTIFICATIONS = 'notifications',
     DEMO = 'demo',
 }

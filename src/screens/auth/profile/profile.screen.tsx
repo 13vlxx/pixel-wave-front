@@ -1,4 +1,5 @@
 import GamesCarousel from "@components/carousels/games.carousel";
+import PostsList from "@components/lists/posts.list";
 import { useAuthStore } from "@stores/auth/auth.store";
 import { GetUserProfileDto } from "@stores/user/user.model";
 import UserRequest from "@stores/user/user.request";
@@ -7,20 +8,24 @@ import { useResponsive } from "@utils/useResponsive";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { LuLogOut } from "react-icons/lu";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 
+
 const ProfileScreen = () => {
+    const { id } = useParams()
     const [data, setData] = useState<GetUserProfileDto | null>(null);
     const { isMobile } = useResponsive();
     const { logout } = useAuthStore();
+    const navigate = useNavigate();
 
     useEffect(() => {
-        UserRequest.getProfile().then(setData)
-    }, []);
+        UserRequest.getMe().then(setData)
+    }, [id]);
 
     const handleNavigate = (destination: string) => {
-        window.location.href = PagesUnauth.GAME + "/" + destination
+        navigate(`${PagesUnauth.GAME}/${destination}`)
     }
 
     const handleLogout = () => {
@@ -53,11 +58,17 @@ const ProfileScreen = () => {
                             <GamesCarousel games={data.favoriteGames} />
                         </> || <h2 className="font-semibold text-lg px-4">Vous n'avez aucun jeu en favoris</h2>
                     }
-                    <section className="px-4 flex items-center justify-between w-full pt-2">
-                        {data.posts.length && <><h2 className="font-semibold text-lg">Posts
-                            <span className="ml-2 indicator indicator-item badge badge-outline">{data.posts.length}</span>
-                        </h2>
-                            <p>Voir tout</p></> || null
+                    <section className="px-4 w-full pt-2 flex flex-col gap-2">
+                        {data.posts.length &&
+                            <>
+                                <div className="flex items-center justify-between">
+                                    <h2 className="font-semibold text-lg">Posts
+                                        <span className="ml-2 indicator indicator-item badge badge-outline">{data.posts.length}</span>
+                                    </h2>
+                                    <p>Voir tout</p>
+                                </div>
+                                {<PostsList posts={data.posts} />}
+                            </> || null
                         }
                     </section>
                 </section>
@@ -106,7 +117,7 @@ const ProfileScreen = () => {
                 </button>
                 <div className="avatar">
                     <div className="w-24 rounded-full">
-                        <img src={data.user.profilePicture} />
+                        <img src={data.user.profilePicture || ""} />
                     </div>
                 </div>
                 <h1 className="text-xl">@{data.user.pseudo}</h1>
