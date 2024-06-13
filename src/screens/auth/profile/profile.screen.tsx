@@ -1,5 +1,7 @@
 import GamesCarousel from "@components/carousels/games.carousel";
+import UpdateProfileForm from "@components/forms/auth/update-profile.form";
 import PostsList from "@components/lists/posts.list";
+import { Modal } from "@layouts/modal.layout";
 import { useAuthStore } from "@stores/auth/auth.store";
 import { GetUserProfileDto } from "@stores/user/user.model";
 import UserRequest from "@stores/user/user.request";
@@ -15,12 +17,15 @@ import { toast } from "sonner";
 const ProfileScreen = () => {
     const { id } = useParams()
     const [data, setData] = useState<GetUserProfileDto | null>(null);
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const { isMobile } = useResponsive();
     const { logout } = useAuthStore();
 
     useEffect(() => {
         UserRequest.getMe().then(setData)
     }, [id]);
+
+    const handleToggleSettings = () => setIsSettingsOpen(!isSettingsOpen);
 
     const handleLogout = () => {
         toast("Voulez vous vous déconnecter ?", {
@@ -41,7 +46,7 @@ const ProfileScreen = () => {
 
         if (isMobile)
             return (
-                <section>
+                <>
                     {
                         data.favoriteGames.length && <><div className="px-4 flex justify-between w-full pt-2">
                             <h2 className="font-semibold text-lg">Jeux Favoris
@@ -65,7 +70,10 @@ const ProfileScreen = () => {
                             </> || null
                         }
                     </section>
-                </section>
+                    {isSettingsOpen && <Modal handleClose={handleToggleSettings}>
+                        <UpdateProfileForm user={data.user} />
+                    </Modal>}
+                </>
             )
 
         return (
@@ -117,7 +125,7 @@ const ProfileScreen = () => {
                 <h1 className="text-xl">@{data.user.pseudo}</h1>
                 <p>Inscrit depuis le {dayjs(data.user.createdAt).format("DD MMM YYYY")}</p>
                 <div className="flex gap-2 mt-2">
-                    <button className="btn btn-outline btn-accent flex-1">Modifier</button>
+                    <button onClick={handleToggleSettings} className="btn btn-outline btn-accent flex-1">Modifier</button>
                     {data.user.role === "ADMIN" && <button className="btn btn-outline btn-accent flex-1">Admin</button>}
                 </div>
             </header>
