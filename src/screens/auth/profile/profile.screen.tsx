@@ -3,7 +3,7 @@ import UpdateProfileForm from "@components/forms/auth/update-profile.form";
 import PostsList from "@components/lists/posts.list";
 import { Modal } from "@layouts/modal.layout";
 import { useAuthStore } from "@stores/auth/auth.store";
-import { GetUserProfileDto } from "@stores/user/user.model";
+import { GetMeDto } from "@stores/user/user.model";
 import UserRequest from "@stores/user/user.request";
 import { useResponsive } from "@utils/useResponsive";
 import dayjs from "dayjs";
@@ -16,7 +16,7 @@ import { toast } from "sonner";
 
 const ProfileScreen = () => {
     const { id } = useParams()
-    const [data, setData] = useState<GetUserProfileDto | null>(null);
+    const [data, setData] = useState<GetMeDto | null>(null);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const { isMobile } = useResponsive();
     const { logout } = useAuthStore();
@@ -71,7 +71,7 @@ const ProfileScreen = () => {
                         }
                     </section>
                     {isSettingsOpen && <Modal handleClose={handleToggleSettings}>
-                        <UpdateProfileForm user={data.user} />
+                        <UpdateProfileForm user={data.user} recieveEmails={data.recieveEmails} />
                     </Modal>}
                 </>
             )

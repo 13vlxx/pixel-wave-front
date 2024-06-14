@@ -23,8 +23,7 @@ export enum FieldValidationType {
 const passwordSecurityRegex = /^(?=.*\d)(?=.*[A-Z]).{6,}$/;
 
 export const fieldsValidation = {
-  [FieldValidationType.REQUIRED_BOOLEAN]: boolean().required(),
-  [FieldValidationType.STRING]: string(),
+  [FieldValidationType.STRING]: string().nullable(),
   [FieldValidationType.REQUIRED_STRING]: string().nullable().required("Ce champ est requis"),
   [FieldValidationType.EMAIL]: string().email("errors:field.fieldEmail"),
   [FieldValidationType.REQUIRED_EMAIL]: string().required("Email requis").email("Email invalide"),
@@ -36,6 +35,8 @@ export const fieldsValidation = {
     ),
   [FieldValidationType.NUMBER]: number(),
   [FieldValidationType.REQUIRED_NUMBER]: number().required("Ce champ est requis").min(0).max(5),
+  [FieldValidationType.REQUIRED_BOOLEAN]: boolean().required(),
+  [FieldValidationType.BOOLEAN]: boolean(),
 };
 
 export type FieldErrorType = string | undefined;

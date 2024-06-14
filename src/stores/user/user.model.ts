@@ -22,8 +22,14 @@ export interface LiteUserDto {
   profilePicture: string;
 }
 
-export interface GetUserProfileDto {
+export interface GetMeDto {
   user: GetUserDto;
+  recieveEmails: boolean;
   favoriteGames: LiteGameDto[];
   posts: PostDto[];
+}
+
+export interface UpdateSettingsDto {
+  password?: string | null;
+  recieveEmails: boolean;
 }
