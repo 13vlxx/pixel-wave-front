@@ -3,6 +3,7 @@ import { PostDto } from "@stores/post/post.model";
 
 export enum UserRole {
   USER = "USER",
+  CERTIFIED = "CERTIFIED",
   MODERATOR = "MODERATOR",
   ADMIN = "ADMIN",
 }

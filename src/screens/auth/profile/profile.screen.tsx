@@ -1,9 +1,9 @@
 import GamesCarousel from "@components/carousels/games.carousel";
 import UpdateProfileForm from "@components/forms/auth/update-profile.form";
 import PostsList from "@components/lists/posts.list";
-import { Modal } from "@layouts/modal.layout";
+import Verified from "@components/verified.component";
 import { useAuthStore } from "@stores/auth/auth.store";
-import { GetMeDto } from "@stores/user/user.model";
+import { GetMeDto, UserRole } from "@stores/user/user.model";
 import UserRequest from "@stores/user/user.request";
 import { useResponsive } from "@utils/useResponsive";
 import dayjs from "dayjs";
@@ -46,35 +46,41 @@ const ProfileScreen = () => {
 
         if (isMobile)
             return (
-                <>
-                    {
-                        data.favoriteGames.length && <><div className="px-4 flex justify-between w-full pt-2">
-                            <h2 className="font-semibold text-lg">Jeux Favoris
-                                <span className="ml-2 indicator indicator-item badge badge-outline">{data.favoriteGames.length}</span>
-                            </h2>
-                            <p>Voir tout</p>
-                        </div>
-                            <GamesCarousel games={data.favoriteGames} />
-                        </> || <h2 className="font-semibold text-lg px-4">Vous n'avez aucun jeu en favoris</h2>
-                    }
-                    <section className="px-4 w-full pt-2 flex flex-col gap-2">
-                        {data.posts.length &&
-                            <>
-                                <div className="flex items-center justify-between">
-                                    <h2 className="font-semibold text-lg">Posts
-                                        <span className="ml-2 indicator indicator-item badge badge-outline">{data.posts.length}</span>
-                                    </h2>
-                                    <p>Voir tout</p>
-                                </div>
-                                {<PostsList posts={data.posts} />}
-                            </> || null
+                isSettingsOpen ?
+                    <div className="mt-4 px-8"><UpdateProfileForm user={data.user} recieveEmails={data.recieveEmails} hideHeader /></div>
+                    :
+                    <>
+                        {
+                            data.favoriteGames.length && <><div className="px-4 flex justify-between w-full pt-2">
+                                <h2 className="font-semibold text-lg">Jeux Favoris
+                                    <span className="ml-2 indicator indicator-item badge badge-outline">{data.favoriteGames.length}</span>
+                                </h2>
+                                <p>Voir tout</p>
+                            </div>
+                                <GamesCarousel games={data.favoriteGames} />
+                            </> || <h2 className="font-semibold text-lg px-4">Vous n'avez aucun jeu en favoris</h2>
                         }
-                    </section>
-                    {isSettingsOpen && <Modal handleClose={handleToggleSettings}>
-                        <UpdateProfileForm user={data.user} recieveEmails={data.recieveEmails} />
-                    </Modal>}
-                </>
+                        <section className="px-4 w-full pt-2 flex flex-col gap-2">
+                            {data.posts.length &&
+                                <>
+                                    <div className="flex items-center justify-between">
+                                        <h2 className="font-semibold text-lg">Posts
+                                            <span className="ml-2 indicator indicator-item badge badge-outline">{data.posts.length}</span>
+                                        </h2>
+                                        <p>Voir tout</p>
+                                    </div>
+                                    {<PostsList posts={data.posts} />}
+                                </> || null
+                            }
+                        </section></>
             )
+
+
+        if (isSettingsOpen) return (
+            <div className="w-2/6 mt-4 mx-auto">
+                <UpdateProfileForm user={data.user} recieveEmails={data.recieveEmails} hideHeader />
+            </div>
+        )
 
         return (
             <section className="flex w-full px-4">
@@ -122,11 +128,17 @@ const ProfileScreen = () => {
                         <img src={data.user.profilePicture || ""} />
                     </div>
                 </div>
-                <h1 className="text-xl">@{data.user.pseudo}</h1>
+                <div className="flex items-center gap-1">
+                    <h1 className="flex items-baseline text-xl">@{data.user.pseudo}</h1>
+                    <Verified role={data.user.role} />
+                </div>
                 <p>Inscrit depuis le {dayjs(data.user.createdAt).format("DD MMM YYYY")}</p>
                 <div className="flex gap-2 mt-2">
-                    <button onClick={handleToggleSettings} className="btn btn-outline btn-accent flex-1">Modifier</button>
-                    {data.user.role === "ADMIN" && <button className="btn btn-outline btn-accent flex-1">Admin</button>}
+                    <button onClick={handleToggleSettings} className="btn btn-outline btn-accent flex-1">{isSettingsOpen ? "Profil" : "Règlages"}</button>
+                    {
+                        data.user.role === UserRole.ADMIN || data.user.role === UserRole.MODERATOR &&
+                        <button className="btn btn-outline btn-accent flex-1">Admin</button>
+                    }
                 </div>
             </header>
             {content()}

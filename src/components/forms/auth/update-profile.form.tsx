@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup"
-import { GetUserDto } from "@stores/user/user.model"
+import { GetUserDto, UserRole } from "@stores/user/user.model"
 import UserRequest from "@stores/user/user.request"
 import dayjs from "@utils/dayjs"
 import { fieldsValidation } from "@utils/yup.utils"
@@ -12,6 +12,7 @@ import { InferType, object, string } from "yup"
 interface UpdateProfileFormProps {
     user: GetUserDto
     recieveEmails: boolean
+    hideHeader?: boolean
 }
 
 const UpdateProfileSchema = object().shape({
@@ -31,7 +32,7 @@ const UpdateProfileSchema = object().shape({
 export type UpdateProfileValidationType = InferType<typeof UpdateProfileSchema>
 
 const UpdateProfileForm = (props: UpdateProfileFormProps) => {
-    const { user, recieveEmails } = props
+    const { user, recieveEmails, hideHeader } = props
     const [isPasswordEditable, setIsPasswordEditable] = useState(false)
 
     const {
@@ -56,15 +57,16 @@ const UpdateProfileForm = (props: UpdateProfileFormProps) => {
 
     return (
         <form className="flex flex-col h-full">
-            <section className="text-center flex-1">
-                <div className="avatar">
-                    <div className="w-24 rounded-full">
-                        <img src={user.profilePicture || ""} />
+            {!hideHeader &&
+                (<section className="text-center flex-1">
+                    <div className="avatar">
+                        <div className="w-24 rounded-full">
+                            <img src={user.profilePicture || ""} />
+                        </div>
                     </div>
-                </div>
-                <h1 className="text-xl">@{user.pseudo}</h1>
-                <p>Inscrit depuis le {dayjs(user.createdAt).format("DD MMM YYYY")}</p>
-            </section>
+                    <h1 className="text-xl">@{user.pseudo}</h1>
+                    <p>Inscrit depuis le {dayjs(user.createdAt).format("DD MMM YYYY")}</p>
+                </section>)}
             <section className="flex flex-col flex-1 gap-2">
                 <input disabled className="input input-bordered" type="text" placeholder="Pseudo" value={user.pseudo} />
                 <input disabled className="input input-bordered" type="text" placeholder="Adresse Email" value={user.email} />
@@ -75,7 +77,7 @@ const UpdateProfileForm = (props: UpdateProfileFormProps) => {
                             <input disabled={!isPasswordEditable} {...register("password")} className="input input-bordered" type="password" placeholder="Nouveau mot de passe" />
                         </>
                     )}
-                    {!isPasswordEditable && (<p onClick={handleOnEditPasswordClick}>Modifier le mot de passe</p>)}
+                    {!isPasswordEditable && (<p className="cursor-pointer underline" onClick={handleOnEditPasswordClick}>Modifier le mot de passe</p>)}
                 </div>
                 <div className="form-control">
                     <label className="label cursor-pointer flex flex-row-reverse gap-2">
@@ -85,9 +87,13 @@ const UpdateProfileForm = (props: UpdateProfileFormProps) => {
                 </div>
             </section>
             <section className="flex flex-col gap-2">
-                <button className="btn btn-outline btn-accent">
-                    <Link to={"/game/fortnite"}>Demander à intégrer le staff</Link>
-                </button>
+                {
+                    user.role === UserRole.USER || user.role === UserRole.CERTIFIED && (
+                        <button className="btn btn-outline btn-accent">
+                            <Link to={"/game/fortnite"}>Demander à intégrer le staff</Link>
+                        </button>
+                    )
+                }
                 <button disabled={!isValid} onClick={onSubmit} className="btn btn-outline btn-accent">Confirmer les changements</button>
             </section>
         </form>
