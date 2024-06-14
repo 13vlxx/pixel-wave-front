@@ -3,18 +3,19 @@ import { MdVerified } from "react-icons/md";
 
 export interface VerifiedProps {
     role: UserRole
+    size?: string
 }
 
 const Verified = (props: VerifiedProps) => {
-    const { role } = props;
+    const { role, size } = props;
 
     switch (role) {
         case UserRole.ADMIN:
-            return <p className="tooltip tooltip-neutral tooltip-bottom" data-tip="Cet utilisateur est un Administrateur vérifié"><MdVerified className="text-xl text-error" /></p>
+            return <span className="tooltip tooltip-neutral tooltip-bottom" data-tip="Administrateur"><MdVerified className={`${size ? size : "text-xl"} text-error`} /></span>
         case UserRole.MODERATOR:
-            return <p className="tooltip tooltip-neutral tooltip-bottom" data-tip="Cet utilisateur est un Modérateur vérifié"><MdVerified className="text-xl text-success" /></p>
+            return <span className="tooltip tooltip-neutral tooltip-bottom" data-tip="Moderateur"><MdVerified className={`${size ? size : "text-xl"} text-success`} /></span>
         case UserRole.CERTIFIED:
-            return <p className="tooltip tooltip-neutral tooltip-bottom" data-tip="Cet utilisateur est un utilisateur certifié"><MdVerified className="text-xl text-blue-500" /></p>
+            return <span className="tooltip tooltip-neutral tooltip-bottom" data-tip="Utilisateur Certifié"><MdVerified className={`${size ? size : "text-xl"} text-blue-500`} /></span>
     }
 }
 

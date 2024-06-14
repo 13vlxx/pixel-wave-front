@@ -2,6 +2,7 @@ import { AuthNavbarLayout } from '@layouts/auth-navbar.layout'
 import { UnauthNavbarLayout } from '@layouts/unauth-navbar.layout'
 import NotificationsScreen from '@screens/auth/notifications/notifications.screen'
 import ProfileScreen from '@screens/auth/profile/profile.screen'
+import StaffRequestScreen from '@screens/auth/staff-request/staff-request.screen'
 import GameDetailsScreen from '@screens/common/game/game-details.screen'
 import HomeScreen from '@screens/common/home/home.screen'
 import DemoScreen from '@screens/demo.screen'
@@ -22,7 +23,7 @@ const authRouter = createBrowserRouter([
       { path: `/${PagesUnauth.GAME}/:name`, element: <GameDetailsScreen /> },
       { path: PagesAuth.NOTIFICATIONS, element: <NotificationsScreen /> },
       { path: `${PagesAuth.PROFILE}/me`, element: <ProfileScreen /> },
-      { path: `${PagesAuth.PROFILE}/:id`, element: <ProfileScreen /> },
+      { path: PagesAuth.STAFF_REQUEST, element: <StaffRequestScreen /> },
       { path: PagesAuth.DEMO, element: <DemoScreen /> },
     ]
   }

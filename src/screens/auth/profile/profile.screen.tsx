@@ -136,7 +136,7 @@ const ProfileScreen = () => {
                 <div className="flex gap-2 mt-2">
                     <button onClick={handleToggleSettings} className="btn btn-outline btn-accent flex-1">{isSettingsOpen ? "Profil" : "Règlages"}</button>
                     {
-                        data.user.role === UserRole.ADMIN || data.user.role === UserRole.MODERATOR &&
+                        [UserRole.ADMIN, UserRole.MODERATOR].includes(data.user.role) &&
                         <button className="btn btn-outline btn-accent flex-1">Admin</button>
                     }
                 </div>

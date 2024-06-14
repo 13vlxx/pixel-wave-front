@@ -2,6 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup"
 import { GetUserDto, UserRole } from "@stores/user/user.model"
 import UserRequest from "@stores/user/user.request"
 import dayjs from "@utils/dayjs"
+import { PagesAuth } from "@utils/router/routes"
 import { fieldsValidation } from "@utils/yup.utils"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
@@ -88,9 +89,9 @@ const UpdateProfileForm = (props: UpdateProfileFormProps) => {
             </section>
             <section className="flex flex-col gap-2">
                 {
-                    user.role === UserRole.USER || user.role === UserRole.CERTIFIED && (
+                    [UserRole.USER, UserRole.CERTIFIED].includes(user.role) && (
                         <button className="btn btn-outline btn-accent">
-                            <Link to={"/game/fortnite"}>Demander à intégrer le staff</Link>
+                            <Link to={`/${PagesAuth.STAFF_REQUEST}`}>Demander à intégrer le staff</Link>
                         </button>
                     )
                 }
