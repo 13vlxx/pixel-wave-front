@@ -3,6 +3,7 @@ import { boolean, number, string } from "yup";
 export enum FieldValidationType {
   STRING = "STRING",
   REQUIRED_STRING = "REQUIRED_STRING",
+  REQUIRED_STAFF_REQUEST = "REQUIRED_STAFF_REQUEST",
   REQUIRED_DOMAIN_NAME = "REQUIRED_DOMAIN_NAME",
   REQUIRED_STRING_ARRAY = "REQUIRED_STRING_ARRAY",
   REQUIRED_STRING_NUMBER = "REQUIRED_STRING_NUMBER",
@@ -25,6 +26,7 @@ const passwordSecurityRegex = /^(?=.*\d)(?=.*[A-Z]).{6,}$/;
 export const fieldsValidation = {
   [FieldValidationType.STRING]: string().nullable(),
   [FieldValidationType.REQUIRED_STRING]: string().nullable().required("Ce champ est requis"),
+  [FieldValidationType.REQUIRED_STAFF_REQUEST]: string().required("Ce champ est requis").min(20),
   [FieldValidationType.EMAIL]: string().email("errors:field.fieldEmail"),
   [FieldValidationType.REQUIRED_EMAIL]: string().required("Email requis").email("Email invalide"),
   [FieldValidationType.REQUIRED_PASSWORD]: string()

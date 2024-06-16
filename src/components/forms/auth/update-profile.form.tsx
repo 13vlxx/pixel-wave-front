@@ -48,8 +48,9 @@ const UpdateProfileForm = (props: UpdateProfileFormProps) => {
     })
 
     const onSubmit = handleSubmit((formData) => {
-        UserRequest.updateSettings(formData)
-        toast.success("Vos paramètres ont été mis à jour")
+        UserRequest.updateSettings(formData).then(() => {
+            toast.success("Vos paramètres ont été mis à jour")
+        })
     });
 
     const handleOnEditPasswordClick = () => {
@@ -90,9 +91,7 @@ const UpdateProfileForm = (props: UpdateProfileFormProps) => {
             <section className="flex flex-col gap-2">
                 {
                     [UserRole.USER, UserRole.CERTIFIED].includes(user.role) && (
-                        <button className="btn btn-outline btn-accent">
-                            <Link to={`/${PagesAuth.STAFF_REQUEST}`}>Demander à intégrer le staff</Link>
-                        </button>
+                        <Link className="btn btn-outline btn-accent" to={`/${PagesAuth.STAFF_REQUEST}`}>Demander à intégrer le staff</Link>
                     )
                 }
                 <button disabled={!isValid} onClick={onSubmit} className="btn btn-outline btn-accent">Confirmer les changements</button>

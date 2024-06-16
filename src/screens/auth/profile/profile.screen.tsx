@@ -125,7 +125,7 @@ const ProfileScreen = () => {
                 </button>
                 <div className="avatar">
                     <div className="w-24 rounded-full">
-                        <img src={data.user.profilePicture || ""} />
+                        <img src={data.user.profilePicture || "/default-pfp.jpeg"} />
                     </div>
                 </div>
                 <div className="flex items-center gap-1">
