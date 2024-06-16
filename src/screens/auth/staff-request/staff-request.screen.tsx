@@ -92,7 +92,7 @@ const StaffRequestScreen = () => {
                             <h1 className="text-xl font-semibold pb-2">Votre demande</h1>
                             <form className="gap-10 flex flex-col">
                                 <textarea {...register("content")} className="p-2 flex-1 textarea textarea-sm min-h-[60dvh] textarea-bordered w-full border-secondary" placeholder="Pourquoi voulez-vous rejoindre l'équipe de Pixel Wave ?" />
-                                <button onClick={onSubmit} disabled={!isValid} className="btn btn-secondary text-primary w-full">Envoyer</button>
+                                <button data-cy="submit" onClick={onSubmit} disabled={!isValid} className="btn btn-secondary text-primary w-full">Envoyer</button>
                                 <p className="text-center">Une fois la demande envoyée, vous pourrez suivre l'avancement de cette dernière en revenant sur cette page</p>
                             </form>
                         </section>
