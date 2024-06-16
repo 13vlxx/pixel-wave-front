@@ -30,6 +30,8 @@ export interface GetMeDto {
   posts: PostDto[];
 }
 
+export interface GetUserProfileDto extends Omit<GetMeDto, "recieveEmails"> {}
+
 export interface UpdateSettingsDto {
   password?: string | null;
   recieveEmails: boolean;
