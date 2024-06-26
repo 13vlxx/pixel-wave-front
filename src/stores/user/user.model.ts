@@ -25,14 +25,14 @@ export interface LiteUserDto {
 
 export interface GetMeDto {
   user: GetUserDto;
-  recieveEmails: boolean;
+  receiveEmails: boolean;
   favoriteGames: LiteGameDto[];
   posts: PostDto[];
 }
 
-export interface GetUserProfileDto extends Omit<GetMeDto, "recieveEmails"> {}
+export interface GetUserProfileDto extends Omit<GetMeDto, "receiveEmails"> {}
 
 export interface UpdateSettingsDto {
   password?: string | null;
-  recieveEmails: boolean;
+  receiveEmails: boolean;
 }

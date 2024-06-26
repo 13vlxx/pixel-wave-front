@@ -47,7 +47,7 @@ const ProfileScreen = () => {
         if (isMobile)
             return (
                 isSettingsOpen ?
-                    <div className="mt-4 px-8"><UpdateProfileForm user={data.user} recieveEmails={data.recieveEmails} hideHeader /></div>
+                    <div className="mt-4 px-8"><UpdateProfileForm handleClose={handleToggleSettings} user={data.user} receiveEmails={data.receiveEmails} hideHeader /></div>
                     :
                     <>
                         {
@@ -78,7 +78,7 @@ const ProfileScreen = () => {
 
         if (isSettingsOpen) return (
             <div className="w-2/6 mt-4 mx-auto">
-                <UpdateProfileForm user={data.user} recieveEmails={data.recieveEmails} hideHeader />
+                <UpdateProfileForm handleClose={handleToggleSettings} user={data.user} receiveEmails={data.receiveEmails} hideHeader />
             </div>
         )
 

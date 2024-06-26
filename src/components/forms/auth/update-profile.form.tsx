@@ -6,14 +6,16 @@ import { PagesAuth } from "@utils/router/routes"
 import { fieldsValidation } from "@utils/yup.utils"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+import { FaEye } from "react-icons/fa"
 import { Link } from "react-router-dom"
 import { toast } from "sonner"
 import { InferType, object, string } from "yup"
 
 interface UpdateProfileFormProps {
     user: GetUserDto
-    recieveEmails: boolean
+    receiveEmails: boolean
     hideHeader?: boolean
+    handleClose: () => void
 }
 
 const UpdateProfileSchema = object().shape({
@@ -26,15 +28,16 @@ const UpdateProfileSchema = object().shape({
                 return fieldsValidation.REQUIRED_PASSWORD.isValidSync(value);
             }
         ),
-    recieveEmails: fieldsValidation.REQUIRED_BOOLEAN,
+    receiveEmails: fieldsValidation.REQUIRED_BOOLEAN,
 });
 
 
 export type UpdateProfileValidationType = InferType<typeof UpdateProfileSchema>
 
 const UpdateProfileForm = (props: UpdateProfileFormProps) => {
-    const { user, recieveEmails, hideHeader } = props
+    const { user, receiveEmails, hideHeader, handleClose } = props
     const [isPasswordEditable, setIsPasswordEditable] = useState(false)
+    const [isPasswordShown, setIsPasswordShown] = useState(false)
 
     const {
         register,
@@ -43,15 +46,19 @@ const UpdateProfileForm = (props: UpdateProfileFormProps) => {
     } = useForm<UpdateProfileValidationType>({
         resolver: yupResolver(UpdateProfileSchema), mode: "all", defaultValues: {
             password: null,
-            recieveEmails: recieveEmails
+            receiveEmails: receiveEmails
         }
     })
 
     const onSubmit = handleSubmit((formData) => {
         UserRequest.updateSettings(formData).then(() => {
             toast.success("Vos paramètres ont été mis à jour")
+            handleClose()
+
         })
     });
+
+    const handleShowPasswordClick = () => setIsPasswordShown(!isPasswordShown)
 
     const handleOnEditPasswordClick = () => {
         setIsPasswordEditable(!isPasswordEditable)
@@ -76,7 +83,10 @@ const UpdateProfileForm = (props: UpdateProfileFormProps) => {
                     {isPasswordEditable && (
                         <>
                             <p className="ml-auto w-min select-none px-2 rounded-full bg-accent tooltip tooltip-accent tooltip-left" data-tip="Le mot de passe doit contenir une majuscule, un chiffre et 6 caracteres">?</p>
-                            <input disabled={!isPasswordEditable} {...register("password")} className="input input-bordered" type="password" placeholder="Nouveau mot de passe" />
+                            <div className="relative">
+                                <input disabled={!isPasswordEditable} {...register("password")} className="input input-bordered w-full" type={`${isPasswordShown ? "text" : "password"}`} placeholder="Nouveau mot de passe" />
+                                <FaEye onClick={handleShowPasswordClick} className="absolute top-1/2 -translate-y-1/2 right-4 cursor-pointer size-6" />
+                            </div>
                         </>
                     )}
                     {!isPasswordEditable && (<p className="cursor-pointer underline" onClick={handleOnEditPasswordClick}>Modifier le mot de passe</p>)}
@@ -84,7 +94,7 @@ const UpdateProfileForm = (props: UpdateProfileFormProps) => {
                 <div className="form-control">
                     <label className="label cursor-pointer flex flex-row-reverse gap-2">
                         <span className="label-text">Je souhaite rester informé par mail à propos des nouvelles sorties ou informations.</span>
-                        <input className="checkbox checkbox-accent" {...register("recieveEmails")} type="checkbox" />
+                        <input className="checkbox checkbox-accent" {...register("receiveEmails")} type="checkbox" />
                     </label>
                 </div>
             </section>
