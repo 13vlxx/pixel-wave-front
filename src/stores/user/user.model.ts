@@ -36,3 +36,11 @@ export interface UpdateSettingsDto {
   password?: string | null;
   receiveEmails: boolean;
 }
+
+export interface UpdateReceiveNotificationsDto {
+  receiveNotifications: boolean;
+}
+
+export interface GetNotificationsDto {
+  receiveNotifications: boolean;
+}
