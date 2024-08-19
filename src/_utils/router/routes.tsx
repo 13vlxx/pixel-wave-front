@@ -5,6 +5,7 @@ export enum PagesAuth {
     GAME = 'game',
     PROFILE = 'profile',
     NOTIFICATIONS = 'notifications',
+    STAFF_REQUEST = 'staff-request',
     DEMO = 'demo',
 }
 

@@ -50,7 +50,7 @@ export const RegisterForm = (props: RegisterFormProps) => {
                 <input {...register("pseudo")} type="text" placeholder="Pseudo" className="input input-bordered" />
                 <input {...register("email")} type="email" placeholder="Adresse email" className="input input-bordered" />
                 <input {...register("password")} type="password" placeholder="Mot de passe" className="input input-bordered" />
-                <button onClick={onSubmit} disabled={!isValid} className="btn btn-outline btn-accent">S'inscrire</button>
+                <button type="submit" onClick={onSubmit} disabled={!isValid} className="btn btn-outline btn-accent">S'inscrire</button>
             </form>
             <div className="flex justify-between mt-2">
                 <span

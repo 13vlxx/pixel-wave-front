@@ -18,7 +18,7 @@ export const AuthNavbarLayout = () => {
         localStorage.setItem('theme', newTheme);
     }
 
-    const handleNavigate = (destination: PagesAuth) => {
+    const handleNavigate = (destination: string) => {
         navigate(destination);
     }
 
@@ -33,7 +33,7 @@ export const AuthNavbarLayout = () => {
                         <BsSunFill onClick={toggleTheme} className="cursor-pointer text-3xl" />
                     }
                     <FaBell name="notifications" className="text-3xl cursor-pointer" onClick={() => handleNavigate(PagesAuth.NOTIFICATIONS)} />
-                    <CgProfile name="profile" className="text-3xl cursor-pointer" onClick={() => handleNavigate(PagesAuth.PROFILE)} />
+                    <CgProfile data-cy="profile" name="profile" className="text-3xl cursor-pointer" onClick={() => handleNavigate(`${PagesAuth.PROFILE}/me`)} />
                 </nav>
             </header>
             <div>
