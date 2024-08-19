@@ -8,8 +8,6 @@ interface PostsListProps {
 const PostsList = (props: PostsListProps) => {
     const { posts } = props;
 
-    console.log(posts.length)
-
     return (
         <div className="flex flex-col gap-2">
             {posts.map((x) => (

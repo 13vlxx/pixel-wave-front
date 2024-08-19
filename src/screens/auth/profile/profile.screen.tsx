@@ -104,13 +104,15 @@ const ProfileScreen = () => {
                     }
                 </section>
                 <div className="divider divider-horizontal"></div>
-                <section className="flex flex-1 justify-start">
-                    {data.posts.length && <div className="flex justify-between w-full">
+                <section className="flex flex-col flex-1 gap-2 justify-start">
+                    {data.posts.length && <><div className="flex justify-between w-full">
                         <h2 className="font-semibold">Posts
                             <span className="ml-2 indicator indicator-item badge badge-outline">{data.posts.length}</span>
                         </h2>
                         <p>Voir tout</p>
-                    </div> || <h2 className="font-semibold">Aucun post à afficher</h2>
+                    </div>
+                        {<PostsList posts={data.posts} />}
+                    </> || <h2 className="font-semibold">Aucun post à afficher</h2>
                     }
                 </section>
             </section>
