@@ -28,7 +28,7 @@ const NotificationsScreen = () => {
                         <div className="form-control">
                             <label className="label cursor-pointer flex flex-row-reverse gap-2">
                                 <span className="label-text">Recevoir les notifications ?</span>
-                                <input checked={notifications?.receiveNotifications} onClick={handleToggleReceiveNotifications} className="checkbox checkbox-accent" type="checkbox" />
+                                <input checked={notifications?.receiveNotifications} onChange={handleToggleReceiveNotifications} className="checkbox checkbox-accent" type="checkbox" />
                             </label>
                         </div>
                     </ul>

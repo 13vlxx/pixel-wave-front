@@ -22,8 +22,9 @@ const ProfileScreen = () => {
     const { logout } = useAuthStore();
 
     useEffect(() => {
+        document.title = `Pixel Wave | ${data?.user.pseudo}`;
         UserRequest.getMe().then(setData)
-    }, [id]);
+    }, [id, data?.user.pseudo]);
 
     const handleToggleSettings = () => setIsSettingsOpen(!isSettingsOpen);
 

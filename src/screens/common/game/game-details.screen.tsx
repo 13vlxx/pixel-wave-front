@@ -25,6 +25,7 @@ const GameDetailsScreen = () => {
     const { token, toggleModal } = useAuthStore();
 
     useEffect(() => {
+        document.title = `Pixel Wave | ${name?.slice(0, 1).toUpperCase()}${name?.slice(1)}`;
         GameRequest.getGameDetails(name!).then(setGame)
     }, [name, showAdviceSection]);
 

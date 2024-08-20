@@ -6,6 +6,7 @@ import ProfileScreen from '@screens/auth/profile/profile.screen'
 import StaffRequestScreen from '@screens/auth/staff-request/staff-request.screen'
 import GameDetailsScreen from '@screens/common/game/game-details.screen'
 import HomeScreen from '@screens/common/home/home.screen'
+import PostFeedScreen from '@screens/common/post/post-feed.screen'
 import DemoScreen from '@screens/demo.screen'
 import ResetPasswordScreen from '@screens/unauth/reset-password.screen'
 import { useAuthStore } from '@stores/auth/auth.store'
@@ -22,6 +23,7 @@ const authRouter = createBrowserRouter([
     errorElement: <div>404</div>,
     children: [
       { index: true, element: <HomeScreen /> },
+      { path: `/posts`, element: <PostFeedScreen /> },
       { path: `/${PagesUnauth.GAME}/:name`, element: <GameDetailsScreen /> },
       { path: PagesAuth.NOTIFICATIONS, element: <NotificationsScreen /> },
       { path: `${PagesAuth.PROFILE}/me`, element: <ProfileScreen /> },
@@ -39,6 +41,7 @@ const unauthRouter = createBrowserRouter([
     errorElement: <div>404</div>,
     children: [
       { index: true, element: <HomeScreen /> },
+      { path: `/posts`, element: <PostFeedScreen /> },
       { path: `/${PagesUnauth.GAME}/:name`, element: <GameDetailsScreen /> },
       { path: PagesUnauth.RESET_PASSWORD, element: <ResetPasswordScreen /> },
       { path: PagesAuth.DEMO, element: <DemoScreen /> },

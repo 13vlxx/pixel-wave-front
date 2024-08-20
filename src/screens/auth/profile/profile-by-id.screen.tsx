@@ -16,8 +16,9 @@ export const ProfileByIdScreen = () => {
     const [user, setUser] = useState<GetUserProfileDto | null>()
 
     useEffect(() => {
+        document.title = `Pixel Wave | ${user?.user.pseudo}`;
         if (id === userId) window.location.href = "/profile/me"
-    }, [id, userId]);
+    }, [id, userId, user?.user.pseudo]);
 
     useEffect(() => {
         UserRequest.getUserById(userId!).then(setUser)

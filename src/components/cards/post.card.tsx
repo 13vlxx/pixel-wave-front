@@ -20,10 +20,17 @@ export interface PostCardProps {
 
 const PostCard = (props: PostCardProps) => {
     const { token } = useAuthStore();
+    const { toggleModal } = useAuthStore();
     const { id } = useUserStore();
     const { post } = props;
 
     const [isFavorite, setIsFavorite] = useState(post.isLiked);
+
+    const handleShare = async () => {
+        navigator.clipboard.writeText('http://localhost:5173/posts/' + post.id,).then(() => {
+            toast.success('Lien copié avec succès')
+        })
+    }
 
     const handleToggleFavorite = () => {
         if (token) {
@@ -32,25 +39,35 @@ const PostCard = (props: PostCardProps) => {
                 post.likes = isFavorite ? post.likes - 1 : post.likes + 1
             })
         }
-        else toast.error("Vous devez être connecté pour aimer un post")
+        else toggleModal();
     };
 
-    const heart = (
-        <div onClick={handleToggleFavorite}>
-            <div className="flex items-center gap-1">
+    const heart = () => {
+        if (token)
+            return (
+                <div onClick={handleToggleFavorite}>
+                    <div className="flex items-center gap-1 cursor-pointer">
+                        <p className="text-sm">{post.likes}</p>
+                        {isFavorite ? <FaHeart color="red" /> : <LuHeart />}
+                    </div>
+                </div>
+            )
+
+        return <div onClick={handleToggleFavorite}>
+            <div className="flex items-center gap-1 cursor-pointer">
                 <p className="text-sm">{post.likes}</p>
-                {isFavorite ? <FaHeart color="red" /> : <LuHeart />}
+                <LuHeart />
             </div>
         </div>
-    )
+    }
 
     const actionButtons = (
         <div className="flex gap-2 w-full justify-end items-center">
-            <div className="flex items-center gap-1">
+            <div onClick={() => toast.success("Comments")} className="flex items-center gap-1">
                 <p className="text-sm">{post.comments}</p>
                 {<FaRegComment />}
             </div>
-            {token && heart || <LuHeart />}
+            {heart()}
         </div>
     )
 
@@ -58,8 +75,8 @@ const PostCard = (props: PostCardProps) => {
         <div className="p-4 rounded-md border border-secondary">
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                    <img src={post.user.profilePicture} alt={`Photo de profil de ${post.user.pseudo}`} className="object-cover size-[50px] rounded-full" />
-                    <h1 className="max-w-[100%] text-ellipsis line-clamp-1">{`@${post.user.pseudo} • ${dayjs(post.createdAt).fromNow()}`}</h1>
+                    <img src={post.user.profilePicture || "/default-pfp.jpeg"} alt={`Photo de profil de ${post.user.pseudo}`} className="object-cover size-[40px] rounded-full" />
+                    <h1 className="max-w-[100%] text-sm text-ellipsis line-clamp-1">{`@${post.user.pseudo} • ${dayjs(post.createdAt).fromNow()}`}</h1>
                 </div>
                 <div className="dropdown  dropdown-end">
                     <div tabIndex={0} role="button">
@@ -82,7 +99,7 @@ const PostCard = (props: PostCardProps) => {
                                 })} className="bg-error size-8 rounded-full p-0 grid place-items-center">
                                     <FaTrash size={16} />
                                 </button>}
-                            <button onClick={() => toast.success("Share")} className="bg-info size-8 rounded-full p-0 grid place-items-center">
+                            <button onClick={handleShare} className="bg-info size-8 rounded-full p-0 grid place-items-center">
                                 <FaShare size={16} />
                             </button>
                         </div>
@@ -94,5 +111,6 @@ const PostCard = (props: PostCardProps) => {
         </div >
     )
 }
+
 
 export default PostCard
