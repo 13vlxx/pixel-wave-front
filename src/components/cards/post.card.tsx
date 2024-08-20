@@ -29,6 +29,7 @@ const PostCard = (props: PostCardProps) => {
         if (token) {
             PostRequest.toggleLike(post.id).then(() => {
                 setIsFavorite(!isFavorite)
+                post.likes = isFavorite ? post.likes - 1 : post.likes + 1
             })
         }
         else toast.error("Vous devez être connecté pour aimer un post")
