@@ -40,10 +40,10 @@ const PostCard = (props: PostCardProps) => {
                                     },
                                 },
 
-                            })} className="btn btn-circle btn-error grid place-items-center">
+                            })} className="bg-error size-8 rounded-full p-0 grid place-items-center">
                                 <FaTrash size={16} />
                             </button>
-                            <button onClick={() => toast.success("Share")} className="btn btn-circle btn-info grid place-items-center">
+                            <button onClick={() => toast.success("Share")} className="bg-info size-8 rounded-full p-0 grid place-items-center">
                                 <FaShare size={16} />
                             </button>
                         </div>

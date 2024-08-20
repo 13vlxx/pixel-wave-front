@@ -1,5 +1,5 @@
+import { useThemeStore } from "@stores/theme/theme.store";
 import { PagesAuth } from "@utils/router/routes";
-import { useState } from "react";
 import { BsSunFill } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { FaBell, FaMoon } from "react-icons/fa";
@@ -7,15 +7,12 @@ import { LuTestTube2 } from "react-icons/lu";
 import { Outlet, useNavigate } from "react-router-dom";
 
 export const AuthNavbarLayout = () => {
-    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+    const { theme, setTheme } = useThemeStore();
     const navigate = useNavigate();
 
     const toggleTheme = () => {
         const newTheme = theme === 'light' ? 'dark' : 'light';
         setTheme(newTheme);
-
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
     }
 
     const handleNavigate = (destination: string) => {

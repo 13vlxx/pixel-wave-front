@@ -1,8 +1,9 @@
 import AuthForm from "@components/forms/auth/auth.form";
 import { AuthModal } from "@components/modals/auth.modal";
 import { useAuthStore } from "@stores/auth/auth.store";
+import { useThemeStore } from "@stores/theme/theme.store";
 import { PagesAuth } from "@utils/router/routes";
-import { useLayoutEffect, useState } from "react";
+import { useLayoutEffect } from "react";
 import { BsSunFill } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { FaMoon } from "react-icons/fa";
@@ -10,16 +11,13 @@ import { LuTestTube2 } from "react-icons/lu";
 import { Outlet, useNavigate } from "react-router-dom";
 
 export const UnauthNavbarLayout = () => {
-    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+    const { theme, setTheme } = useThemeStore();
     const { isModalOpen, toggleModal } = useAuthStore();
     const navigate = useNavigate();
 
     const toggleTheme = () => {
         const newTheme = theme === 'light' ? 'dark' : 'light';
         setTheme(newTheme);
-
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
     }
 
     const handleNavigate = (destination: PagesAuth) => {

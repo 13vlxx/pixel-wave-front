@@ -9,6 +9,7 @@ import HomeScreen from '@screens/common/home/home.screen'
 import DemoScreen from '@screens/demo.screen'
 import ResetPasswordScreen from '@screens/unauth/reset-password.screen'
 import { useAuthStore } from '@stores/auth/auth.store'
+import { useThemeStore } from '@stores/theme/theme.store'
 import { useEffect } from 'react'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import { Toaster } from 'sonner'
@@ -47,17 +48,15 @@ const unauthRouter = createBrowserRouter([
 
 function App() {
   const { token } = useAuthStore()
+  const { theme } = useThemeStore()
 
   useEffect(() => {
-    const preferredTheme = localStorage.getItem('theme');
-    if (preferredTheme) {
-      document.documentElement.setAttribute('data-theme', preferredTheme);
-    }
-  }, []);
+    document.documentElement.setAttribute("data-theme", theme)
+  }, [theme]);
 
   return (
     <>
-      <Toaster richColors theme="light" />
+      <Toaster richColors theme={theme} />
       <RouterProvider router={token ? authRouter : unauthRouter} />
     </>
   )
