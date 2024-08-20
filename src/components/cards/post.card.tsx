@@ -1,9 +1,14 @@
+import { useAuthStore } from "@stores/auth/auth.store";
 import { PostDto } from "@stores/post/post.model";
+import PostRequest from "@stores/post/post.request";
+import { useUserStore } from "@stores/user/user.store";
 import dayjs from "dayjs";
 import 'dayjs/locale/fr';
 import relativeTime from "dayjs/plugin/relativeTime";
+import { useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
-import { FaShare, FaTrash } from "react-icons/fa";
+import { FaHeart, FaRegComment, FaShare, FaTrash } from "react-icons/fa";
+import { LuHeart } from "react-icons/lu";
 import { toast } from "sonner";
 
 dayjs.extend(relativeTime)
@@ -14,7 +19,39 @@ export interface PostCardProps {
 }
 
 const PostCard = (props: PostCardProps) => {
+    const { token } = useAuthStore();
+    const { id } = useUserStore();
     const { post } = props;
+
+    const [isFavorite, setIsFavorite] = useState(post.isLiked);
+
+    const handleToggleFavorite = () => {
+        if (token) {
+            PostRequest.toggleLike(post.id).then(() => {
+                setIsFavorite(!isFavorite)
+            })
+        }
+        else toast.error("Vous devez être connecté pour aimer un post")
+    };
+
+    const heart = (
+        <div onClick={handleToggleFavorite}>
+            <div className="flex items-center gap-1">
+                <p className="text-sm">{post.likes}</p>
+                {isFavorite ? <FaHeart color="red" /> : <LuHeart />}
+            </div>
+        </div>
+    )
+
+    const actionButtons = (
+        <div className="flex gap-2 w-full justify-end items-center">
+            <div className="flex items-center gap-1">
+                <p className="text-sm">{post.comments}</p>
+                {<FaRegComment />}
+            </div>
+            {token && heart || <LuHeart />}
+        </div>
+    )
 
     return (
         <div className="p-4 rounded-md border border-secondary">
@@ -30,19 +67,20 @@ const PostCard = (props: PostCardProps) => {
                     <ul className="menu bg-neutral dropdown-content rounded-box shadow">
                         <label htmlFor=""></label>
                         <div className="flex gap-2">
-                            <button onClick={() => toast("Êtes-vous sur de vouloir supprimer ce post ?", {
-                                duration: 5000,
-                                action: {
-                                    label: 'Oui',
-                                    onClick: () => {
-                                        //TODO: Delete post
-                                        console.log(post.id)
+                            {id === post.user.id &&
+                                <button onClick={() => toast("Êtes-vous sur de vouloir supprimer ce post ?", {
+                                    duration: 5000,
+                                    action: {
+                                        label: 'Oui',
+                                        onClick: () => {
+                                            //TODO: Delete post
+                                            console.log(post.id)
+                                        },
                                     },
-                                },
 
-                            })} className="bg-error size-8 rounded-full p-0 grid place-items-center">
-                                <FaTrash size={16} />
-                            </button>
+                                })} className="bg-error size-8 rounded-full p-0 grid place-items-center">
+                                    <FaTrash size={16} />
+                                </button>}
                             <button onClick={() => toast.success("Share")} className="bg-info size-8 rounded-full p-0 grid place-items-center">
                                 <FaShare size={16} />
                             </button>
@@ -51,6 +89,7 @@ const PostCard = (props: PostCardProps) => {
                 </div>
             </div >
             <p className="py-2"> {post.content}</p>
+            {actionButtons}
         </div >
     )
 }

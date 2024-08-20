@@ -7,5 +7,6 @@ export interface PostDto {
   createdAt: string;
   user: LiteUserDto;
   likes: number;
+  comments: number;
   isLiked: boolean;
 }

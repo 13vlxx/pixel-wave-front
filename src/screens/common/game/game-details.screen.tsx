@@ -47,7 +47,6 @@ const GameDetailsScreen = () => {
         if (token)
             GameRequest.toggleFavorite(game!.id).then((x) => setIsFavorite(x))
         else toggleModal();
-
     };
 
 
