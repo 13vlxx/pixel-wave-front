@@ -7,4 +7,5 @@ export default {
       `/posts${currentUserId ? `?currentUserId=${currentUserId}` : ""}`
     ).then((res) => res.data),
   toggleLike: (postId: string) => PixelWaveAxios.put(`/posts/${postId}`).then((res) => res.data),
+  deletePost: (postId: string) => PixelWaveAxios.delete(`/posts/${postId}`).then((res) => res.data),
 };

@@ -6,6 +6,7 @@ import { useUserStore } from "@stores/user/user.store";
 import { useResponsive } from "@utils/useResponsive";
 import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
+import { toast } from "sonner";
 
 const PostFeedScreen = () => {
   const { token, toggleModal } = useAuthStore();
@@ -27,18 +28,25 @@ const PostFeedScreen = () => {
       toggleModal()
   }
 
+  const handleDeletePost = (postId: string) => {
+    PostRequest.deletePost(postId).then(() => {
+      setPosts(posts.filter((x) => x.id !== postId))
+      toast.success("Post supprimé avec succès")
+    });
+  }
+
   const main = () => {
     if (isMobile)
       return <section className="flex flex-col gap-2">
         {posts.map((post) => (
-          <PostCard key={post.id} post={post} />
+          <PostCard onDelete={handleDeletePost} key={post.id} post={post} />
         ))}
         <button onClick={handleShowCreatePost} className="fixed right-4 bottom-4 btn btn-circle btn-secondary text-xl text-secondary bg-clip-text"><FaPlus /></button>
       </section>
 
     return <section className="flex flex-col gap-2">
       {posts.map((post) => (
-        <PostCard key={post.id} post={post} />
+        <PostCard onDelete={handleDeletePost} key={post.id} post={post} />
       ))}
     </section>
   }

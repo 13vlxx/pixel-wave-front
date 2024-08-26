@@ -16,13 +16,14 @@ dayjs.locale('fr')
 
 export interface PostCardProps {
     post: PostDto;
+    onDelete: (postId: string) => void;
 }
 
 const PostCard = (props: PostCardProps) => {
     const { token } = useAuthStore();
     const { toggleModal } = useAuthStore();
     const { id } = useUserStore();
-    const { post } = props;
+    const { post, onDelete } = props;
 
     const [isFavorite, setIsFavorite] = useState(post.isLiked);
 
@@ -91,8 +92,7 @@ const PostCard = (props: PostCardProps) => {
                                     action: {
                                         label: 'Oui',
                                         onClick: () => {
-                                            //TODO: Delete post
-                                            console.log(post.id)
+                                            onDelete(post.id)
                                         },
                                     },
 
