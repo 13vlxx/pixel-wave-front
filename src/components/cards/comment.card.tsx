@@ -28,9 +28,11 @@ const CommentCard = (props: CommentCardProps) => {
       <div className="flex items-center justify-between">
         <Link
           to={
-            comment.user.id === id
-              ? "/profile/me"
-              : `/profile/${comment.user.id}`
+            token
+              ? comment.user.id === id
+                ? "/profile/me"
+                : `/profile/${comment.user.id}`
+              : ""
           }
           className="flex items-center gap-2 cursor-pointer"
         >

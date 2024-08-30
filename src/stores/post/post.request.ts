@@ -6,10 +6,10 @@ export default {
     PixelWaveAxios.get<PostDto[]>(
       `/posts${currentUserId ? `?currentUserId=${currentUserId}` : ""}`,
     ).then((res) => res.data),
-  getPostById: (postId: string) =>
-    PixelWaveAxios.get<PostWithCommentsDto>(`/posts/${postId}`).then(
-      (res) => res.data,
-    ),
+  getPostById: (postId: string, currentUserId?: string) =>
+    PixelWaveAxios.get<PostWithCommentsDto>(
+      `/posts/${postId}${currentUserId ? `?currentUserId=${currentUserId}` : ""}`,
+    ).then((res) => res.data),
   toggleLike: (postId: string) =>
     PixelWaveAxios.put(`/posts/${postId}`).then((res) => res.data),
   deletePost: (postId: string) =>

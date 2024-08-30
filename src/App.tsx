@@ -25,7 +25,7 @@ const authRouter = createBrowserRouter([
     children: [
       { index: true, element: <HomeScreen /> },
       { path: `/${PagesAuth.POSTS}`, element: <PostFeedScreen /> },
-      { path: `/${PagesAuth.POSTS}/:id`, element: <PostByIdScreen /> },
+      { path: `/${PagesAuth.POSTS}/:postId`, element: <PostByIdScreen /> },
       { path: `/${PagesAuth.GAME}/:name`, element: <GameDetailsScreen /> },
       { path: PagesAuth.NOTIFICATIONS, element: <NotificationsScreen /> },
       { path: `${PagesAuth.PROFILE}/me`, element: <ProfileScreen /> },
@@ -44,6 +44,7 @@ const unauthRouter = createBrowserRouter([
     children: [
       { index: true, element: <HomeScreen /> },
       { path: `/${PagesUnauth.POSTS}`, element: <PostFeedScreen /> },
+      { path: `/${PagesAuth.POSTS}/:postId`, element: <PostByIdScreen /> },
       { path: `/${PagesUnauth.GAME}/:name`, element: <GameDetailsScreen /> },
       { path: PagesUnauth.RESET_PASSWORD, element: <ResetPasswordScreen /> },
       { path: PagesAuth.DEMO, element: <DemoScreen /> },

@@ -4,22 +4,25 @@ import CommentCard from "../../../components/cards/comment.card";
 import PostCard from "../../../components/cards/post.card";
 import { PostDto, PostWithCommentsDto } from "../../../stores/post/post.model";
 import PostRequest from "../../../stores/post/post.request";
+import { useUserStore } from "../../../stores/user/user.store";
 
 const PostByIdScreen = () => {
-  const { id } = useParams();
+  const { postId } = useParams();
+  const { id } = useUserStore();
   const [isLoading, setIsLoading] = useState(true);
   const [post, setPost] = useState<PostWithCommentsDto | null>(null);
 
   useEffect(() => {
-    PostRequest.getPostById(id ?? "")
+    PostRequest.getPostById(postId ?? "", id ? id : "")
       .then((x) => {
         setPost(x);
+        console.log(x);
         setIsLoading(false);
       })
       .catch(() => {
         setIsLoading(false);
       });
-  }, [id]);
+  }, [postId, id]);
 
   if (isLoading) return <div>Loading...</div>;
 
@@ -31,14 +34,10 @@ const PostByIdScreen = () => {
       <div className="flex flex-row-reverse">
         <div className="w-[95%]">
           {post!.postComments.map((x) => (
-            <>
+            <div key={x.id}>
               <div className="h-5 bg-white w-px ml-4"></div>
-              <CommentCard
-                key={x.id}
-                comment={x}
-                onDelete={() => console.log("a")}
-              />
-            </>
+              <CommentCard comment={x} onDelete={() => console.log("a")} />
+            </div>
           ))}
         </div>
       </div>
