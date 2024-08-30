@@ -16,7 +16,6 @@ const PostByIdScreen = () => {
     PostRequest.getPostById(postId ?? "", id ? id : "")
       .then((x) => {
         setPost(x);
-        console.log(x);
         setIsLoading(false);
       })
       .catch(() => {

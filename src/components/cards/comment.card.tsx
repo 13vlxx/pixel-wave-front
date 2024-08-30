@@ -1,5 +1,4 @@
 import { useAuthStore } from "@stores/auth/auth.store";
-import { CommentDto } from "@stores/comment/comment.model";
 import { useUserStore } from "@stores/user/user.store";
 import dayjs from "dayjs";
 import "dayjs/locale/fr";
@@ -8,6 +7,7 @@ import { BsThreeDots } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
+import { CommentDto } from "../../stores/post/post.model";
 
 dayjs.extend(relativeTime);
 dayjs.locale("fr");
@@ -20,7 +20,6 @@ export interface CommentCardProps {
 const CommentCard = (props: CommentCardProps) => {
   const { comment, onDelete } = props;
   const { token } = useAuthStore();
-  const { toggleModal } = useAuthStore();
   const { id } = useUserStore();
 
   return (
@@ -44,7 +43,10 @@ const CommentCard = (props: CommentCardProps) => {
           <h1 className="max-w-[100%] text-sm text-ellipsis line-clamp-1">{`@${comment.user.pseudo} • ${dayjs(comment.createdAt).fromNow()}`}</h1>
         </Link>
         {id === comment.user.id && (
-          <div className="dropdown  dropdown-end">
+          <div
+            onClick={(e: React.MouseEvent) => e.stopPropagation()}
+            className="dropdown  dropdown-end"
+          >
             <div tabIndex={0} role="button">
               <BsThreeDots className="size-6" />
             </div>

@@ -9,7 +9,7 @@ import { useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { FaHeart, FaRegComment, FaShare, FaTrash } from "react-icons/fa";
 import { LuHeart } from "react-icons/lu";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 dayjs.extend(relativeTime);
@@ -25,8 +25,16 @@ const PostCard = (props: PostCardProps) => {
   const { toggleModal } = useAuthStore();
   const { id } = useUserStore();
   const { post, onDelete } = props;
-
+  const navigate = useNavigate();
   const [isFavorite, setIsFavorite] = useState(post.isLiked);
+
+  const handleStopPropagation = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
+  const handlePostClick = () => {
+    navigate(`/posts/${post.id}`);
+  };
 
   const handleShare = async () => {
     navigator.clipboard
@@ -36,7 +44,8 @@ const PostCard = (props: PostCardProps) => {
       });
   };
 
-  const handleToggleFavorite = () => {
+  const handleToggleFavorite = (e: React.MouseEvent) => {
+    handleStopPropagation(e);
     if (token) {
       PostRequest.toggleLike(post.id).then(() => {
         setIsFavorite(!isFavorite);
@@ -67,9 +76,9 @@ const PostCard = (props: PostCardProps) => {
   };
 
   const actionButtons = (
-    <div className="flex gap-2 w-full justify-end items-center">
+    <div className="flex gap-2 justify-end items-center">
       <div
-        onClick={() => toast.success("Comments")}
+        onClick={(e: React.MouseEvent) => e.stopPropagation()}
         className="flex items-center gap-1"
       >
         <p className="text-sm">{post.comments}</p>
@@ -80,61 +89,64 @@ const PostCard = (props: PostCardProps) => {
   );
 
   return (
-    <Link to={`/posts/${post.id}`}>
-      <div className="p-4 rounded-md border border-secondary cursor-pointer">
-        <div className="flex items-center justify-between">
-          <Link
-            to={
-              post.user.id === id ? "/profile/me" : `/profile/${post.user.id}`
-            }
-            className="flex items-center gap-2 cursor-pointer"
-          >
-            <img
-              src={post.user.profilePicture || "/default-pfp.jpeg"}
-              alt={`Photo de profil de ${post.user.pseudo}`}
-              className="object-cover size-[40px] rounded-full"
-            />
-            <h1 className="max-w-[100%] text-sm text-ellipsis line-clamp-1">{`@${post.user.pseudo} • ${dayjs(post.createdAt).fromNow()}`}</h1>
-          </Link>
-          <div className="dropdown  dropdown-end">
-            <div tabIndex={0} role="button">
-              <BsThreeDots className="size-6" />
-            </div>
-            <ul className="menu bg-neutral dropdown-content rounded-box shadow">
-              <label htmlFor=""></label>
-              <div className="flex gap-2">
-                {id === post.user.id && (
-                  <button
-                    onClick={() =>
-                      toast("Êtes-vous sur de vouloir supprimer ce post ?", {
-                        duration: 5000,
-                        action: {
-                          label: "Oui",
-                          onClick: () => {
-                            onDelete(post.id);
-                          },
-                        },
-                      })
-                    }
-                    className="bg-error size-8 rounded-full p-0 grid place-items-center"
-                  >
-                    <FaTrash size={16} />
-                  </button>
-                )}
-                <button
-                  onClick={handleShare}
-                  className="bg-info size-8 rounded-full p-0 grid place-items-center"
-                >
-                  <FaShare size={16} />
-                </button>
-              </div>
-            </ul>
+    <div
+      onClick={handlePostClick}
+      className="p-4 rounded-md border border-secondary cursor-pointer"
+    >
+      <div className="flex items-center justify-between">
+        <Link
+          onClick={(e: React.MouseEvent) => e.stopPropagation()}
+          to={post.user.id === id ? "/profile/me" : `/profile/${post.user.id}`}
+          className="flex items-center gap-2 cursor-pointer"
+        >
+          <img
+            src={post.user.profilePicture || "/default-pfp.jpeg"}
+            alt={`Photo de profil de ${post.user.pseudo}`}
+            className="object-cover size-[40px] rounded-full"
+          />
+          <h1 className="max-w-[100%] text-sm text-ellipsis line-clamp-1">{`@${post.user.pseudo} • ${dayjs(post.createdAt).fromNow()}`}</h1>
+        </Link>
+        <div
+          onClick={(e: React.MouseEvent) => e.stopPropagation()}
+          className="dropdown  dropdown-end"
+        >
+          <div tabIndex={0} role="button">
+            <BsThreeDots className="size-6" />
           </div>
+          <ul className="menu bg-neutral dropdown-content rounded-box shadow">
+            <label htmlFor=""></label>
+            <div className="flex gap-2">
+              {id === post.user.id && (
+                <button
+                  onClick={() =>
+                    toast("Êtes-vous sur de vouloir supprimer ce post ?", {
+                      duration: 5000,
+                      action: {
+                        label: "Oui",
+                        onClick: () => {
+                          onDelete(post.id);
+                        },
+                      },
+                    })
+                  }
+                  className="bg-error size-8 rounded-full p-0 grid place-items-center"
+                >
+                  <FaTrash size={16} />
+                </button>
+              )}
+              <button
+                onClick={handleShare}
+                className="bg-info size-8 rounded-full p-0 grid place-items-center"
+              >
+                <FaShare size={16} />
+              </button>
+            </div>
+          </ul>
         </div>
-        <p className="py-2"> {post.content}</p>
-        {actionButtons}
       </div>
-    </Link>
+      <p className="py-2"> {post.content}</p>
+      {actionButtons}
+    </div>
   );
 };
 
