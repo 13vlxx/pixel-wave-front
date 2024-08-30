@@ -85,11 +85,7 @@ const PostCard = (props: PostCardProps) => {
         <div className="flex items-center justify-between">
           <Link
             to={
-              token
-                ? post.user.id === id
-                  ? "/profile/me"
-                  : `/profile/${post.user.id}`
-                : ""
+              post.user.id === id ? "/profile/me" : `/profile/${post.user.id}`
             }
             className="flex items-center gap-2 cursor-pointer"
           >

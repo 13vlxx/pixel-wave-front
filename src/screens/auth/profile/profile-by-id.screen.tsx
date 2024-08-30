@@ -22,7 +22,7 @@ export const ProfileByIdScreen = () => {
   }, [id, userId, user?.user.pseudo]);
 
   useEffect(() => {
-    UserRequest.getUserById(userId!)
+    UserRequest.getUserById(userId!, id)
       .then((x) => {
         setUser(x);
         setIsLoading(false);

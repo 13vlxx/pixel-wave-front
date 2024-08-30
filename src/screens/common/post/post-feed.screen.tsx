@@ -23,33 +23,41 @@ const PostFeedScreen = () => {
   const handleShowCreatePost = () => {
     if (token)
       //TODO: Modale de création de post
-      console.log("Show create post modal")
-    else
-      toggleModal()
-  }
+      console.log("Show create post modal");
+    else toggleModal();
+  };
 
   const handleDeletePost = (postId: string) => {
     PostRequest.deletePost(postId).then(() => {
-      setPosts(posts.filter((x) => x.id !== postId))
-      toast.success("Post supprimé avec succès")
+      setPosts(posts.filter((x) => x.id !== postId));
+      toast.success("Post supprimé avec succès");
     });
-  }
+  };
 
   const main = () => {
     if (isMobile)
-      return <section className="flex flex-col gap-2">
+      return (
+        <section className="flex flex-col gap-2">
+          {posts.map((post) => (
+            <PostCard onDelete={handleDeletePost} key={post.id} post={post} />
+          ))}
+          <button
+            onClick={handleShowCreatePost}
+            className="fixed right-4 bottom-4 btn btn-circle btn-secondary text-xl text-secondary bg-clip-text"
+          >
+            <FaPlus />
+          </button>
+        </section>
+      );
+
+    return (
+      <section className="flex flex-col gap-2">
         {posts.map((post) => (
           <PostCard onDelete={handleDeletePost} key={post.id} post={post} />
         ))}
-        <button onClick={handleShowCreatePost} className="fixed right-4 bottom-4 btn btn-circle btn-secondary text-xl text-secondary bg-clip-text"><FaPlus /></button>
       </section>
-
-    return <section className="flex flex-col gap-2">
-      {posts.map((post) => (
-        <PostCard onDelete={handleDeletePost} key={post.id} post={post} />
-      ))}
-    </section>
-  }
+    );
+  };
 
   if (isMobile)
     return (
@@ -63,7 +71,9 @@ const PostFeedScreen = () => {
     <section className="relative p-4 w-[70%]">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl bg-gradient-to-r mb-4 font-semibold">Feed</h1>
-        <button className="btn btn-sm btn-secondary text-primary">Poster</button>
+        <button className="btn btn-sm btn-secondary text-primary">
+          Poster
+        </button>
       </div>
       {main()}
     </section>

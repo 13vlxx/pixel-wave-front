@@ -46,6 +46,7 @@ const unauthRouter = createBrowserRouter([
       { path: `/${PagesUnauth.POSTS}`, element: <PostFeedScreen /> },
       { path: `/${PagesAuth.POSTS}/:postId`, element: <PostByIdScreen /> },
       { path: `/${PagesUnauth.GAME}/:name`, element: <GameDetailsScreen /> },
+      { path: `${PagesAuth.PROFILE}/:userId`, element: <ProfileByIdScreen /> },
       { path: PagesUnauth.RESET_PASSWORD, element: <ResetPasswordScreen /> },
       { path: PagesAuth.DEMO, element: <DemoScreen /> },
     ],
