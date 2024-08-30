@@ -3,114 +3,139 @@ import { PostDto } from "@stores/post/post.model";
 import PostRequest from "@stores/post/post.request";
 import { useUserStore } from "@stores/user/user.store";
 import dayjs from "dayjs";
-import 'dayjs/locale/fr';
+import "dayjs/locale/fr";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { FaHeart, FaRegComment, FaShare, FaTrash } from "react-icons/fa";
 import { LuHeart } from "react-icons/lu";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
 
-dayjs.extend(relativeTime)
-dayjs.locale('fr')
+dayjs.extend(relativeTime);
+dayjs.locale("fr");
 
 export interface PostCardProps {
-    post: PostDto;
-    onDelete: (postId: string) => void;
+  post: PostDto;
+  onDelete: (postId: string) => void;
 }
 
 const PostCard = (props: PostCardProps) => {
-    const { token } = useAuthStore();
-    const { toggleModal } = useAuthStore();
-    const { id } = useUserStore();
-    const { post, onDelete } = props;
+  const { token } = useAuthStore();
+  const { toggleModal } = useAuthStore();
+  const { id } = useUserStore();
+  const { post, onDelete } = props;
 
-    const [isFavorite, setIsFavorite] = useState(post.isLiked);
+  const [isFavorite, setIsFavorite] = useState(post.isLiked);
 
-    const handleShare = async () => {
-        navigator.clipboard.writeText('http://localhost:5173/posts/' + post.id,).then(() => {
-            toast.success('Lien copié avec succès')
-        })
-    }
+  const handleShare = async () => {
+    navigator.clipboard
+      .writeText("http://localhost:5173/posts/" + post.id)
+      .then(() => {
+        toast.success("Lien copié avec succès");
+      });
+  };
 
-    const handleToggleFavorite = () => {
-        if (token) {
-            PostRequest.toggleLike(post.id).then(() => {
-                setIsFavorite(!isFavorite)
-                post.likes = isFavorite ? post.likes - 1 : post.likes + 1
-            })
-        }
-        else toggleModal();
-    };
+  const handleToggleFavorite = () => {
+    if (token) {
+      PostRequest.toggleLike(post.id).then(() => {
+        setIsFavorite(!isFavorite);
+        post.likes = isFavorite ? post.likes - 1 : post.likes + 1;
+      });
+    } else toggleModal();
+  };
 
-    const heart = () => {
-        if (token)
-            return (
-                <div onClick={handleToggleFavorite}>
-                    <div className="flex items-center gap-1 cursor-pointer">
-                        <p className="text-sm">{post.likes}</p>
-                        {isFavorite ? <FaHeart color="red" /> : <LuHeart />}
-                    </div>
-                </div>
-            )
-
-        return <div onClick={handleToggleFavorite}>
-            <div className="flex items-center gap-1 cursor-pointer">
-                <p className="text-sm">{post.likes}</p>
-                <LuHeart />
-            </div>
+  const heart = () => {
+    if (token)
+      return (
+        <div onClick={handleToggleFavorite}>
+          <div className="flex items-center gap-1 cursor-pointer">
+            <p className="text-sm">{post.likes}</p>
+            {isFavorite ? <FaHeart color="red" /> : <LuHeart />}
+          </div>
         </div>
-    }
-
-    const actionButtons = (
-        <div className="flex gap-2 w-full justify-end items-center">
-            <div onClick={() => toast.success("Comments")} className="flex items-center gap-1">
-                <p className="text-sm">{post.comments}</p>
-                {<FaRegComment />}
-            </div>
-            {heart()}
-        </div>
-    )
+      );
 
     return (
-        <div className="p-4 rounded-md border border-secondary">
-            <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                    <img src={post.user.profilePicture || "/default-pfp.jpeg"} alt={`Photo de profil de ${post.user.pseudo}`} className="object-cover size-[40px] rounded-full" />
-                    <h1 className="max-w-[100%] text-sm text-ellipsis line-clamp-1">{`@${post.user.pseudo} • ${dayjs(post.createdAt).fromNow()}`}</h1>
-                </div>
-                <div className="dropdown  dropdown-end">
-                    <div tabIndex={0} role="button">
-                        <BsThreeDots className="size-6" />
-                    </div>
-                    <ul className="menu bg-neutral dropdown-content rounded-box shadow">
-                        <label htmlFor=""></label>
-                        <div className="flex gap-2">
-                            {id === post.user.id &&
-                                <button onClick={() => toast("Êtes-vous sur de vouloir supprimer ce post ?", {
-                                    duration: 5000,
-                                    action: {
-                                        label: 'Oui',
-                                        onClick: () => {
-                                            onDelete(post.id)
-                                        },
-                                    },
+      <div onClick={handleToggleFavorite}>
+        <div className="flex items-center gap-1 cursor-pointer">
+          <p className="text-sm">{post.likes}</p>
+          <LuHeart />
+        </div>
+      </div>
+    );
+  };
 
-                                })} className="bg-error size-8 rounded-full p-0 grid place-items-center">
-                                    <FaTrash size={16} />
-                                </button>}
-                            <button onClick={handleShare} className="bg-info size-8 rounded-full p-0 grid place-items-center">
-                                <FaShare size={16} />
-                            </button>
-                        </div>
-                    </ul>
-                </div>
-            </div >
-            <p className="py-2"> {post.content}</p>
-            {actionButtons}
-        </div >
-    )
-}
+  const actionButtons = (
+    <div className="flex gap-2 w-full justify-end items-center">
+      <div
+        onClick={() => toast.success("Comments")}
+        className="flex items-center gap-1"
+      >
+        <p className="text-sm">{post.comments}</p>
+        {<FaRegComment />}
+      </div>
+      {heart()}
+    </div>
+  );
 
+  return (
+    <Link to={`/posts/${post.id}`}>
+      <div className="p-4 rounded-md border border-secondary cursor-pointer">
+        <div className="flex items-center justify-between">
+          <Link
+            to={
+              post.user.id === id ? "/profile/me" : `/profile/${post.user.id}`
+            }
+            className="flex items-center gap-2 cursor-pointer"
+          >
+            <img
+              src={post.user.profilePicture || "/default-pfp.jpeg"}
+              alt={`Photo de profil de ${post.user.pseudo}`}
+              className="object-cover size-[40px] rounded-full"
+            />
+            <h1 className="max-w-[100%] text-sm text-ellipsis line-clamp-1">{`@${post.user.pseudo} • ${dayjs(post.createdAt).fromNow()}`}</h1>
+          </Link>
+          <div className="dropdown  dropdown-end">
+            <div tabIndex={0} role="button">
+              <BsThreeDots className="size-6" />
+            </div>
+            <ul className="menu bg-neutral dropdown-content rounded-box shadow">
+              <label htmlFor=""></label>
+              <div className="flex gap-2">
+                {id === post.user.id && (
+                  <button
+                    onClick={() =>
+                      toast("Êtes-vous sur de vouloir supprimer ce post ?", {
+                        duration: 5000,
+                        action: {
+                          label: "Oui",
+                          onClick: () => {
+                            onDelete(post.id);
+                          },
+                        },
+                      })
+                    }
+                    className="bg-error size-8 rounded-full p-0 grid place-items-center"
+                  >
+                    <FaTrash size={16} />
+                  </button>
+                )}
+                <button
+                  onClick={handleShare}
+                  className="bg-info size-8 rounded-full p-0 grid place-items-center"
+                >
+                  <FaShare size={16} />
+                </button>
+              </div>
+            </ul>
+          </div>
+        </div>
+        <p className="py-2"> {post.content}</p>
+        {actionButtons}
+      </div>
+    </Link>
+  );
+};
 
-export default PostCard
+export default PostCard;

@@ -10,3 +10,14 @@ export interface PostDto {
   comments: number;
   isLiked: boolean;
 }
+
+export interface CommentDto {
+  id: string;
+  content: string;
+  user: LiteUserDto;
+  createdAt: Date;
+}
+
+export interface PostWithCommentsDto extends PostDto {
+  postComments: CommentDto[];
+}

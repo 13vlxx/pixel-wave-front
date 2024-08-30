@@ -14,7 +14,7 @@ const NotificationsScreen = () => {
     const [notificationsParam, setNotificationsParam] = useState({ receiveNotifications: false })
 
     const fetchNotifications = useCallback(() => {
-        NotificationRequest.getNotifications().then(setNotifications);
+        NotificationRequest.getNotifications().then((x) => setNotifications(x.reverse()));
     }, []);
 
     useEffect(() => {
