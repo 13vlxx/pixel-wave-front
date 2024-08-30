@@ -14,4 +14,8 @@ export default {
     PixelWaveAxios.put(`/posts/${postId}`).then((res) => res.data),
   deletePost: (postId: string) =>
     PixelWaveAxios.delete(`/posts/${postId}`).then((res) => res.data),
+  deleteComment: (commentId: string) =>
+    PixelWaveAxios.delete(`/posts/comment/${commentId}`).then(
+      (res) => res.data,
+    ),
 };
