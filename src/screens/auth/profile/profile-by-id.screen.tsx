@@ -1,7 +1,7 @@
 import GamesCarousel from "@components/carousels/games.carousel";
 import PostsList from "@components/lists/posts.list";
 import Verified from "@components/verified.component";
-import { GetUserProfileDto } from "@stores/user/user.model";
+import { GetUserProfileDto, UserRole } from "@stores/user/user.model";
 import UserRequest from "@stores/user/user.request";
 import { useUserStore } from "@stores/user/user.store";
 import { useResponsive } from "@utils/useResponsive";
@@ -46,7 +46,7 @@ export const ProfileByIdScreen = () => {
     if (isMobile)
       return (
         <>
-          {(user.favoriteGames.length && (
+          {(user?.favoriteGames.length && (
             <>
               <div className="px-4 flex justify-between w-full pt-2">
                 <h2 className="font-semibold text-lg">
@@ -63,7 +63,7 @@ export const ProfileByIdScreen = () => {
             <h2 className="font-semibold text-lg px-4">Aucun jeu a afficher</h2>
           )}
           <section className="px-4 w-full pt-2 flex flex-col gap-2">
-            {(user.posts.length && (
+            {(user?.posts.length && (
               <>
                 <div className="flex items-center justify-between">
                   <h2 className="font-semibold text-lg">
@@ -74,7 +74,7 @@ export const ProfileByIdScreen = () => {
                   </h2>
                   <p>Voir tout</p>
                 </div>
-                {<PostsList posts={user.posts} />}
+                {<PostsList onDelete={() => {}} posts={user.posts} />}
               </>
             )) ||
               null}
@@ -85,7 +85,7 @@ export const ProfileByIdScreen = () => {
     return (
       <section className="flex w-full px-4">
         <section className="flex flex-1 flex-col gap-2">
-          {(user.favoriteGames.length && (
+          {(user?.favoriteGames.length && (
             <>
               <div className="flex justify-between w-full">
                 <h2 className="font-semibold">
@@ -97,7 +97,7 @@ export const ProfileByIdScreen = () => {
                 <p>Voir tout</p>
               </div>
               <div className="grid grid-cols-2 gap-4 gap-x-6">
-                {user.favoriteGames.map((x) => (
+                {user?.favoriteGames.map((x) => (
                   <Link
                     to={`/game/${x.name}`}
                     key={x.id}
@@ -121,7 +121,7 @@ export const ProfileByIdScreen = () => {
         </section>
         <div className="divider divider-horizontal"></div>
         <section className="flex flex-1 justify-start">
-          {(user.posts.length && (
+          {(user?.posts.length && (
             <div className="flex justify-between w-full">
               <h2 className="font-semibold">
                 Posts
@@ -142,15 +142,15 @@ export const ProfileByIdScreen = () => {
       <header className="relative flex py-4 flex-col items-center border-neutral border-b">
         <div className="avatar">
           <div className="w-24 rounded-full">
-            <img src={user.user.profilePicture || "/default-pfp.jpeg"} />
+            <img src={user?.user.profilePicture || "/default-pfp.jpeg"} />
           </div>
         </div>
         <div className="flex items-center gap-1">
-          <h1 className="flex items-baseline text-xl">@{user.user.pseudo}</h1>
-          <Verified role={user.user.role} />
+          <h1 className="flex items-baseline text-xl">@{user?.user.pseudo}</h1>
+          <Verified role={user?.user.role ?? UserRole.USER} />
         </div>
         <p>
-          Inscrit depuis le {dayjs(user.user.createdAt).format("DD MMM YYYY")}
+          Inscrit depuis le {dayjs(user?.user.createdAt).format("DD MMM YYYY")}
         </p>
       </header>
       {content()}

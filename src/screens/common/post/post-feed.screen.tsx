@@ -12,7 +12,6 @@ const PostFeedScreen = () => {
   const { token, toggleModal } = useAuthStore();
   const { id } = useUserStore();
   const [posts, setPosts] = useState<PostDto[]>([]);
-
   const { isMobile } = useResponsive();
 
   useEffect(() => {
