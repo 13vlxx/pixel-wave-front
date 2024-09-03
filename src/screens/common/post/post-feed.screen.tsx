@@ -72,17 +72,7 @@ const PostFeedScreen = () => {
               setIsNewPostModalShowed(!isNewPostModalShowed);
             }}
           >
-            <div className="flex justify-between items-center">
-              <h1 className="text-2xl bg-gradient-to-r mb-4 font-semibold">
-                Poster
-              </h1>
-              <button
-                onClick={() => setIsNewPostModalShowed(false)}
-                className="btn btn-sm btn-secondary text-primary"
-              >
-                Fermer
-              </button>
-            </div>
+            <div className="flex justify-between items-center">alex</div>
           </Modal>
         )}
       </>
