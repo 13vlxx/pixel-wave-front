@@ -17,14 +17,20 @@ dayjs.locale("fr");
 
 export interface PostCardProps {
   post: PostDto;
+  hideActions?: boolean;
+  onNewComment: (post: PostDto) => void;
   onDelete: (postId: string) => void;
 }
 
-const PostCard = (props: PostCardProps) => {
+const PostCard = ({
+  post,
+  hideActions = false,
+  onNewComment,
+  onDelete,
+}: PostCardProps) => {
   const { token } = useAuthStore();
   const { toggleModal } = useAuthStore();
   const { id } = useUserStore();
-  const { post, onDelete } = props;
   const navigate = useNavigate();
   const [isFavorite, setIsFavorite] = useState(post.isLiked);
 
@@ -82,7 +88,7 @@ const PostCard = (props: PostCardProps) => {
         className="flex items-center gap-1"
       >
         <p className="text-sm">{post.comments}</p>
-        {<FaRegComment />}
+        {<FaRegComment onClick={() => onNewComment(post)} />}
       </div>
       {heart()}
     </div>
@@ -106,46 +112,48 @@ const PostCard = (props: PostCardProps) => {
           />
           <h1 className="max-w-[100%] text-sm text-ellipsis line-clamp-1">{`@${post.user.pseudo} • ${dayjs(post.createdAt).fromNow()}`}</h1>
         </Link>
-        <div
-          onClick={(e: React.MouseEvent) => e.stopPropagation()}
-          className="dropdown  dropdown-end"
-        >
-          <div tabIndex={0} role="button">
-            <BsThreeDots className="size-6" />
-          </div>
-          <ul className="menu bg-neutral dropdown-content rounded-box shadow">
-            <label htmlFor=""></label>
-            <div className="flex gap-2">
-              {id === post.user.id && (
-                <button
-                  onClick={() =>
-                    toast("Êtes-vous sur de vouloir supprimer ce post ?", {
-                      duration: 5000,
-                      action: {
-                        label: "Oui",
-                        onClick: () => {
-                          onDelete(post.id);
-                        },
-                      },
-                    })
-                  }
-                  className="bg-error size-8 rounded-full p-0 grid place-items-center"
-                >
-                  <FaTrash size={16} />
-                </button>
-              )}
-              <button
-                onClick={handleShare}
-                className="bg-info size-8 rounded-full p-0 grid place-items-center"
-              >
-                <FaShare size={16} />
-              </button>
+        {!hideActions && (
+          <div
+            onClick={(e: React.MouseEvent) => e.stopPropagation()}
+            className="dropdown  dropdown-end"
+          >
+            <div tabIndex={0} role="button">
+              <BsThreeDots className="size-6" />
             </div>
-          </ul>
-        </div>
+            <ul className="menu bg-neutral dropdown-content rounded-box shadow">
+              <label htmlFor=""></label>
+              <div className="flex gap-2">
+                {id === post.user.id && (
+                  <button
+                    onClick={() =>
+                      toast("Êtes-vous sur de vouloir supprimer ce post ?", {
+                        duration: 5000,
+                        action: {
+                          label: "Oui",
+                          onClick: () => {
+                            onDelete(post.id);
+                          },
+                        },
+                      })
+                    }
+                    className="bg-error size-8 rounded-full p-0 grid place-items-center"
+                  >
+                    <FaTrash size={16} />
+                  </button>
+                )}
+                <button
+                  onClick={handleShare}
+                  className="bg-info size-8 rounded-full p-0 grid place-items-center"
+                >
+                  <FaShare size={16} />
+                </button>
+              </div>
+            </ul>
+          </div>
+        )}
       </div>
       <p className="py-2"> {post.content}</p>
-      {actionButtons}
+      {!hideActions && actionButtons}
     </div>
   );
 };

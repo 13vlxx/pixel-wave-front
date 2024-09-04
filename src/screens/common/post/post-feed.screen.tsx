@@ -7,6 +7,7 @@ import { useResponsive } from "@utils/useResponsive";
 import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { toast } from "sonner";
+import { CommentModal } from "../../../components/modals/comment.modal";
 import { PostModal } from "../../../components/modals/post.modal";
 
 const PostFeedScreen = () => {
@@ -15,6 +16,8 @@ const PostFeedScreen = () => {
   const [posts, setPosts] = useState<PostDto[]>([]);
   const [isNewPostModalShowed, setIsNewPostModalShowed] =
     useState<boolean>(false);
+  const [isNewCommentModalShowed, setIsNewCommentModalShowed] =
+    useState<PostDto | null>(null);
   const { isMobile } = useResponsive();
 
   useEffect(() => {
@@ -39,7 +42,12 @@ const PostFeedScreen = () => {
       return (
         <section className="flex flex-col gap-2">
           {posts.map((post) => (
-            <PostCard onDelete={handleDeletePost} key={post.id} post={post} />
+            <PostCard
+              onNewComment={(x) => setIsNewCommentModalShowed(x)}
+              onDelete={handleDeletePost}
+              key={post.id}
+              post={post}
+            />
           ))}
           <button
             onClick={handleShowNewPostModal}
@@ -53,7 +61,12 @@ const PostFeedScreen = () => {
     return (
       <section className="flex flex-col gap-2">
         {posts.map((post) => (
-          <PostCard onDelete={handleDeletePost} key={post.id} post={post} />
+          <PostCard
+            onNewComment={(x) => setIsNewCommentModalShowed(x)}
+            onDelete={handleDeletePost}
+            key={post.id}
+            post={post}
+          />
         ))}
       </section>
     );
@@ -70,6 +83,14 @@ const PostFeedScreen = () => {
           <PostModal
             handleClose={() => {
               setIsNewPostModalShowed(!isNewPostModalShowed);
+            }}
+          />
+        )}
+        {isNewCommentModalShowed && (
+          <CommentModal
+            post={isNewCommentModalShowed}
+            handleClose={() => {
+              setIsNewCommentModalShowed(null);
             }}
           />
         )}
@@ -94,6 +115,14 @@ const PostFeedScreen = () => {
         <PostModal
           handleClose={() => {
             setIsNewPostModalShowed(!isNewPostModalShowed);
+          }}
+        />
+      )}
+      {isNewCommentModalShowed && (
+        <CommentModal
+          post={isNewCommentModalShowed}
+          handleClose={() => {
+            setIsNewCommentModalShowed(null);
           }}
         />
       )}
