@@ -11,6 +11,11 @@ export interface PostDto {
   isLiked: boolean;
 }
 
+export interface CreatePostDto {
+  content: string;
+  photo?: File | null;
+}
+
 export interface CommentDto {
   id: string;
   content: string;

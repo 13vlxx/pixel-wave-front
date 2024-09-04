@@ -7,7 +7,7 @@ import { useResponsive } from "@utils/useResponsive";
 import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { toast } from "sonner";
-import { Modal } from "../../../layouts/modal.layout";
+import { PostModal } from "../../../components/modals/post.modal";
 
 const PostFeedScreen = () => {
   const { token, toggleModal } = useAuthStore();
@@ -20,7 +20,7 @@ const PostFeedScreen = () => {
   useEffect(() => {
     document.title = "Pixel Wave | Feed";
     PostRequest.getFeed(id ? id : "").then(setPosts);
-  }, [id]);
+  }, [isNewPostModalShowed, id]);
 
   const handleShowNewPostModal = () => {
     if (token) setIsNewPostModalShowed(!isNewPostModalShowed);
@@ -67,13 +67,11 @@ const PostFeedScreen = () => {
           {main()}
         </section>
         {isNewPostModalShowed && (
-          <Modal
+          <PostModal
             handleClose={() => {
               setIsNewPostModalShowed(!isNewPostModalShowed);
             }}
-          >
-            <div className="flex justify-between items-center">alex</div>
-          </Modal>
+          />
         )}
       </>
     );
@@ -83,12 +81,22 @@ const PostFeedScreen = () => {
       <section className="relative p-4 w-[70%]">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl bg-gradient-to-r mb-4 font-semibold">Feed</h1>
-          <button className="btn btn-sm btn-secondary text-primary">
+          <button
+            onClick={handleShowNewPostModal}
+            className="btn btn-sm btn-secondary text-primary"
+          >
             Poster
           </button>
         </div>
         {main()}
       </section>
+      {isNewPostModalShowed && (
+        <PostModal
+          handleClose={() => {
+            setIsNewPostModalShowed(!isNewPostModalShowed);
+          }}
+        />
+      )}
     </>
   );
 };
