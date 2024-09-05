@@ -120,17 +120,20 @@ export const ProfileByIdScreen = () => {
           )) || <h2 className="font-semibold">Aucun jeu à afficher</h2>}
         </section>
         <div className="divider divider-horizontal"></div>
-        <section className="flex flex-1 justify-start">
+        <section className="flex flex-col gap-2 flex-1 justify-start">
           {(user?.posts.length && (
-            <div className="flex justify-between w-full">
-              <h2 className="font-semibold">
-                Posts
-                <span className="ml-2 indicator indicator-item badge badge-outline">
-                  {user.posts.length}
-                </span>
-              </h2>
-              <p>Voir tout</p>
-            </div>
+            <>
+              <div className="flex justify-between w-full">
+                <h2 className="font-semibold">
+                  Posts
+                  <span className="ml-2 indicator indicator-item badge badge-outline">
+                    {user.posts.length}
+                  </span>
+                </h2>
+                <p>Voir tout</p>
+              </div>
+              {<PostsList onDelete={() => {}} posts={user.posts} />}
+            </>
           )) || <h2 className="font-semibold">Aucun post à afficher</h2>}
         </section>
       </section>

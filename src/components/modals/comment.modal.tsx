@@ -2,10 +2,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { IoCloseSharp } from "react-icons/io5";
+import { toast } from "sonner";
 import { InferType, object } from "yup";
 import { useResponsive } from "../../_utils/useResponsive";
 import { fieldsValidation } from "../../_utils/yup.utils";
 import { PostDto } from "../../stores/post/post.model";
+import PostRequest from "../../stores/post/post.request";
 import { useUserStore } from "../../stores/user/user.store";
 import PostCard from "../cards/post.card";
 
@@ -45,7 +47,10 @@ export const CommentModal = (props: CommentModalProps) => {
   }, []);
 
   const onSubmit = handleSubmit((formData) => {
-    console.log(formData);
+    PostRequest.createComment(post.id, formData).then((x) => {
+      toast.success("Commentaire ajouté avec succès");
+      handleClose();
+    });
   });
 
   if (isMobile)

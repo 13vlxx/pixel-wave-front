@@ -16,6 +16,10 @@ export interface CreatePostDto {
   photo?: File | null;
 }
 
+export interface CreateCommentDto {
+  content: string;
+}
+
 export interface CommentDto {
   id: string;
   content: string;

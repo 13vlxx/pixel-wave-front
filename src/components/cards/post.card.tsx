@@ -84,11 +84,14 @@ const PostCard = ({
   const actionButtons = (
     <div className="flex gap-2 justify-end items-center">
       <div
-        onClick={(e: React.MouseEvent) => e.stopPropagation()}
+        onClick={(e: React.MouseEvent) => {
+          e.stopPropagation();
+          onNewComment(post);
+        }}
         className="flex items-center gap-1"
       >
         <p className="text-sm">{post.comments}</p>
-        {<FaRegComment onClick={() => onNewComment(post)} />}
+        {<FaRegComment />}
       </div>
       {heart()}
     </div>

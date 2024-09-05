@@ -58,11 +58,11 @@ const AdvicesCarousel = (props: AdvicesCarouselProps) => {
             key={x.user.id + x.game.id}
             className="overflow-scroll text-center bg-neutral flex flex-col max-h-[200px] items-center rounded-md p-2 justify-center"
           >
-            <div className="avatar">
+            <Link to={`/profile/${x.user.id}`} className="avatar">
               <div className="w-12 rounded-full">
                 <img src={x.user.profilePicture || "/default-pfp.jpeg"} />
               </div>
-            </div>
+            </Link>
             <div>
               <p className="text-sm text-ellipsis">{x.note}/5</p>
               {!hideGameName && (

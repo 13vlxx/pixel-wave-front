@@ -26,7 +26,7 @@ const PostByIdScreen = () => {
       .catch(() => {
         setIsLoading(false);
       });
-  }, [postId, id]);
+  }, [postId, id, isNewCommentModalShowed]);
 
   const handleDeletePost = (postId: string) => {
     PostRequest.deletePost(postId).then(() => {

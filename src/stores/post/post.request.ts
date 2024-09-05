@@ -1,5 +1,10 @@
 import { PixelWaveAxios } from "@api/Axios";
-import { CreatePostDto, PostDto, PostWithCommentsDto } from "./post.model";
+import {
+  CreateCommentDto,
+  CreatePostDto,
+  PostDto,
+  PostWithCommentsDto,
+} from "./post.model";
 
 export default {
   getFeed: (currentUserId?: string) =>
@@ -14,6 +19,10 @@ export default {
     PixelWaveAxios.put(`/posts/${postId}`).then((res) => res.data),
   createPost: (createPostDto: CreatePostDto) =>
     PixelWaveAxios.post("/posts", createPostDto).then((res) => res.data),
+  createComment: (postId: string, createCommentDto: CreateCommentDto) =>
+    PixelWaveAxios.post(`/posts/${postId}/comment`, createCommentDto).then(
+      (res) => res.data,
+    ),
   deletePost: (postId: string) =>
     PixelWaveAxios.delete(`/posts/${postId}`).then((res) => res.data),
   deleteComment: (commentId: string) =>
