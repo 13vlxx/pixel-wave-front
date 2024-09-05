@@ -1,18 +1,33 @@
+import NotificationCard from "@components/cards/notification.card";
 import NotificationRequest from "@stores/notifications/notification.request";
 import { GetNotificationsDto } from "@stores/user/user.model";
-import { useEffect, useState } from "react";
+import dayjs from "dayjs";
+import relativeTime from 'dayjs/plugin/relativeTime';
+import { useCallback, useEffect, useState } from "react";
 import { IoMdSettings } from "react-icons/io";
 
-const NotificationsScreen = () => {
-    const [notifications, setNotifications] = useState<GetNotificationsDto | null>({ receiveNotifications: false })
+dayjs.locale('fr')
+dayjs.extend(relativeTime)
 
-    useEffect(() => {
-        NotificationRequest.getNotifications().then((data) => setNotifications({ receiveNotifications: data }))
+const NotificationsScreen = () => {
+    const [notifications, setNotifications] = useState<GetNotificationsDto[]>([])
+    const [notificationsParam, setNotificationsParam] = useState({ receiveNotifications: false })
+
+    const fetchNotifications = useCallback(() => {
+        NotificationRequest.getNotifications().then((x) => setNotifications(x.reverse()));
     }, []);
 
+    useEffect(() => {
+        document.title = `Pixel Wave | Notifications`;
+        fetchNotifications();
+        NotificationRequest.check().then((x) => setNotificationsParam({ ...notificationsParam, receiveNotifications: x }))
+    }, [fetchNotifications, notificationsParam]);
+
     const handleToggleReceiveNotifications = () => {
-        NotificationRequest.toggleReceiveNotifications({ receiveNotifications: !notifications?.receiveNotifications })
-            .then((x) => setNotifications({ ...notifications, receiveNotifications: x }))
+        NotificationRequest.toggleReceiveNotifications({ receiveNotifications: !notificationsParam?.receiveNotifications })
+            .then((x) => {
+                setNotificationsParam({ ...notificationsParam, receiveNotifications: x })
+            })
     }
 
     return (
@@ -28,12 +43,16 @@ const NotificationsScreen = () => {
                         <div className="form-control">
                             <label className="label cursor-pointer flex flex-row-reverse gap-2">
                                 <span className="label-text">Recevoir les notifications ?</span>
-                                <input checked={notifications?.receiveNotifications} onClick={handleToggleReceiveNotifications} className="checkbox checkbox-accent" type="checkbox" />
+                                <input checked={notificationsParam?.receiveNotifications} onChange={handleToggleReceiveNotifications} className="checkbox checkbox-accent" type="checkbox" />
                             </label>
                         </div>
                     </ul>
                 </div>
             </header>
+            <div className="pt-2"></div>
+            {notifications.map((x) => (
+                <NotificationCard key={x.destinationId} notification={x} />
+            ))}
         </section>
     )
 }

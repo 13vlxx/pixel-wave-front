@@ -23,7 +23,10 @@ export const useAuthStore = create<AuthState & AuthAction>()(
       isModalOpen: false,
       login: (auth: AuthenticatedResponseDto) => {
         set({ token: auth.token });
-        useUserStore.setState({ id: auth.user.id });
+        useUserStore.setState({
+          id: auth.user.id,
+          profilePicture: auth.user.profilePicture,
+        });
       },
       logout: () => {
         set({ token: undefined, isModalOpen: false });
@@ -36,6 +39,6 @@ export const useAuthStore = create<AuthState & AuthAction>()(
       name: "pw-auth",
       storage: createJSONStorage(() => localStorage),
       partialize: ({ token, isModalOpen }) => ({ token, isModalOpen }),
-    }
-  )
+    },
+  ),
 );

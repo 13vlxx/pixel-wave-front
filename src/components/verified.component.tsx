@@ -9,13 +9,15 @@ export interface VerifiedProps {
 const Verified = (props: VerifiedProps) => {
     const { role, size } = props;
 
+    const textsize = size ? `text-[${size}]` : "text-xl";
+
     switch (role) {
         case UserRole.ADMIN:
-            return <span className="tooltip tooltip-neutral tooltip-bottom" data-tip="Administrateur"><MdVerified className={`${size ? size : "text-xl"} text-error`} /></span>
+            return <span className="tooltip tooltip-neutral tooltip-bottom" data-tip="Administrateur"><MdVerified className={`${textsize} text-error`} /></span>
         case UserRole.MODERATOR:
-            return <span className="tooltip tooltip-neutral tooltip-bottom" data-tip="Moderateur"><MdVerified className={`${size ? size : "text-xl"} text-success`} /></span>
+            return <span className="tooltip tooltip-neutral tooltip-bottom" data-tip="Moderateur"><MdVerified className={`${textsize} text-success`} /></span>
         case UserRole.CERTIFIED:
-            return <span className="tooltip tooltip-neutral tooltip-bottom" data-tip="Utilisateur Certifié"><MdVerified className={`${size ? size : "text-xl"} text-blue-500`} /></span>
+            return <span className="tooltip tooltip-neutral tooltip-bottom" data-tip="Utilisateur Certifié"><MdVerified className={`${textsize} text-blue-500`} /></span>
     }
 }
 

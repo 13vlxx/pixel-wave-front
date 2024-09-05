@@ -3,22 +3,25 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 interface UserState {
   id?: string;
+  profilePicture?: string;
 }
 
 interface UserActions {
-  setUser: (id: string) => void;
+  setUser: (id: string, profilePicture?: string) => void;
 }
 
 export const useUserStore = create<UserState & UserActions>()(
   persist(
     (set) => ({
       id: undefined,
-      setUser: (id: string) => set({ id }),
+      profilePicture: undefined,
+      setUser: (id: string, profilePicture?: string) =>
+        set({ id, profilePicture }),
     }),
     {
-      name: "pw-user-id",
+      name: "pw-user",
       storage: createJSONStorage(() => localStorage),
-      partialize: ({ id }) => ({ id }),
-    }
-  )
+      partialize: ({ id, profilePicture }) => ({ id, profilePicture }),
+    },
+  ),
 );

@@ -8,6 +8,11 @@ export enum UserRole {
   ADMIN = "ADMIN",
 }
 
+export enum NotificationTypeEnum {
+  NEW_LIKE = "NEW_LIKE",
+  NEW_COMMENT = "NEW_COMMENT",
+}
+
 export interface GetUserDto {
   id: string;
   email: string;
@@ -21,6 +26,7 @@ export interface LiteUserDto {
   id: string;
   pseudo: string;
   profilePicture: string;
+  role: UserRole;
 }
 
 export interface GetMeDto {
@@ -42,5 +48,10 @@ export interface UpdateReceiveNotificationsDto {
 }
 
 export interface GetNotificationsDto {
-  receiveNotifications: boolean;
+  id: string;
+  user: LiteUserDto;
+  notificationType: NotificationTypeEnum;
+  destinationId: string;
+  isRead: boolean;
+  createdAt: Date;
 }

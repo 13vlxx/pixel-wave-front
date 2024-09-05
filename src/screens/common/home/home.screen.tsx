@@ -7,6 +7,7 @@ import { AdviceDto, CategoryDto, LiteGameDto, PlatformDto } from "@stores/game/g
 import HomeRequest from "@stores/home/home.request";
 import { useEffect, useState } from "react";
 import { FaArrowRight } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const HomeScreen = () => {
     const [games, setGames] = useState<LiteGameDto[]>([]);
@@ -30,7 +31,7 @@ const HomeScreen = () => {
             <AdvicesCarousel advices={advices} />
             <div className="bg-neutral p-4 flex items-center justify-center flex-col gap-2 cursor-pointer">
                 <p>Envie de discuter avec d'autres joueurs ?</p>
-                <span className="link link-accent flex items-center gap-2">Consulter les posts <FaArrowRight /></span>
+                <Link to={"/posts"} className="link link-accent flex items-center gap-2">Consulter les posts <FaArrowRight /></Link>
             </div>
             <CategoriesCarousel categories={categories} />
             <PlatformsCarousel platforms={platforms} />
