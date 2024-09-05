@@ -47,7 +47,7 @@ export const CommentModal = (props: CommentModalProps) => {
   }, []);
 
   const onSubmit = handleSubmit((formData) => {
-    PostRequest.createComment(post.id, formData).then((x) => {
+    PostRequest.createComment(post.id, formData).then(() => {
       toast.success("Commentaire ajouté avec succès");
       handleClose();
     });

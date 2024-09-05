@@ -30,7 +30,7 @@ export const ProfileByIdScreen = () => {
       .catch(() => {
         setUser(null);
       });
-  }, [userId]);
+  }, [userId, id]);
 
   if (isLoading)
     return (
