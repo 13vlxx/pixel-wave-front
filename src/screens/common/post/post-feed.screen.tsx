@@ -43,7 +43,9 @@ const PostFeedScreen = () => {
         <section className="flex flex-col gap-2">
           {posts.map((post) => (
             <PostCard
-              onNewComment={(x) => setIsNewCommentModalShowed(x)}
+              onNewComment={(x) =>
+                token ? setIsNewCommentModalShowed(x) : toggleModal()
+              }
               onDelete={handleDeletePost}
               key={post.id}
               post={post}
@@ -62,7 +64,9 @@ const PostFeedScreen = () => {
       <section className="flex flex-col gap-2">
         {posts.map((post) => (
           <PostCard
-            onNewComment={(x) => setIsNewCommentModalShowed(x)}
+            onNewComment={(x) =>
+              token ? setIsNewCommentModalShowed(x) : toggleModal()
+            }
             onDelete={handleDeletePost}
             key={post.id}
             post={post}

@@ -4,11 +4,13 @@ import { toast } from "sonner";
 import CommentCard from "../../../components/cards/comment.card";
 import PostCard from "../../../components/cards/post.card";
 import { CommentModal } from "../../../components/modals/comment.modal";
+import { useAuthStore } from "../../../stores/auth/auth.store";
 import { PostDto, PostWithCommentsDto } from "../../../stores/post/post.model";
 import PostRequest from "../../../stores/post/post.request";
 import { useUserStore } from "../../../stores/user/user.store";
 
 const PostByIdScreen = () => {
+  const { token, toggleModal } = useAuthStore();
   const { postId } = useParams();
   const { id } = useUserStore();
   const [isLoading, setIsLoading] = useState(true);
@@ -58,7 +60,9 @@ const PostByIdScreen = () => {
       <div className="p-4 pb-0">
         <PostCard
           post={post as PostDto}
-          onNewComment={() => setIsNewCommentModalShowed(post)}
+          onNewComment={() =>
+            token ? setIsNewCommentModalShowed(post) : toggleModal()
+          }
           onDelete={handleDeletePost}
         />
         <div className="flex flex-row-reverse">

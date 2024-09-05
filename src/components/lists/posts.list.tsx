@@ -21,7 +21,13 @@ const PostsList = (props: PostsListProps) => {
   return (
     <div className="flex flex-col gap-2">
       {posts.map((x) => (
-        <PostCard key={x.id} post={x} onDelete={handleDeletePost} />
+        <PostCard
+          onNewComment={() => {}}
+          hideActions
+          key={x.id}
+          post={x}
+          onDelete={handleDeletePost}
+        />
       ))}
     </div>
   );

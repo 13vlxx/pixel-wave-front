@@ -3,7 +3,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 interface UserState {
   id?: string;
-  profilePicture?: string;
+  profilePicture?: string | null;
 }
 
 interface UserActions {

@@ -30,7 +30,7 @@ export const useAuthStore = create<AuthState & AuthAction>()(
       },
       logout: () => {
         set({ token: undefined, isModalOpen: false });
-        useUserStore.setState({ id: undefined });
+        useUserStore.setState({ id: undefined, profilePicture: undefined });
         window.location.replace("/");
       },
       toggleModal: () => set((state) => ({ isModalOpen: !state.isModalOpen })),
