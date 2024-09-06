@@ -22,7 +22,26 @@ const ProfileScreen = () => {
   useEffect(() => {
     document.title = `Pixel Wave | ${data?.user.pseudo}`;
     UserRequest.getMe().then(setData);
-  }, [id, data?.user.pseudo]);
+  }, [id, data?.user.pseudo, data?.user.profilePicture]);
+
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const formData = new FormData();
+    const file = event.target.files![0];
+    formData.append("profilePicture", file);
+    if (file)
+      UserRequest.updateProfilePicture(formData).then((x) => {
+        setData({
+          ...data!,
+          user: {
+            ...data!.user,
+            profilePicture: x,
+          },
+        });
+        toast.success("Photo de profil mise à jour avec succès");
+      });
+  };
 
   const handleToggleSettings = () => setIsSettingsOpen(!isSettingsOpen);
 
@@ -181,11 +200,24 @@ const ProfileScreen = () => {
         >
           <LuLogOut />
         </button>
-        <div className="avatar">
+        <label
+          htmlFor="profile-picture-input"
+          className="avatar cursor-pointer"
+        >
           <div className="w-24 rounded-full">
-            <img src={data.user.profilePicture || "/default-pfp.jpeg"} />
+            <img
+              src={data.user.profilePicture || "/default-pfp.jpeg"}
+              alt="Profile picture"
+            />
           </div>
-        </div>
+        </label>
+        <input
+          id="profile-picture-input"
+          type="file"
+          onChange={handleFileChange}
+          accept="image/*"
+          className="hidden"
+        />
         <div className="flex items-center gap-1">
           <h1 className="flex items-baseline text-xl">@{data.user.pseudo}</h1>
           <Verified role={data.user.role} />
