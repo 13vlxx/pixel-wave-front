@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { LuLogOut } from "react-icons/lu";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "sonner";
+import { useUserStore } from "../../../stores/user/user.store";
 
 const ProfileScreen = () => {
   const { id } = useParams();
@@ -18,6 +19,7 @@ const ProfileScreen = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const { isMobile } = useResponsive();
   const { logout } = useAuthStore();
+  const { setProfilePicture } = useUserStore();
 
   useEffect(() => {
     document.title = `Pixel Wave | ${data?.user.pseudo}`;
@@ -39,6 +41,7 @@ const ProfileScreen = () => {
             profilePicture: x,
           },
         });
+        setProfilePicture(x);
         toast.success("Photo de profil mise à jour avec succès");
       });
   };

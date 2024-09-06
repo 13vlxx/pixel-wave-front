@@ -15,7 +15,7 @@ export interface PostModalProps {
 
 const CreatePostDataSchema = object().shape({
   content: fieldsValidation.REQUIRED_POST_CONTENT,
-  photo: fieldsValidation.FILE,
+  photo: object().nullable(),
 });
 
 export type CreatePostDataValidationType = InferType<

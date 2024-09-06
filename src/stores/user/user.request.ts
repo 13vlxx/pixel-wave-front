@@ -10,7 +10,7 @@ export default {
     ).then((res) => res.data),
   updateSettings: (update: UpdateSettingsDto) =>
     PixelWaveAxios.patch(`/users/profile`, update).then((res) => res.data),
-  updateProfilePicture: (profilePicture: any) =>
+  updateProfilePicture: (profilePicture: FormData) =>
     PixelWaveAxios.patch(`/users/profile/picture`, profilePicture).then(
       (res) => res.data,
     ),

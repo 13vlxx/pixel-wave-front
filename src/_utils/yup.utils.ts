@@ -1,4 +1,4 @@
-import { boolean, mixed, number, string } from "yup";
+import { boolean, number, string } from "yup";
 
 export enum FieldValidationType {
   STRING = "STRING",
@@ -47,23 +47,6 @@ export const fieldsValidation = {
       passwordSecurityRegex,
       "Le mot de passe doit contenir au moins 6 caractères, une majuscule et un chiffre",
     ),
-  [FieldValidationType.REQUIRED_FILE]: mixed()
-    .required("Le fichier est requis")
-    .test(
-      "fileType",
-      "Le fichier doit être une image de type JPEG ou PNG",
-      (value) => {
-        if (!value) return false;
-        const fileType = value.type;
-        return fileType === "image/jpeg" || fileType === "image/png";
-      },
-    )
-    .test("fileSize", "Le fichier doit être inférieur à 5 Mo", (value) => {
-      if (!value) return false;
-      const fileSize = value.size;
-      return fileSize <= 5 * 1024 * 1024;
-    }),
-  [FieldValidationType.FILE]: mixed().nullable().optional(),
   [FieldValidationType.NUMBER]: number(),
   [FieldValidationType.REQUIRED_NUMBER]: number()
     .required("Ce champ est requis")

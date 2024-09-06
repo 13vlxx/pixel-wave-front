@@ -8,6 +8,7 @@ interface UserState {
 
 interface UserActions {
   setUser: (id: string, profilePicture?: string) => void;
+  setProfilePicture: (profilePicture: string) => void;
 }
 
 export const useUserStore = create<UserState & UserActions>()(
@@ -17,6 +18,7 @@ export const useUserStore = create<UserState & UserActions>()(
       profilePicture: undefined,
       setUser: (id: string, profilePicture?: string) =>
         set({ id, profilePicture }),
+      setProfilePicture: (profilePicture: string) => set({ profilePicture }),
     }),
     {
       name: "pw-user",
