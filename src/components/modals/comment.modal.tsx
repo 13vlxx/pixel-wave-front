@@ -73,6 +73,7 @@ export const CommentModal = (props: CommentModalProps) => {
         <form className="px-4">
           <PostCard
             hideActions={true}
+            hideImage={true}
             onDelete={() => {}}
             onNewComment={() => {}}
             post={post}
@@ -116,6 +117,7 @@ export const CommentModal = (props: CommentModalProps) => {
         <form className="px-6 py-4 h-[calc(100%-80px)] flex flex-col justify-between overflow-y-auto">
           <PostCard
             hideActions={true}
+            hideImage={true}
             onDelete={() => {}}
             onNewComment={() => {}}
             post={post}

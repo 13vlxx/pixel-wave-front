@@ -1,11 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { AiOutlinePicture } from "react-icons/ai";
+import { FaRegTrashAlt } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
 import { toast } from "sonner";
-import { InferType, object } from "yup";
+import { InferType, mixed, object } from "yup";
 import { useResponsive } from "../../_utils/useResponsive";
 import { fieldsValidation } from "../../_utils/yup.utils";
+import { CreatePostDto } from "../../stores/post/post.model";
 import PostRequest from "../../stores/post/post.request";
 import { useUserStore } from "../../stores/user/user.store";
 
@@ -15,7 +18,7 @@ export interface PostModalProps {
 
 const CreatePostDataSchema = object().shape({
   content: fieldsValidation.REQUIRED_POST_CONTENT,
-  photo: object().nullable(),
+  photo: mixed().nullable(),
 });
 
 export type CreatePostDataValidationType = InferType<
@@ -30,10 +33,12 @@ export const PostModal = (props: PostModalProps) => {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { isValid },
   } = useForm<CreatePostDataValidationType>({
     resolver: yupResolver(CreatePostDataSchema),
     mode: "all",
+    criteriaMode: "all",
   });
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -46,12 +51,18 @@ export const PostModal = (props: PostModalProps) => {
     };
   }, []);
 
-  const onSubmit = handleSubmit((formData) => {
-    console.log(formData);
-    PostRequest.createPost({
-      ...formData,
-      photo: null,
-    }).then(() => {
+  const onSubmit = handleSubmit((data) => {
+    const formData = new FormData();
+
+    formData.append("content", data.content);
+
+    // @ts-expect-error pww
+    if (data.photo && data.photo[0]) {
+      // @ts-expect-error pww
+      formData.append("photo", data.photo[0]);
+    }
+
+    PostRequest.createPost(formData as unknown as CreatePostDto).then(() => {
       setSelectedImage(null);
       toast.success("Post créé avec succès !");
       handleClose();
@@ -63,12 +74,17 @@ export const PostModal = (props: PostModalProps) => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setSelectedImage(reader.result as string); // Mettre à jour l'état avec l'URL de l'image
+        setSelectedImage(reader.result as string);
       };
       reader.readAsDataURL(file);
     } else {
-      setSelectedImage(null); // Réinitialiser si aucun fichier n'est sélectionné
+      setSelectedImage(null);
     }
+  };
+
+  const handleRemoveImage = () => {
+    setValue("photo", null);
+    setSelectedImage(null);
   };
 
   if (isMobile)
@@ -88,7 +104,7 @@ export const PostModal = (props: PostModalProps) => {
           </button>
         </div>
         <div className="h-px w-[95%] mb-2 mx-auto bg-neutral"></div>
-        <form className="px-4">
+        <form className="px-4 overflow-y-auto">
           <div className="flex gap-2 min-h-40">
             <img
               src={profilePicture || "/default-pfp.jpeg"}
@@ -98,27 +114,40 @@ export const PostModal = (props: PostModalProps) => {
             <textarea
               {...register("content")}
               maxLength={255}
-              className="w-full outline-none bg-transparent resize-none p-2 rounded-lg"
+              className="w-full outline-none bg-transparent resize-none border border-secondary p-2 rounded-lg"
               placeholder="Quoi de neuf ?"
             ></textarea>
           </div>
-          <div>
+          <div className="flex flex-col items-end">
+            {selectedImage && (
+              <div className="mt-4">
+                <img
+                  src={selectedImage}
+                  alt="Aperçu de l'image"
+                  className="w-1/ mx-auto h-auto max-h-80 rounded-lg"
+                />
+              </div>
+            )}
+            {!selectedImage ? (
+              <label htmlFor="photo" className="btn btn-sm btn-secondary mt-2">
+                Ajouter une photo
+              </label>
+            ) : (
+              <button
+                onClick={handleRemoveImage}
+                className="btn btn-sm btn-secondary mt-2"
+              >
+                Supprimer la photo
+              </button>
+            )}
             <input
               {...register("photo")}
+              id="photo"
               type="file"
-              className="p-2 py-8 w-full border-dotted border-secondary border-2"
-              onChange={handleFileChange} // Ajoutez le gestionnaire d'événements ici
+              className="sr-only"
+              onChange={handleFileChange}
             />
           </div>
-          {selectedImage && (
-            <div className="mt-4">
-              <img
-                src={selectedImage}
-                alt="Aperçu de l'image"
-                className="w-1/ mx-auto h-auto rounded-lg"
-              />
-            </div>
-          )}
         </form>
       </div>
     );
@@ -131,13 +160,27 @@ export const PostModal = (props: PostModalProps) => {
             className="text-3xl cursor-pointer"
             onClick={handleClose}
           />
-          <button
-            disabled={!isValid}
-            onClick={onSubmit}
-            className="btn btn-outline btn-sm"
-          >
-            Poster
-          </button>
+          <div className="flex gap-2 items-baseline">
+            {!selectedImage ? (
+              <label htmlFor="photo" className="btn btn-sm btn-secondary mt-2">
+                <AiOutlinePicture />
+              </label>
+            ) : (
+              <button
+                onClick={handleRemoveImage}
+                className="btn btn-sm btn-secondary mt-2"
+              >
+                <FaRegTrashAlt />
+              </button>
+            )}
+            <button
+              disabled={!isValid}
+              onClick={onSubmit}
+              className="btn btn-outline btn-sm"
+            >
+              Poster
+            </button>
+          </div>
         </div>
         <form className="px-6 py-4 h-[calc(100%-80px)] flex flex-col justify-between overflow-y-auto">
           <div className="flex gap-4 min-h-40">
@@ -149,26 +192,27 @@ export const PostModal = (props: PostModalProps) => {
             <textarea
               {...register("content")}
               maxLength={255}
-              className="w-full outline-none bg-transparent resize-none p-2 rounded-lg"
+              className="w-full outline-none bg-transparent border border-secondary resize-none p-2 rounded-lg"
               placeholder="Quoi de neuf ?"
             ></textarea>
           </div>
+          {selectedImage && (
+            <div className="mt-4">
+              <img
+                src={selectedImage}
+                alt="Aperçu de l'image"
+                className="w-full object-contain h-40 rounded-lg"
+              />
+            </div>
+          )}
           <div className="mt-4">
             <input
               {...register("photo")}
+              id="photo"
               type="file"
-              className="p-2 py-8 w-full border-dotted border-2 border-secondary"
+              className="sr-only"
               onChange={handleFileChange}
             />
-            {selectedImage && (
-              <div className="mt-4">
-                <img
-                  src={selectedImage}
-                  alt="Aperçu de l'image"
-                  className="w-full h-auto rounded-lg"
-                />
-              </div>
-            )}
           </div>
         </form>
       </div>

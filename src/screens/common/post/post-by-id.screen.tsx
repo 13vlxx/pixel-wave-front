@@ -57,7 +57,7 @@ const PostByIdScreen = () => {
 
   return (
     <>
-      <div className="p-4 pb-0">
+      <div className="p-4 pb-0 max-lg:w-full w-[50%] mx-auto">
         <PostCard
           post={post as PostDto}
           onNewComment={() =>

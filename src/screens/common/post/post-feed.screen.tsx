@@ -53,7 +53,7 @@ const PostFeedScreen = () => {
           ))}
           <button
             onClick={handleShowNewPostModal}
-            className="fixed right-4 bottom-4 btn btn-circle btn-secondary text-xl text-secondary bg-clip-text"
+            className="fixed right-4 bottom-4 btn btn-circle btn-secondary text-xl text-primary bg-secondary"
           >
             <FaPlus />
           </button>
@@ -103,7 +103,7 @@ const PostFeedScreen = () => {
 
   return (
     <>
-      <section className="relative p-4 w-[70%]">
+      <section className="relative mx-auto p-4 w-[50%]">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl bg-gradient-to-r mb-4 font-semibold">Feed</h1>
           <button

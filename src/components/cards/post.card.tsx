@@ -18,6 +18,7 @@ dayjs.locale("fr");
 export interface PostCardProps {
   post: PostDto;
   hideActions?: boolean;
+  hideImage?: boolean;
   onNewComment: (post: PostDto) => void;
   onDelete: (postId: string) => void;
 }
@@ -25,6 +26,7 @@ export interface PostCardProps {
 const PostCard = ({
   post,
   hideActions = false,
+  hideImage = false,
   onNewComment,
   onDelete,
 }: PostCardProps) => {
@@ -33,6 +35,8 @@ const PostCard = ({
   const { id } = useUserStore();
   const navigate = useNavigate();
   const [isFavorite, setIsFavorite] = useState(post.isLiked);
+
+  console.log(post.photo);
 
   const handleStopPropagation = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -100,7 +104,7 @@ const PostCard = ({
   return (
     <div
       onClick={handlePostClick}
-      className="p-4 rounded-md border border-secondary cursor-pointer"
+      className="p-4 rounded-md border border-secondary max-lg:w-full cursor-pointer"
     >
       <div className="flex items-center justify-between">
         <Link
@@ -156,6 +160,13 @@ const PostCard = ({
         )}
       </div>
       <p className="py-2"> {post.content}</p>
+      {post.photo && !hideImage && (
+        <img
+          src={post.photo}
+          alt="Photo du post"
+          className="object-contain w-full h-68 rounded-md border border-secondary mb-2"
+        />
+      )}
       {!hideActions && actionButtons}
     </div>
   );

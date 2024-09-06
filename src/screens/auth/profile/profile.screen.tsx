@@ -24,7 +24,7 @@ const ProfileScreen = () => {
   useEffect(() => {
     document.title = `Pixel Wave | ${data?.user.pseudo}`;
     UserRequest.getMe().then(setData);
-  }, [id, data?.user.pseudo, data?.user.profilePicture]);
+  }, [id, data?.user.pseudo]);
 
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -40,6 +40,13 @@ const ProfileScreen = () => {
             ...data!.user,
             profilePicture: x,
           },
+          posts: data!.posts.map((y) => ({
+            ...y,
+            user: {
+              ...y.user,
+              profilePicture: x,
+            },
+          })),
         });
         setProfilePicture(x);
         toast.success("Photo de profil mise à jour avec succès");

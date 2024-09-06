@@ -13,7 +13,7 @@ export interface PostDto {
 
 export interface CreatePostDto {
   content: string;
-  photo?: File | null;
+  photo?: FileList | null;
 }
 
 export interface CreateCommentDto {
