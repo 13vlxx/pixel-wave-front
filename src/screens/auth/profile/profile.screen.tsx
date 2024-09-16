@@ -110,7 +110,7 @@ const ProfileScreen = () => {
               Vous n'avez aucun jeu en favoris
             </h2>
           )}
-          <section className="px-4 w-full pt-2 flex flex-col gap-2">
+          <section className="px-4 w-full mb-4 pt-2 flex flex-col gap-2">
             {(data.posts.length && (
               <>
                 <div className="flex items-center justify-between">

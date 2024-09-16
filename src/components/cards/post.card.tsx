@@ -104,7 +104,7 @@ const PostCard = ({
   return (
     <div
       onClick={handlePostClick}
-      className="p-4 rounded-md border border-secondary max-lg:w-full cursor-pointer"
+      className="p-4 rounded-md border border-secondary max-md:w-full cursor-pointer"
     >
       <div className="flex items-center justify-between">
         <Link
@@ -164,7 +164,7 @@ const PostCard = ({
         <img
           src={post.photo}
           alt="Photo du post"
-          className="object-contain w-full h-68 rounded-md border border-secondary mb-2"
+          className="object-cover max-md:w-full mx-auto h-64 rounded-md border border-secondary mb-2"
         />
       )}
       {!hideActions && actionButtons}
