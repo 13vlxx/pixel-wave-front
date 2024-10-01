@@ -9,8 +9,7 @@ const config: AxiosRequestConfig = {
 export const PixelWaveAxios = axios.create(config);
 
 PixelWaveAxios.interceptors.request.use((config) => {
-  if (useAuthStore.getState().token)
-    config.headers.Authorization = `Bearer ${useAuthStore.getState().token}`;
+  if (useAuthStore.getState().token) config.headers.Authorization = `Bearer ${useAuthStore.getState().token}`;
   return config;
 });
 

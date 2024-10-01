@@ -23,20 +23,12 @@ export interface PostCardProps {
   onDelete: (postId: string) => void;
 }
 
-const PostCard = ({
-  post,
-  hideActions = false,
-  hideImage = false,
-  onNewComment,
-  onDelete,
-}: PostCardProps) => {
+const PostCard = ({ post, hideActions = false, hideImage = false, onNewComment, onDelete }: PostCardProps) => {
   const { token } = useAuthStore();
   const { toggleModal } = useAuthStore();
   const { id } = useUserStore();
   const navigate = useNavigate();
   const [isFavorite, setIsFavorite] = useState(post.isLiked);
-
-  console.log(post.photo);
 
   const handleStopPropagation = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -47,11 +39,9 @@ const PostCard = ({
   };
 
   const handleShare = async () => {
-    navigator.clipboard
-      .writeText("http://localhost:5173/posts/" + post.id)
-      .then(() => {
-        toast.success("Lien copié avec succès");
-      });
+    navigator.clipboard.writeText("http://localhost:5173/posts/" + post.id).then(() => {
+      toast.success("Lien copié avec succès");
+    });
   };
 
   const handleToggleFavorite = (e: React.MouseEvent) => {
@@ -102,10 +92,7 @@ const PostCard = ({
   );
 
   return (
-    <div
-      onClick={handlePostClick}
-      className="p-4 rounded-md border border-secondary max-md:w-full cursor-pointer"
-    >
+    <div onClick={handlePostClick} className="p-4 rounded-md border border-secondary max-md:w-full cursor-pointer">
       <div className="flex items-center justify-between">
         <Link
           onClick={(e: React.MouseEvent) => e.stopPropagation()}
@@ -120,10 +107,7 @@ const PostCard = ({
           <h1 className="max-w-[100%] text-sm text-ellipsis line-clamp-1">{`@${post.user.pseudo} • ${dayjs(post.createdAt).fromNow()}`}</h1>
         </Link>
         {!hideActions && (
-          <div
-            onClick={(e: React.MouseEvent) => e.stopPropagation()}
-            className="dropdown  dropdown-end"
-          >
+          <div onClick={(e: React.MouseEvent) => e.stopPropagation()} className="dropdown  dropdown-end">
             <div tabIndex={0} role="button">
               <BsThreeDots className="size-6" />
             </div>
@@ -148,10 +132,7 @@ const PostCard = ({
                     <FaTrash size={16} />
                   </button>
                 )}
-                <button
-                  onClick={handleShare}
-                  className="bg-info size-8 rounded-full p-0 grid place-items-center"
-                >
+                <button onClick={handleShare} className="bg-info size-8 rounded-full p-0 grid place-items-center">
                   <FaShare size={16} />
                 </button>
               </div>
@@ -161,11 +142,7 @@ const PostCard = ({
       </div>
       <p className="py-2"> {post.content}</p>
       {post.photo && !hideImage && (
-        <img
-          src={post.photo}
-          alt="Photo du post"
-          className="object-cover max-md:w-full mx-auto h-64 rounded-md border border-secondary mb-2"
-        />
+        <img src={post.photo} alt="Photo du post" className="object-cover max-md:w-full mx-auto h-64 rounded-md border border-secondary mb-2" />
       )}
       {!hideActions && actionButtons}
     </div>

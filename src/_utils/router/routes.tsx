@@ -18,6 +18,12 @@ export enum PagesUnauth {
   DEMO = "demo",
 }
 
+export enum PagesBackoffice {
+  DASHBOARD = "admin",
+  USERS = "users",
+  POSTS = "posts",
+}
+
 export const useRouteMatch = (patterns: readonly string[] = []) => {
   const { pathname } = useLocation();
   const pathSegments = pathname.split("/");

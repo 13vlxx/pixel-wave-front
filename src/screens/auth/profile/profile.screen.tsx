@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { LuLogOut } from "react-icons/lu";
 import { Link, useParams } from "react-router-dom";
 import { toast } from "sonner";
+import { PagesBackoffice } from "../../../_utils/router/routes";
 import { useUserStore } from "../../../stores/user/user.store";
 
 const ProfileScreen = () => {
@@ -26,9 +27,7 @@ const ProfileScreen = () => {
     UserRequest.getMe().then(setData);
   }, [id, data?.user.pseudo]);
 
-  const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const formData = new FormData();
     const file = event.target.files![0];
     formData.append("profilePicture", file);
@@ -74,21 +73,13 @@ const ProfileScreen = () => {
     });
   };
 
-  if (data === null)
-    return (
-      <div className="mx-auto block mt-4 loading loading-spinner loading-lg"></div>
-    );
+  if (data === null) return <div className="mx-auto block mt-4 loading loading-spinner loading-lg"></div>;
 
   const content = () => {
     if (isMobile)
       return isSettingsOpen ? (
         <div className="mt-4 px-8">
-          <UpdateProfileForm
-            handleClose={handleToggleSettings}
-            user={data.user}
-            receiveEmails={data.receiveEmails}
-            hideHeader
-          />
+          <UpdateProfileForm handleClose={handleToggleSettings} user={data.user} receiveEmails={data.receiveEmails} hideHeader />
         </div>
       ) : (
         <>
@@ -97,28 +88,20 @@ const ProfileScreen = () => {
               <div className="px-4 flex justify-between w-full pt-2">
                 <h2 className="font-semibold text-lg">
                   Jeux Favoris
-                  <span className="ml-2 indicator indicator-item badge badge-outline">
-                    {data.favoriteGames.length}
-                  </span>
+                  <span className="ml-2 indicator indicator-item badge badge-outline">{data.favoriteGames.length}</span>
                 </h2>
                 <p>Voir tout</p>
               </div>
               <GamesCarousel games={data.favoriteGames} />
             </>
-          )) || (
-            <h2 className="font-semibold text-lg px-4">
-              Vous n'avez aucun jeu en favoris
-            </h2>
-          )}
+          )) || <h2 className="font-semibold text-lg px-4">Vous n'avez aucun jeu en favoris</h2>}
           <section className="px-4 w-full mb-4 pt-2 flex flex-col gap-2">
             {(data.posts.length && (
               <>
                 <div className="flex items-center justify-between">
                   <h2 className="font-semibold text-lg">
                     Posts
-                    <span className="ml-2 indicator indicator-item badge badge-outline">
-                      {data.posts.length}
-                    </span>
+                    <span className="ml-2 indicator indicator-item badge badge-outline">{data.posts.length}</span>
                   </h2>
                   <p>Voir tout</p>
                 </div>
@@ -133,12 +116,7 @@ const ProfileScreen = () => {
     if (isSettingsOpen)
       return (
         <div className="w-2/6 mt-4 mx-auto">
-          <UpdateProfileForm
-            handleClose={handleToggleSettings}
-            user={data.user}
-            receiveEmails={data.receiveEmails}
-            hideHeader
-          />
+          <UpdateProfileForm handleClose={handleToggleSettings} user={data.user} receiveEmails={data.receiveEmails} hideHeader />
         </div>
       );
 
@@ -150,19 +128,13 @@ const ProfileScreen = () => {
               <div className="flex justify-between w-full">
                 <h2 className="font-semibold">
                   Jeux Favoris
-                  <span className="ml-2 indicator indicator-item badge badge-outline">
-                    {data.favoriteGames.length}
-                  </span>
+                  <span className="ml-2 indicator indicator-item badge badge-outline">{data.favoriteGames.length}</span>
                 </h2>
                 <p>Voir tout</p>
               </div>
               <div className="grid grid-cols-2 gap-4 gap-x-6">
                 {data.favoriteGames.map((x) => (
-                  <Link
-                    to={`/game/${x.name}`}
-                    key={x.id}
-                    className="cursor-pointer select-none hover:scale-105 transition-all duration-300"
-                  >
+                  <Link to={`/game/${x.name}`} key={x.id} className="cursor-pointer select-none hover:scale-105 transition-all duration-300">
                     <img
                       className="object-cover rounded-md"
                       src={
@@ -186,9 +158,7 @@ const ProfileScreen = () => {
               <div className="flex justify-between w-full">
                 <h2 className="font-semibold">
                   Posts
-                  <span className="ml-2 indicator indicator-item badge badge-outline">
-                    {data.posts.length}
-                  </span>
+                  <span className="ml-2 indicator indicator-item badge badge-outline">{data.posts.length}</span>
                 </h2>
                 <p>Voir tout</p>
               </div>
@@ -203,47 +173,28 @@ const ProfileScreen = () => {
   return (
     <section>
       <header className="relative flex py-4 flex-col items-center border-neutral border-b">
-        <button
-          data-cy="logout"
-          onClick={handleLogout}
-          className="btn btn-outline btn-accent absolute top-4 right-4"
-        >
+        <button data-cy="logout" onClick={handleLogout} className="btn btn-outline btn-accent absolute top-4 right-4">
           <LuLogOut />
         </button>
-        <label
-          htmlFor="profile-picture-input"
-          className="avatar cursor-pointer"
-        >
+        <label htmlFor="profile-picture-input" className="avatar cursor-pointer">
           <div className="w-24 rounded-full">
-            <img
-              src={data.user.profilePicture || "/default-pfp.jpeg"}
-              alt="Profile picture"
-            />
+            <img src={data.user.profilePicture || "/default-pfp.jpeg"} alt="Profile picture" />
           </div>
         </label>
-        <input
-          id="profile-picture-input"
-          type="file"
-          onChange={handleFileChange}
-          accept="image/*"
-          className="hidden"
-        />
+        <input id="profile-picture-input" type="file" onChange={handleFileChange} accept="image/*" className="hidden" />
         <div className="flex items-center gap-1">
           <h1 className="flex items-baseline text-xl">@{data.user.pseudo}</h1>
           <Verified role={data.user.role} />
         </div>
-        <p>
-          Inscrit depuis le {dayjs(data.user.createdAt).format("DD MMM YYYY")}
-        </p>
+        <p>Inscrit depuis le {dayjs(data.user.createdAt).format("DD MMM YYYY")}</p>
         <div className="flex gap-2 mt-2">
-          <button
-            onClick={handleToggleSettings}
-            className="btn btn-outline btn-accent flex-1"
-          >
+          <button onClick={handleToggleSettings} className="btn btn-outline btn-accent flex-1">
             {isSettingsOpen ? "Profil" : "Règlages"}
           </button>
           {[UserRole.ADMIN, UserRole.MODERATOR].includes(data.user.role) && (
-            <button className="btn btn-outline btn-accent flex-1">Admin</button>
+            <Link to={`/${PagesBackoffice.DASHBOARD}`} className="btn btn-outline btn-accent flex-1">
+              Admin
+            </Link>
           )}
         </div>
       </header>

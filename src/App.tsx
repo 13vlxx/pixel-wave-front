@@ -14,7 +14,10 @@ import { useThemeStore } from "@stores/theme/theme.store";
 import { useEffect } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Toaster } from "sonner";
-import { PagesAuth, PagesUnauth } from "./_utils/router/routes";
+import { PagesAuth, PagesBackoffice, PagesUnauth } from "./_utils/router/routes";
+import { AdminNavbarLayout } from "./layouts/admin-navbar.layout";
+import { AdminDashboardScreen } from "./screens/admin/dashbaord/admin-dashboard.screen";
+import { UsersTable } from "./screens/admin/tables/users.table";
 import PostByIdScreen from "./screens/common/post/post-by-id.screen";
 
 const authRouter = createBrowserRouter([
@@ -34,6 +37,21 @@ const authRouter = createBrowserRouter([
       { path: PagesAuth.DEMO, element: <DemoScreen /> },
     ],
   },
+  {
+    path: PagesBackoffice.DASHBOARD,
+    element: <AdminNavbarLayout />,
+    errorElement: <div>404</div>,
+    children: [
+      {
+        index: true,
+        element: <AdminDashboardScreen />,
+      },
+      {
+        path: PagesBackoffice.USERS,
+        element: <UsersTable />,
+      },
+    ],
+  },
 ]);
 
 const unauthRouter = createBrowserRouter([
@@ -49,6 +67,7 @@ const unauthRouter = createBrowserRouter([
       { path: `${PagesAuth.PROFILE}/:userId`, element: <ProfileByIdScreen /> },
       { path: PagesUnauth.RESET_PASSWORD, element: <ResetPasswordScreen /> },
       { path: PagesAuth.DEMO, element: <DemoScreen /> },
+      { path: "*", element: <HomeScreen /> },
     ],
   },
 ]);

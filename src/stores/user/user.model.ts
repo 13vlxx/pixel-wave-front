@@ -22,6 +22,13 @@ export interface GetUserDto {
   createdAt: Date;
 }
 
+export interface GetBackofficeUserDto {
+  id: string;
+  email: string;
+  pseudo: string;
+  role: UserRole;
+}
+
 export interface LiteUserDto {
   id: string;
   pseudo: string;
