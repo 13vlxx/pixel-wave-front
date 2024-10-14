@@ -29,14 +29,14 @@ export const AuthNavbarLayout = () => {
           PixelWave
         </h1>
         <nav className="flex gap-4">
-          <LuTestTube2 className="text-3xl cursor-pointer" onClick={() => handleNavigate(PagesAuth.DEMO)} />
+          <LuTestTube2 className="text-2xl cursor-pointer" onClick={() => handleNavigate(PagesAuth.DEMO)} />
           {theme === "light" ? (
-            <FaMoon onClick={toggleTheme} className="cursor-pointer text-3xl" />
+            <FaMoon onClick={toggleTheme} className="cursor-pointer text-2xl" />
           ) : (
-            <BsSunFill onClick={toggleTheme} className="cursor-pointer text-3xl" />
+            <BsSunFill onClick={toggleTheme} className="cursor-pointer text-2xl" />
           )}
-          <FaBell name="notifications" className="text-3xl cursor-pointer" onClick={() => handleNavigate(PagesAuth.NOTIFICATIONS)} />
-          <CgProfile data-cy="profile" name="profile" className="text-3xl cursor-pointer" onClick={() => handleNavigate(`${PagesAuth.PROFILE}/me`)} />
+          <FaBell name="notifications" className="text-2xl cursor-pointer" onClick={() => handleNavigate(PagesAuth.NOTIFICATIONS)} />
+          <CgProfile data-cy="profile" name="profile" className="text-2xl cursor-pointer" onClick={() => handleNavigate(`${PagesAuth.PROFILE}/me`)} />
         </nav>
       </header>
       <div>

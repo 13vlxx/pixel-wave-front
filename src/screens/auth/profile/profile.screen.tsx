@@ -191,7 +191,7 @@ const ProfileScreen = () => {
           <button onClick={handleToggleSettings} className="btn btn-outline btn-accent flex-1">
             {isSettingsOpen ? "Profil" : "Règlages"}
           </button>
-          {[UserRole.ADMIN, UserRole.MODERATOR].includes(data.user.role) && (
+          {[UserRole.ADMIN, UserRole.MODERATOR].includes(data.user.role) && !isMobile && (
             <Link to={`/${PagesBackoffice.DASHBOARD}`} className="btn btn-outline btn-accent flex-1">
               Admin
             </Link>

@@ -1,3 +1,4 @@
+import { PagesAuth, PagesBackoffice } from "@utils/router/routes";
 import { BiSolidCategoryAlt } from "react-icons/bi";
 import { BsChatLeftTextFill } from "react-icons/bs";
 import { FaCommentDots, FaUsers } from "react-icons/fa";
@@ -30,42 +31,42 @@ export const AdminNavbarLayout = () => {
     {
       title: "Utilisateurs",
       icon: <FaUsers className="mr-2" />,
-      to: "/admin/users",
+      to: PagesBackoffice.USERS,
     },
     {
       title: "Posts",
       icon: <FaCommentDots className="mr-2" />,
-      to: "/admin/analytics",
+      to: PagesBackoffice.POSTS,
     },
     {
       title: "Jeux",
       icon: <IoGameController className="mr-2" />,
-      to: "/admin/settings",
+      to: PagesBackoffice.GAMES,
     },
     {
       title: "Plateformes",
       icon: <IoApps className="mr-2" />,
-      to: "/admin/settings",
+      to: PagesBackoffice.PLATFORMS,
     },
     {
       title: "Catégories",
       icon: <BiSolidCategoryAlt className="mr-2" />,
-      to: "/admin/settings",
+      to: PagesBackoffice.CATEGORIES,
     },
     {
       title: "Avis",
       icon: <BsChatLeftTextFill className="mr-2" />,
-      to: "/admin/settings",
+      to: PagesBackoffice.ADVICES,
     },
     {
       title: "Demandes de staff",
       icon: <MdAdminPanelSettings className="mr-2" />,
-      to: "/admin/settings",
+      to: PagesBackoffice.STAFF_REQUESTS,
     },
     {
       title: "Quitter",
       icon: <FaArrowLeftLong className="mr-2" />,
-      to: "/profile/me",
+      to: `/${PagesAuth.PROFILE}/me`,
     },
   ];
 
@@ -85,7 +86,7 @@ export const AdminNavbarLayout = () => {
   return (
     <section className="h-screen flex">
       <nav className="bg-base-200 w-64 p-6 space-y-8">
-        <NavLink to={"/admin"} className="text-3xl font-bold mb-8 bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent">
+        <NavLink to={"/admin/dashboard"} className="text-3xl font-bold mb-8 bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent">
           PixelWave
         </NavLink>
         <ul className="space-y-4">

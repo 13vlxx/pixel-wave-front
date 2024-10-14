@@ -1,19 +1,26 @@
+import { PagesBackoffice } from "@utils/router/routes";
 import { Link } from "react-router-dom";
 
 interface DashboardCardProps {
   title: string;
   image: React.ReactNode;
-  destination: string;
+  value: number;
+  destination: PagesBackoffice;
 }
 
 export const DashboardCard = (props: DashboardCardProps) => {
-  const { title, image, destination } = props;
+  const { title, image, value, destination } = props;
 
   return (
-    <Link to={destination} className="card card-compact border-neutral border-2 shadow-xl hover:border-accent transition-all hover:shadow-accent">
-      <figure className="pt-4 max-lg:text-2xl text-4xl">{image}</figure>
-      <div className="card-body w-full flex flex-col items-center">
-        <h2 className="card-title max-lg:text-sm">{title}</h2>
+    <Link to={destination} className="card card-compact border-neutral border-2 shadow-lg hover:border-accent transition-all hover:shadow-accent">
+      <div className="stats">
+        <div className="stat">
+          <div className="stat-title flex items-center gap-2">
+            {title} {image}
+          </div>
+          <div className="stat-value">{value}</div>
+          <div className="stat-desc">21% more than last month</div>
+        </div>
       </div>
     </Link>
   );

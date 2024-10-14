@@ -5,7 +5,6 @@ export const UsersTable = () => {
 
   return (
     <div className="h-full">
-      <h1 className="text-2xl mb-4 font-semibold">Liste des utilisateurs</h1>
       <div className="overflow-x-auto border rounded-xl max-h-[500px]">
         <table className="table">
           <thead className="bg-neutral">

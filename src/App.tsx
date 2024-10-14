@@ -1,5 +1,8 @@
 import { AuthNavbarLayout } from "@layouts/auth-navbar.layout";
 import { UnauthNavbarLayout } from "@layouts/unauth-navbar.layout";
+import { CategoriesScreen } from "@screens/admin/categories/categories.screen";
+import { GamesTable } from "@screens/admin/tables/games.table";
+import { UsersTable } from "@screens/admin/tables/users.table";
 import NotificationsScreen from "@screens/auth/notifications/notifications.screen";
 import ProfileByIdScreen from "@screens/auth/profile/profile-by-id.screen";
 import ProfileScreen from "@screens/auth/profile/profile.screen";
@@ -17,7 +20,6 @@ import { Toaster } from "sonner";
 import { PagesAuth, PagesBackoffice, PagesUnauth } from "./_utils/router/routes";
 import { AdminNavbarLayout } from "./layouts/admin-navbar.layout";
 import { AdminDashboardScreen } from "./screens/admin/dashbaord/admin-dashboard.screen";
-import { UsersTable } from "./screens/admin/tables/users.table";
 import PostByIdScreen from "./screens/common/post/post-by-id.screen";
 
 const authRouter = createBrowserRouter([
@@ -50,6 +52,8 @@ const authRouter = createBrowserRouter([
         path: PagesBackoffice.USERS,
         element: <UsersTable />,
       },
+      { path: PagesBackoffice.CATEGORIES, element: <CategoriesScreen /> },
+      { path: PagesBackoffice.GAMES, element: <GamesTable /> },
     ],
   },
 ]);

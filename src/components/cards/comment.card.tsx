@@ -1,16 +1,11 @@
 import { useAuthStore } from "@stores/auth/auth.store";
 import { useUserStore } from "@stores/user/user.store";
-import dayjs from "dayjs";
-import "dayjs/locale/fr";
-import relativeTime from "dayjs/plugin/relativeTime";
+import dayjs from "@utils/dayjs";
 import { BsThreeDots } from "react-icons/bs";
 import { FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { CommentDto } from "../../stores/post/post.model";
-
-dayjs.extend(relativeTime);
-dayjs.locale("fr");
 
 export interface CommentCardProps {
   comment: CommentDto;
@@ -25,16 +20,7 @@ const CommentCard = (props: CommentCardProps) => {
   return (
     <div className="p-4 rounded-md border border-secondary">
       <div className="flex items-center justify-between">
-        <Link
-          to={
-            token
-              ? comment.user.id === id
-                ? "/profile/me"
-                : `/profile/${comment.user.id}`
-              : ""
-          }
-          className="flex items-center gap-2 cursor-pointer"
-        >
+        <Link to={token ? (comment.user.id === id ? "/profile/me" : `/profile/${comment.user.id}`) : ""} className="flex items-center gap-2 cursor-pointer">
           <img
             src={comment.user.profilePicture || "/default-pfp.jpeg"}
             alt={`Photo de profil de ${comment.user.pseudo}`}
@@ -43,10 +29,7 @@ const CommentCard = (props: CommentCardProps) => {
           <h1 className="max-w-[100%] text-sm text-ellipsis line-clamp-1">{`@${comment.user.pseudo} • ${dayjs(comment.createdAt).fromNow()}`}</h1>
         </Link>
         {id === comment.user.id && (
-          <div
-            onClick={(e: React.MouseEvent) => e.stopPropagation()}
-            className="dropdown  dropdown-end"
-          >
+          <div onClick={(e: React.MouseEvent) => e.stopPropagation()} className="dropdown  dropdown-end">
             <div tabIndex={0} role="button">
               <BsThreeDots className="size-6" />
             </div>

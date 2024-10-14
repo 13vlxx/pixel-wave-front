@@ -2,18 +2,13 @@ import { useAuthStore } from "@stores/auth/auth.store";
 import { PostDto } from "@stores/post/post.model";
 import PostRequest from "@stores/post/post.request";
 import { useUserStore } from "@stores/user/user.store";
-import dayjs from "dayjs";
-import "dayjs/locale/fr";
-import relativeTime from "dayjs/plugin/relativeTime";
+import dayjs from "@utils/dayjs";
 import { useState } from "react";
 import { BsThreeDots } from "react-icons/bs";
 import { FaHeart, FaRegComment, FaShare, FaTrash } from "react-icons/fa";
 import { LuHeart } from "react-icons/lu";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-
-dayjs.extend(relativeTime);
-dayjs.locale("fr");
 
 export interface PostCardProps {
   post: PostDto;

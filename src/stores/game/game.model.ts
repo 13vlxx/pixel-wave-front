@@ -14,6 +14,17 @@ export interface GameDto {
   news: LiteNewsDto[];
 }
 
+export interface AdminGameDto {
+  id: string;
+  name: string;
+  logo: string;
+  media: string[];
+  description: string;
+  releaseDate: string;
+  categories: string[];
+  platforms: string[];
+}
+
 export interface MediaDto {
   id: string;
   type: string;
