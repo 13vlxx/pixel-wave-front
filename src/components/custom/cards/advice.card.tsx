@@ -8,7 +8,7 @@ interface AdviceCardProps {
 
 export const AdviceCard = (props: AdviceCardProps) => {
   const { advice } = props;
-  console.log(advice.game.logo);
+
   return (
     <Card className="w-[300px] h-[120px]">
       <CardContent className="py-4">

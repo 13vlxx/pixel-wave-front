@@ -29,15 +29,20 @@ export const GameScreen = () => {
     }
   }, [showAdviceSection, game, token]);
 
+  const handleToggleFavorite = () => {
+    if (token) GameRequest.toggleFavorite(game!.id).then((x) => setIsFavorite(x));
+    else toggleModal();
+  };
+
   if (game)
     return (
-      <section className="relative">
+      <section className="relative mb-8">
         <img src={game.logo} alt={game.name} className="w-full object-cover max-h-96 blur-sm" />
-        <div className="absolute w-full -translate-y-1/2">
+        <div className="absolute w-full -translate-y-1/2 sm:-translate-y-56">
           <GameImageCard game={game} />
         </div>
-        <div className="pt-40">
-          <GameInfoCard game={game} />
+        <div className="pt-36 sm:pt-12">
+          <GameInfoCard game={game} isFavorite={isFavorite} toggleFavorite={handleToggleFavorite} />
         </div>
       </section>
     );

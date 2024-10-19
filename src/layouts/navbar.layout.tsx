@@ -10,20 +10,18 @@ export const NavbarLayout = () => {
 
   return (
     <>
-      <main className="h-screen flex flex-col">
-        <header className="flex justify-between p-4 items-center shadow-lg shadow-primary/10">
-          <Link to="/" className="text-xl font-bold bg-gradient-to-r from-primary to-foreground bg-clip-text text-transparent">
-            Pixel Wave
-          </Link>
-          <nav className="flex gap-2">
-            <ThemeToggleDropdown />
-            {token ? <AuthAccountDropdown /> : <UnauthAccountDropdown />}
-          </nav>
-        </header>
-        <div className="flex-1 overflow-y-auto">
-          <Outlet />
-        </div>
-      </main>
+      <header className="flex justify-between p-4 items-center shadow-lg shadow-primary/10 sticky top-0 left-0 z-50 bg-background/50 backdrop-blur-md">
+        <Link to="/" className="text-xl font-bold bg-gradient-to-r from-primary to-foreground bg-clip-text text-transparent">
+          Pixel Wave
+        </Link>
+        <nav className="flex gap-2">
+          <ThemeToggleDropdown />
+          {token ? <AuthAccountDropdown /> : <UnauthAccountDropdown />}
+        </nav>
+      </header>
+      <div className="overflow-y-auto">
+        <Outlet />
+      </div>
       <AuthModal isOpen={isModalOpen} onClose={toggleModal} />
     </>
   );
