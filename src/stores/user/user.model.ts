@@ -17,7 +17,7 @@ export interface GetUserDto {
   id: string;
   email: string;
   pseudo: string;
-  profilePicture?: string | null;
+  profilePicture: string;
   role: UserRole;
   createdAt: Date;
 }

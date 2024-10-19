@@ -1,11 +1,11 @@
-import { PagesAuth } from "@/_utils/router/routes";
+import { PagesAuth, PagesUnauth } from "@/_utils/router/routes";
 import { NavbarLayout } from "@/layouts/navbar.layout";
 import { HomeScreen } from "@/screens/common/home/home.screen";
 import { useAuthStore } from "@/stores/auth/auth.store";
-import { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Toaster } from "sonner";
 import { useTheme } from "./_utils/theme-provider";
+import { GameScreen } from "./screens/common/game/game.screen";
 
 const authRouter = createBrowserRouter([
   {
@@ -16,7 +16,7 @@ const authRouter = createBrowserRouter([
       { index: true, element: <HomeScreen /> },
       { path: `/${PagesAuth.POSTS}` },
       { path: `/${PagesAuth.POSTS}/:postId` },
-      { path: `/${PagesAuth.GAME}/:name` },
+      { path: `/${PagesAuth.GAME}/:name`, element: <GameScreen /> },
       { path: PagesAuth.NOTIFICATIONS },
       { path: `${PagesAuth.PROFILE}/me` },
       { path: `${PagesAuth.PROFILE}/:userId` },
@@ -55,10 +55,9 @@ const unauthRouter = createBrowserRouter([
       { index: true, element: <HomeScreen /> },
       // { path: `/${PagesUnauth.POSTS}`, element: <PostFeedScreen /> },
       // { path: `/${PagesAuth.POSTS}/:postId`, element: <PostByIdScreen /> },
-      // { path: `/${PagesUnauth.GAME}/:name`, element: <GameDetailsScreen /> },
+      { path: `/${PagesUnauth.GAME}/:name`, element: <GameScreen /> },
       // { path: `${PagesAuth.PROFILE}/:userId`, element: <ProfileByIdScreen /> },
       // { path: PagesUnauth.RESET_PASSWORD, element: <ResetPasswordScreen /> },
-      // { path: PagesAuth.DEMO, element: <DemoScreen /> },
       { path: "*", element: <HomeScreen /> },
     ],
   },
@@ -68,13 +67,9 @@ function App() {
   const { token } = useAuthStore();
   const { theme } = useTheme();
 
-  useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-  }, [theme]);
-
   return (
     <>
-      <Toaster richColors />
+      <Toaster richColors theme={theme} />
       <RouterProvider router={token ? authRouter : unauthRouter} />
     </>
   );
