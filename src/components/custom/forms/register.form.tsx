@@ -44,7 +44,7 @@ export const RegisterForm = (props: RegisterFormProps) => {
   return (
     <section className="flex flex-col">
       <form className="space-y-4">
-        <h1>Inscription</h1>
+        <h1 className="text-lg font-semibold">Inscription</h1>
         <div className="form-group grid grid-cols-2 gap-4">
           <Input type="email" placeholder="Entrez votre email" {...register("email")} />
           <Input type="text" placeholder="Nom d'utilisateur" {...register("pseudo")} />

@@ -47,7 +47,7 @@ export const LoginForm = (props: LoginFormProps) => {
   return (
     <section className="flex flex-col">
       <form className="space-y-4">
-        <h1>Connexion à Pixel Wave</h1>
+        <h1 className="text-lg font-semibold">Connexion à Pixel Wave</h1>
         <div className="form-group grid grid-cols-2 gap-4">
           <Input type="email" placeholder="Entrez votre email" {...register("email")} />
           <Input type="password" placeholder="Mot de passe" {...register("password")} />

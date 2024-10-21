@@ -12,12 +12,13 @@ import { GameMediaCarousel } from "../carousels/game-media.carousel";
 interface GameInfoCardProps {
   game: GameDto;
   isFavorite: boolean;
-  toggleFavorite: () => void;
   userAdvice?: AdviceDto | null;
+  toggleFavorite: () => void;
+  toggleAdvice?: () => void;
 }
 
 export const GameInfoCard = (props: GameInfoCardProps) => {
-  const { game, isFavorite, toggleFavorite, userAdvice } = props;
+  const { game, isFavorite, userAdvice, toggleFavorite, toggleAdvice } = props;
   const { isMobile } = useResponsive();
 
   return (
@@ -27,7 +28,7 @@ export const GameInfoCard = (props: GameInfoCardProps) => {
           <h2 className="text-2xl font-bold capitalize flex items-center gap-2">
             {game.name} <HearthGameButton isFavorite={isFavorite} onClick={toggleFavorite} />
           </h2>
-          <p className="text-sm capitalize text-foreground/40">{dayjs(game.releaseDate).format("DD MMMM YYYY")}</p>
+          <p className="text-sm capitalize text-muted-foreground">{dayjs(game.releaseDate).format("DD MMMM YYYY")}</p>
         </div>
         <section className="space-x-2">
           {game.game_platform.map((platform) => (
@@ -45,15 +46,26 @@ export const GameInfoCard = (props: GameInfoCardProps) => {
             <CategoryBadge key={category.category.id} categoryName={category.category.name} />
           ))}
         </section>
+        {isMobile && (
+          <Button onClick={toggleFavorite} className="w-full">
+            {isFavorite ? "Retirer des favoris 💔" : "Ajouter aux favoris ❤️"}
+          </Button>
+        )}
         {!isMobile && (
           <section>
-            <h3 className="text-lg font-bold">Avis des joueurs</h3>
-            <AdviceCarousel advices={game.game_advice} />
+            {game.game_advice.length > 0 && (
+              <>
+                <h3 className="text-lg font-bold">Avis des joueurs</h3>
+                <AdviceCarousel advices={game.game_advice} />
+              </>
+            )}
             <div className="flex gap-2">
               <Button onClick={toggleFavorite} className="flex-1">
                 {isFavorite ? "Retirer des favoris 💔" : "Ajouter aux favoris ❤️"}
               </Button>
-              <Button className="flex-1">{userAdvice ? "Modifier mon avis" : "Donner mon avis"}</Button>
+              <Button onClick={toggleAdvice} className="flex-1">
+                {userAdvice ? "Modifier mon avis" : "Donner mon avis"}
+              </Button>
             </div>
           </section>
         )}

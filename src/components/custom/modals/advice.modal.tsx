@@ -1,23 +1,26 @@
 import { useResponsive } from "@/_utils/use-responsive";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
-import { AuthForm } from "../forms/auth.form";
+import { AdviceDto, GameDto } from "@/stores/game/game.model";
+import { CreateUpdateAdviceForm } from "../forms/create-update-advice.form";
 
-interface AuthModalProps {
+interface AdviceModalProps {
   isOpen: boolean;
+  game: GameDto;
+  advice: AdviceDto | null;
   onClose: () => void;
 }
 
-export const AuthModal = (props: AuthModalProps) => {
+export const AdviceModal = (props: AdviceModalProps) => {
   const { isMobile } = useResponsive();
-  const { isOpen, onClose } = props;
+  const { isOpen, game, advice, onClose } = props;
 
   if (isMobile)
     return (
       <Drawer open={isOpen} onOpenChange={onClose}>
         <DialogTitle className="hidden">Auth</DialogTitle>
         <DrawerContent aria-description="auth form" className="p-4">
-          <AuthForm />
+          <CreateUpdateAdviceForm advice={advice} game={game} closeModal={onClose} />
         </DrawerContent>
       </Drawer>
     );
@@ -26,7 +29,7 @@ export const AuthModal = (props: AuthModalProps) => {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogTitle className="hidden">Auth</DialogTitle>
       <DialogContent aria-describedby="auth form" className="sm:max-w-[425px]">
-        <AuthForm />
+        <CreateUpdateAdviceForm advice={advice} game={game} closeModal={onClose} />
       </DialogContent>
     </Dialog>
   );

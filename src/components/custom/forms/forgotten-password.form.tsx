@@ -45,7 +45,7 @@ export const ForgottenPasswordForm = (props: ForgottenPasswordFormProps) => {
   return (
     <section className="flex flex-col">
       <form className="space-y-4">
-        <h1>Mot de passe oublié</h1>
+        <h1 className="text-lg font-semibold">Mot de passe oublié</h1>
         <div className="form-group grid grid-cols-1 gap-4">
           <Input type="email" placeholder="Adresse email" {...register("email")} />
         </div>

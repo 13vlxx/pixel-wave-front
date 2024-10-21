@@ -4,17 +4,19 @@ import { AdviceDto } from "@/stores/game/game.model";
 
 interface AdviceCardProps {
   advice: AdviceDto;
+  showGameName: boolean;
 }
 
 export const AdviceCard = (props: AdviceCardProps) => {
-  const { advice } = props;
+  const { advice, showGameName = true } = props;
 
   return (
-    <Card className="w-[300px] h-[120px]">
+    <Card className="w-[300px]">
       <CardContent className="py-4">
         {<UserAvatar user={advice.user} />}
-        <span className="capitalize font-bold">{advice.game.name}</span>
+        {showGameName && <span className="capitalize font-bold">{advice.game.name}</span>}
         <p className="text-ellipsis overflow-hidden">{advice.advice}</p>
+        <p className="text-ellipsis overflow-hidden text-end text-muted-foreground">{advice.note}/5</p>
       </CardContent>
     </Card>
   );
