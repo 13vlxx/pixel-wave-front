@@ -13,7 +13,7 @@ import { InferType, object } from "yup";
 interface CreateUpdateAdviceFormProps {
   game: GameDto;
   advice: AdviceDto | null;
-  closeModal: () => void;
+  closeModal: (advice: AdviceDto) => void;
 }
 
 const AdviceSchema = object().shape({
@@ -42,11 +42,14 @@ export const CreateUpdateAdviceForm = (props: CreateUpdateAdviceFormProps) => {
 
   const onSubmit = handleSubmit((formData) => {
     if (advice)
-      return GameRequest.updateAdvice(formData, game.id)
-        .then(() => toast.success("Avis modifié avec succès"))
-        .then(() => closeModal());
-    GameRequest.createAdvice(formData, game.id).then(() => toast.success("Avis ajouté avec succès"));
-    closeModal();
+      return GameRequest.updateAdvice(formData, game.id).then((x) => {
+        toast.success("Avis modifié avec succès");
+        closeModal(x);
+      });
+    GameRequest.createAdvice(formData, game.id).then((x) => {
+      toast.success("Avis ajouté avec succès");
+      closeModal(x);
+    });
   });
 
   return (
@@ -68,7 +71,7 @@ export const CreateUpdateAdviceForm = (props: CreateUpdateAdviceFormProps) => {
         </div>
         <div className="h-2"></div>
         <Button disabled={!isValid} className="w-full" type="submit" size={"sm"} onClick={onSubmit}>
-          Envoyer
+          {advice ? "Modifier" : "Commenter"}
         </Button>
       </form>
     </section>

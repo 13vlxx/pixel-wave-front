@@ -23,7 +23,7 @@ export const GameScreen = () => {
   useEffect(() => {
     document.title = `Pixel Wave | ${name?.slice(0, 1).toUpperCase()}${name?.slice(1)}`;
     GameRequest.getGameDetails(name!).then(setGame);
-  }, [name, showAdviceModal]);
+  }, [name]);
 
   useEffect(() => {
     if (game && token) {
@@ -46,6 +46,14 @@ export const GameScreen = () => {
     else toggleModal();
   };
 
+  const handleCreateOrUpdateAdvice = (advice: AdviceDto | null) => {
+    GameRequest.getGameDetails(name!).then(setGame);
+    if (advice) {
+      setAlreadyPostedAdvice(advice);
+    }
+    setShowAdviceModal(false);
+  };
+
   if (game && isMobile)
     return (
       <>
@@ -59,7 +67,7 @@ export const GameScreen = () => {
             <GameAdvicesCard advices={game.game_advice} userAdvice={alreadyPostedAdvice} toggleAdvice={handleToggleAdviceModal} />
           </div>
         </section>
-        <AdviceModal isOpen={showAdviceModal} game={game} advice={alreadyPostedAdvice} onClose={() => setShowAdviceModal(false)} />
+        <AdviceModal isOpen={showAdviceModal} game={game} advice={alreadyPostedAdvice} onClose={handleCreateOrUpdateAdvice} />
       </>
     );
 
@@ -81,7 +89,7 @@ export const GameScreen = () => {
             </section>
           </section>
         </section>
-        <AdviceModal isOpen={showAdviceModal} game={game} advice={alreadyPostedAdvice} onClose={() => setShowAdviceModal(false)} />
+        <AdviceModal isOpen={showAdviceModal} game={game} advice={alreadyPostedAdvice} onClose={handleCreateOrUpdateAdvice} />
       </>
     );
 };

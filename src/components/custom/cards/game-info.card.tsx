@@ -56,7 +56,7 @@ export const GameInfoCard = (props: GameInfoCardProps) => {
             {game.game_advice.length > 0 && (
               <>
                 <h3 className="text-lg font-bold">Avis des joueurs</h3>
-                <AdviceCarousel advices={game.game_advice} />
+                <AdviceCarousel advices={game.game_advice} showGameName={false} />
               </>
             )}
             <div className="flex gap-2">
