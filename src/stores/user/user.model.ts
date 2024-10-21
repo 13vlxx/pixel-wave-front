@@ -50,6 +50,10 @@ export interface GetMeDto {
   posts: PostDto[];
 }
 
+export interface GetRoleDto {
+  role: UserRole;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface GetUserProfileDto extends Omit<GetMeDto, "receiveEmails"> {}
 

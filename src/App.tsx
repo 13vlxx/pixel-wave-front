@@ -1,10 +1,11 @@
 import { PagesAuth, PagesUnauth } from "@/_utils/router/routes";
+import { Toaster } from "@/components/ui/sonner";
 import { NavbarLayout } from "@/layouts/navbar.layout";
+import { ProfileScreen } from "@/screens/auth/profile/profile.screen";
+import { GameScreen } from "@/screens/common/game/game.screen";
 import { HomeScreen } from "@/screens/common/home/home.screen";
 import { useAuthStore } from "@/stores/auth/auth.store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Toaster } from "./components/ui/sonner";
-import { GameScreen } from "./screens/common/game/game.screen";
 
 const authRouter = createBrowserRouter([
   {
@@ -17,7 +18,7 @@ const authRouter = createBrowserRouter([
       { path: `/${PagesAuth.POSTS}/:postId` },
       { path: `/${PagesAuth.GAME}/:name`, element: <GameScreen /> },
       { path: PagesAuth.NOTIFICATIONS },
-      { path: `${PagesAuth.PROFILE}/me` },
+      { path: `/${PagesAuth.PROFILE}/me`, element: <ProfileScreen /> },
       { path: `${PagesAuth.PROFILE}/:userId` },
       { path: PagesAuth.STAFF_REQUEST },
       { path: PagesAuth.DEMO },
