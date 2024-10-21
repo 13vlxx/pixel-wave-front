@@ -1,23 +1,27 @@
 import dayjs from "@/_utils/dayjs";
+import { useResponsive } from "@/_utils/use-responsive";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { GameDto } from "@/stores/game/game.model";
+import { AdviceDto, GameDto } from "@/stores/game/game.model";
 import { HearthGameButton } from "../_utils/hearth-game.button";
 import { CategoryBadge } from "../badges/category.badge";
 import { PlatformBadge } from "../badges/platform.badge";
+import { AdviceCarousel } from "../carousels/advice-carousel";
 import { GameMediaCarousel } from "../carousels/game-media.carousel";
 
 interface GameInfoCardProps {
   game: GameDto;
   isFavorite: boolean;
   toggleFavorite: () => void;
+  userAdvice?: AdviceDto | null;
 }
 
 export const GameInfoCard = (props: GameInfoCardProps) => {
-  const { game, isFavorite, toggleFavorite } = props;
+  const { game, isFavorite, toggleFavorite, userAdvice } = props;
+  const { isMobile } = useResponsive();
 
   return (
-    <Card className="mx-auto border-secondary w-2/3 max-sm:w-[90%] dark:border-primary dark:shadow-primary">
+    <Card className="mx-auto border-secondary w-2/3 max-sm:w-[90%] dark:border-primary dark:shadow-primary sm:min-w-[300px]">
       <CardContent className="py-4 space-y-2">
         <div className="flex justify-between w-full items-baseline">
           <h2 className="text-2xl font-bold capitalize flex items-center gap-2">
@@ -41,9 +45,18 @@ export const GameInfoCard = (props: GameInfoCardProps) => {
             <CategoryBadge key={category.category.id} categoryName={category.category.name} />
           ))}
         </section>
-        <section className="flex gap-2">
-          <Button className="flex-1">Voir les avis ({game.game_advice.length})</Button>
-        </section>
+        {!isMobile && (
+          <section>
+            <h3 className="text-lg font-bold">Avis des joueurs</h3>
+            <AdviceCarousel advices={game.game_advice} />
+            <div className="flex gap-2">
+              <Button onClick={toggleFavorite} className="flex-1">
+                {isFavorite ? "Retirer des favoris 💔" : "Ajouter aux favoris ❤️"}
+              </Button>
+              <Button className="flex-1">{userAdvice ? "Modifier mon avis" : "Donner mon avis"}</Button>
+            </div>
+          </section>
+        )}
       </CardContent>
     </Card>
   );

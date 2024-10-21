@@ -15,7 +15,8 @@ export const AuthModal = (props: DialogDemoProps) => {
   if (isMobile)
     return (
       <Drawer open={isOpen} onOpenChange={onClose}>
-        <DrawerContent className="p-4">
+        <DialogTitle className="hidden">Auth</DialogTitle>
+        <DrawerContent aria-description="auth form" className="p-4">
           <AuthForm />
         </DrawerContent>
       </Drawer>

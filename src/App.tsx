@@ -3,8 +3,7 @@ import { NavbarLayout } from "@/layouts/navbar.layout";
 import { HomeScreen } from "@/screens/common/home/home.screen";
 import { useAuthStore } from "@/stores/auth/auth.store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Toaster } from "sonner";
-import { useTheme } from "./_utils/theme-provider";
+import { Toaster } from "./components/ui/sonner";
 import { GameScreen } from "./screens/common/game/game.screen";
 
 const authRouter = createBrowserRouter([
@@ -65,11 +64,10 @@ const unauthRouter = createBrowserRouter([
 
 function App() {
   const { token } = useAuthStore();
-  const { theme } = useTheme();
 
   return (
     <>
-      <Toaster richColors theme={theme} />
+      <Toaster />
       <RouterProvider router={token ? authRouter : unauthRouter} />
     </>
   );

@@ -26,7 +26,7 @@ export const HomeScreen = () => {
     <section className="mt-4 space-y-4">
       <GameCarousel title="Jeux du moment" games={games} />
       <GameCarousel title="Prochaines sorties" games={games} />
-      <AdviceCarousel advices={advices} />
+      <AdviceCarousel padding advices={advices} />
       <PostsBanner />
       <CategoryCarousel title="Categories" categories={categories} />
       <PlatformCarousel title="Plateformes" platforms={platforms} />
