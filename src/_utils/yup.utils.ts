@@ -24,7 +24,7 @@ export enum FieldValidationType {
   BOOLEAN = "BOOLEAN",
 }
 
-const passwordSecurityRegex = /^(?=.*\d)(?=.*[A-Z]).{6,}$/;
+const passwordSecurityRegex = /^(?=.*\d)(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/;
 
 export const fieldsValidation = {
   [FieldValidationType.STRING]: string().nullable(),

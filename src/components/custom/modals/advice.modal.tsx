@@ -18,8 +18,8 @@ export const AdviceModal = (props: AdviceModalProps) => {
   if (isMobile)
     return (
       <Drawer open={isOpen} onOpenChange={() => onClose(null)}>
-        <DialogTitle className="hidden">Auth</DialogTitle>
-        <DrawerContent aria-description="auth form" className="p-4">
+        <DialogTitle className="hidden">Advice</DialogTitle>
+        <DrawerContent aria-description="advice form" className="p-4">
           <CreateUpdateAdviceForm advice={advice} game={game} closeModal={(x) => onClose(x)} />
         </DrawerContent>
       </Drawer>
@@ -27,8 +27,8 @@ export const AdviceModal = (props: AdviceModalProps) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={() => onClose(null)}>
-      <DialogTitle className="hidden">Auth</DialogTitle>
-      <DialogContent aria-describedby="auth form" className="sm:max-w-[425px]">
+      <DialogTitle className="hidden">Advice</DialogTitle>
+      <DialogContent aria-describedby="advice form" className="sm:max-w-[425px]">
         <CreateUpdateAdviceForm advice={advice} game={game} closeModal={onClose} />
       </DialogContent>
     </Dialog>

@@ -22,7 +22,7 @@ export const GameInfoCard = (props: GameInfoCardProps) => {
   const { isMobile } = useResponsive();
 
   return (
-    <Card className="mx-auto border-secondary w-2/3 max-sm:w-[90%] dark:border-primary dark:shadow-primary sm:min-w-[300px]">
+    <Card className="mx-auto border-secondary w-2/3 max-sm:w-[90%] sm:min-w-[300px]">
       <CardContent className="py-4 space-y-2">
         <div className="flex justify-between w-full items-baseline">
           <h2 className="text-2xl font-bold capitalize flex items-center gap-2">
@@ -46,11 +46,6 @@ export const GameInfoCard = (props: GameInfoCardProps) => {
             <CategoryBadge key={category.category.id} categoryName={category.category.name} />
           ))}
         </section>
-        {isMobile && (
-          <Button onClick={toggleFavorite} className="w-full">
-            {isFavorite ? "Retirer des favoris 💔" : "Ajouter aux favoris ❤️"}
-          </Button>
-        )}
         {!isMobile && (
           <section>
             {game.game_advice.length > 0 && (
@@ -60,9 +55,6 @@ export const GameInfoCard = (props: GameInfoCardProps) => {
               </>
             )}
             <div className="flex gap-2">
-              <Button onClick={toggleFavorite} className="flex-1">
-                {isFavorite ? "Retirer des favoris 💔" : "Ajouter aux favoris ❤️"}
-              </Button>
               <Button onClick={toggleAdvice} className="flex-1">
                 {userAdvice ? "Modifier mon avis" : "Donner mon avis"}
               </Button>

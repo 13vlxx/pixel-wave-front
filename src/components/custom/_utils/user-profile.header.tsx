@@ -7,10 +7,11 @@ import { VerifiedBadge } from "./verified.badge";
 
 interface UserProfileHeaderProps {
   user: GetUserDto;
+  onEditClick?: () => void;
 }
 
 export const UserProfileHeader = (props: UserProfileHeaderProps) => {
-  const { user } = props;
+  const { user, onEditClick } = props;
 
   return (
     <>
@@ -27,7 +28,7 @@ export const UserProfileHeader = (props: UserProfileHeaderProps) => {
           <span className="font-semibold">{user.pseudo}</span>
           <VerifiedBadge role={user.role} />
         </div>
-        <Button variant={"outline"} size={"sm"}>
+        <Button onClick={onEditClick} variant={"outline"} size={"sm"}>
           Modifier le profil
         </Button>
       </div>
@@ -43,9 +44,12 @@ export const UserProfileHeaderSkeleton = () => {
           <Skeleton className="size-20 rounded-full" />
         </section>
       </div>
-      <div className="pt-8 pl-6 flex gap-2 items-center">
-        <Skeleton className="h-6 w-32" />
-        <Skeleton className="h-5 w-5 rounded-full" />
+      <div className="flex justify-between items-baseline pr-4 mt-1">
+        <div className="pt-8 pl-6 flex gap-2 items-center">
+          <Skeleton className="h-6 w-32" />
+          <Skeleton className="h-5 w-5 rounded-full" />
+        </div>
+        <Skeleton className="h-8 w-32" />
       </div>
     </>
   );

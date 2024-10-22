@@ -2,6 +2,7 @@ import { AuthFormEnum } from "@/_utils/enums/auth-form-state.enum";
 import { fieldsValidation } from "@/_utils/yup.utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import AuthRequest from "@/stores/auth/auth.request";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LucideLoader2 } from "lucide-react";
@@ -46,15 +47,16 @@ export const ForgottenPasswordForm = (props: ForgottenPasswordFormProps) => {
     <section className="flex flex-col">
       <form className="space-y-4">
         <h1 className="text-lg font-semibold">Mot de passe oublié</h1>
-        <div className="form-group grid grid-cols-1 gap-4">
-          <Input type="email" placeholder="Adresse email" {...register("email")} />
+        <div>
+          <Label htmlFor="email">Adresse email</Label>
+          <Input id="email" placeholder="Entrez votre adresse email" {...register("email")} />
         </div>
         <Button className="w-full" onClick={onSubmit} disabled={!isValid} type="submit">
           {isLoading ? <LucideLoader2 className="animate-spin" /> : "Recevoir l'email de récupération"}
         </Button>
       </form>
       <Button size={"sm"} variant={"link"} onClick={() => handleChangeState(AuthFormEnum.LOGIN)}>
-        Déjà inscrit ? Connectez-vous !
+        <span className="text-foreground">Déjà inscrit ?</span> Connectez-vous !
       </Button>
     </section>
   );

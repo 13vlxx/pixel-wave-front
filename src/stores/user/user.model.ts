@@ -58,7 +58,8 @@ export interface GetRoleDto {
 export interface GetUserProfileDto extends Omit<GetMeDto, "receiveEmails"> {}
 
 export interface UpdateSettingsDto {
-  password?: string | null;
+  oldPassword?: string | null;
+  newPassword?: string | null;
   receiveEmails: boolean;
 }
 

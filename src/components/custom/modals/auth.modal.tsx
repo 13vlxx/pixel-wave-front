@@ -9,8 +9,8 @@ interface AuthModalProps {
 }
 
 export const AuthModal = (props: AuthModalProps) => {
-  const { isMobile } = useResponsive();
   const { isOpen, onClose } = props;
+  const { isMobile } = useResponsive();
 
   if (isMobile)
     return (

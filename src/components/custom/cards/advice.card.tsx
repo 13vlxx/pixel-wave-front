@@ -11,7 +11,7 @@ export const AdviceCard = (props: AdviceCardProps) => {
   const { advice, showGameName = true } = props;
 
   return (
-    <Card className="w-[300px]">
+    <Card className="w-[300px] select-none border-primary">
       <CardContent className="py-4">
         {<UserAvatar user={advice.user} />}
         {showGameName && <span className="capitalize font-bold">{advice.game.name}</span>}
