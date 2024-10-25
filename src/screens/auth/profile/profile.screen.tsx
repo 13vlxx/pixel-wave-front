@@ -10,11 +10,9 @@ import { useUserStore } from "@/stores/user/user.store";
 // @ts-expect-error pww
 import ColorThief from "color-thief-ts";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 export const ProfileScreen = () => {
-  const { id } = useParams();
   const [data, setData] = useState<GetMeDto | null>(null);
   const [showEditProfileModal, setShowEditProfileModal] = useState(false);
   const [bannerColor, setBannerColor] = useState<string>("");
@@ -22,8 +20,6 @@ export const ProfileScreen = () => {
   const { setProfilePicture } = useUserStore();
 
   const colorThief = useMemo(() => new ColorThief(), []);
-
-  console.log(data);
 
   const handleBannerChange = useCallback(
     async (imageURL: string) => {
@@ -39,14 +35,7 @@ export const ProfileScreen = () => {
       setData(x);
       handleBannerChange(x.user.profilePicture);
     });
-  }, [id, data?.user.pseudo, handleBannerChange]);
-
-  if (!data)
-    return (
-      <section className="h-screen">
-        <UserProfileHeaderSkeleton />
-      </section>
-    );
+  }, [data?.user.pseudo, handleBannerChange]);
 
   const handleEditClick = () => {
     setShowEditProfileModal(true);
@@ -83,6 +72,13 @@ export const ProfileScreen = () => {
       toast.success("Post supprimé avec succès !");
     });
   };
+
+  if (!data)
+    return (
+      <section className="h-screen">
+        <UserProfileHeaderSkeleton />
+      </section>
+    );
 
   return (
     <>

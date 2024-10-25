@@ -1,6 +1,7 @@
 import { PagesAuth, PagesUnauth } from "@/_utils/router/routes";
 import { Toaster } from "@/components/ui/sonner";
 import { NavbarLayout } from "@/layouts/navbar.layout";
+import { ProfileByIdScreen } from "@/screens/auth/profile/profile-by-id.screen";
 import { ProfileScreen } from "@/screens/auth/profile/profile.screen";
 import { GameScreen } from "@/screens/common/game/game.screen";
 import { HomeScreen } from "@/screens/common/home/home.screen";
@@ -19,7 +20,7 @@ const authRouter = createBrowserRouter([
       { path: `/${PagesAuth.GAME}/:name`, element: <GameScreen /> },
       { path: PagesAuth.NOTIFICATIONS },
       { path: `/${PagesAuth.PROFILE}/me`, element: <ProfileScreen /> },
-      { path: `${PagesAuth.PROFILE}/:userId` },
+      { path: `${PagesAuth.PROFILE}/:userId`, element: <ProfileByIdScreen /> },
       { path: PagesAuth.STAFF_REQUEST },
       { path: PagesAuth.DEMO },
     ],
@@ -56,7 +57,7 @@ const unauthRouter = createBrowserRouter([
       // { path: `/${PagesUnauth.POSTS}`, element: <PostFeedScreen /> },
       // { path: `/${PagesAuth.POSTS}/:postId`, element: <PostByIdScreen /> },
       { path: `/${PagesUnauth.GAME}/:name`, element: <GameScreen /> },
-      // { path: `${PagesAuth.PROFILE}/:userId`, element: <ProfileByIdScreen /> },
+      { path: `${PagesAuth.PROFILE}/:userId`, element: <ProfileByIdScreen /> },
       // { path: PagesUnauth.RESET_PASSWORD, element: <ResetPasswordScreen /> },
       { path: "*", element: <HomeScreen /> },
     ],

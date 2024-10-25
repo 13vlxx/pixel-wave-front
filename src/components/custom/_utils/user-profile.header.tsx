@@ -28,9 +28,13 @@ export const UserProfileHeader = (props: UserProfileHeaderProps) => {
           <span className="font-semibold">{user.pseudo}</span>
           <VerifiedBadge role={user.role} />
         </div>
-        <Button onClick={onEditClick} variant={"default"} size={"sm"}>
-          Modifier le profil
-        </Button>
+        {onEditClick ? (
+          <Button onClick={onEditClick} size={"sm"}>
+            Modifier le profil
+          </Button>
+        ) : (
+          <Button size={"sm"}>Partager</Button>
+        )}
       </div>
     </>
   );
