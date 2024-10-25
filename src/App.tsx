@@ -5,6 +5,7 @@ import { ProfileByIdScreen } from "@/screens/auth/profile/profile-by-id.screen";
 import { ProfileScreen } from "@/screens/auth/profile/profile.screen";
 import { GameScreen } from "@/screens/common/game/game.screen";
 import { HomeScreen } from "@/screens/common/home/home.screen";
+import { PostFeedScreen } from "@/screens/common/post/post-feed.screen";
 import { useAuthStore } from "@/stores/auth/auth.store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -15,7 +16,7 @@ const authRouter = createBrowserRouter([
     errorElement: <div>404</div>,
     children: [
       { index: true, element: <HomeScreen /> },
-      { path: `/${PagesAuth.POSTS}` },
+      { path: `/${PagesAuth.POSTS}`, element: <PostFeedScreen /> },
       { path: `/${PagesAuth.POSTS}/:postId` },
       { path: `/${PagesAuth.GAME}/:name`, element: <GameScreen /> },
       { path: PagesAuth.NOTIFICATIONS },
@@ -54,7 +55,7 @@ const unauthRouter = createBrowserRouter([
     errorElement: <div>404</div>,
     children: [
       { index: true, element: <HomeScreen /> },
-      // { path: `/${PagesUnauth.POSTS}`, element: <PostFeedScreen /> },
+      { path: `/${PagesAuth.POSTS}`, element: <PostFeedScreen /> },
       // { path: `/${PagesAuth.POSTS}/:postId`, element: <PostByIdScreen /> },
       { path: `/${PagesUnauth.GAME}/:name`, element: <GameScreen /> },
       { path: `${PagesAuth.PROFILE}/:userId`, element: <ProfileByIdScreen /> },

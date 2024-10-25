@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import AuthRequest from "@/stores/auth/auth.request";
 import { useAuthStore } from "@/stores/auth/auth.store";
+import { useUserStore } from "@/stores/user/user.store";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -24,6 +25,7 @@ export type LoginDataValidationType = InferType<typeof LoginDataSchema>;
 export const LoginForm = (props: LoginFormProps) => {
   const { handleChangeState } = props;
   const { login } = useAuthStore();
+  const { setProfilePicture } = useUserStore();
 
   const {
     register,
@@ -41,6 +43,7 @@ export const LoginForm = (props: LoginFormProps) => {
   const onSubmit = handleSubmit((formData) => {
     AuthRequest.loginUser(formData).then((x) => {
       login(x);
+      setProfilePicture(x.user.profilePicture);
       toast.success("Connexion réussie avec succes !");
     });
   });

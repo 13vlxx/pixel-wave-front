@@ -69,17 +69,15 @@ export const PostCard = (props: PostCardProps) => {
           </AspectRatio>
         )}
         <section className="text-muted-foreground text-[12px] flex gap-4 justify-end">
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 cursor-pointer">
             <BsChat />
             <span>{post.comments}</span>
           </div>
-          <div className="flex items-center gap-1">
-            <div onClick={handleToggleLike} className="flex items-center gap-1">
-              {isLiked ? <FaHeart className="text-primary" /> : <LuHeart />}
-            </div>
+          <div onClick={handleToggleLike} className="flex items-center gap-1 cursor-pointer">
+            <div className="flex items-center gap-1">{isLiked ? <FaHeart className="text-primary" /> : <LuHeart />}</div>
             <span>{post.likes}</span>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 cursor-pointer">
             <PiShareFat />
           </div>
         </section>
