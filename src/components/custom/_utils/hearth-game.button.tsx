@@ -9,8 +9,8 @@ export const HearthGameButton = (props: HearthGameButtonProps) => {
   const { isFavorite, onClick } = props;
 
   return isFavorite ? (
-    <FaHeart onClick={onClick} className="cursor-pointer text-primary" />
+    <FaHeart onClick={onClick} className="cursor-pointer text-primary text-2xl" />
   ) : (
-    <FaRegHeart onClick={onClick} className="cursor-pointer text-primary" />
+    <FaRegHeart onClick={onClick} className="cursor-pointer text-primary text-2xl" />
   );
 };

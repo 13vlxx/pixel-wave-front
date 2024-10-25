@@ -1,21 +1,21 @@
-import { GetUserDto } from "@/stores/user/user.model";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
+import { GetUserDto } from "@/stores/user/user.model";
 import { VerifiedBadge } from "./verified.badge";
 
 interface UserProfileHeaderProps {
+  bannerColor: string;
   user: GetUserDto;
   onEditClick?: () => void;
 }
 
 export const UserProfileHeader = (props: UserProfileHeaderProps) => {
-  const { user, onEditClick } = props;
+  const { bannerColor, user, onEditClick } = props;
 
   return (
     <>
-      <div className="h-36 bg-primary/25 relative px-4">
+      <div style={{ backgroundColor: bannerColor }} className={`h-36 relative px-4`}>
         <section className="absolute -bottom-1/2 -translate-y-1/2 flex items-baseline">
           <Avatar className="size-20 border border-secondary">
             <AvatarImage src={user.profilePicture} />
@@ -28,7 +28,7 @@ export const UserProfileHeader = (props: UserProfileHeaderProps) => {
           <span className="font-semibold">{user.pseudo}</span>
           <VerifiedBadge role={user.role} />
         </div>
-        <Button onClick={onEditClick} variant={"outline"} size={"sm"}>
+        <Button onClick={onEditClick} variant={"default"} size={"sm"}>
           Modifier le profil
         </Button>
       </div>
@@ -51,6 +51,7 @@ export const UserProfileHeaderSkeleton = () => {
         </div>
         <Skeleton className="h-8 w-32" />
       </div>
+      <div className="h-px mx-auto my-2 w-[96dvw] bg-muted"></div>
     </>
   );
 };

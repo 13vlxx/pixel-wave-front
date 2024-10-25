@@ -5,10 +5,11 @@ import { Link } from "react-router-dom";
 export interface GameCarouselProps {
   title: string;
   games: LiteGameDto[];
+  hideGameName?: boolean;
 }
 
-export function GameCarousel(props: GameCarouselProps) {
-  const { title, games } = props;
+export const GameCarousel = (props: GameCarouselProps) => {
+  const { title, games, hideGameName = false } = props;
   return (
     <section>
       <h1 className="font-semibold text-lg px-4">{title}</h1>
@@ -25,7 +26,7 @@ export function GameCarousel(props: GameCarouselProps) {
                 }
                 alt={x.name}
               />
-              <p className="font-medium text-sm capitalize">{x.name}</p>
+              {!hideGameName && <p className="font-medium text-sm capitalize">{x.name}</p>}
             </Link>
           ))}
         </div>
@@ -33,4 +34,4 @@ export function GameCarousel(props: GameCarouselProps) {
       </ScrollArea>
     </section>
   );
-}
+};

@@ -13,7 +13,7 @@ export const GameImageCard = (props: GameImageCardProps) => {
       style={{
         backgroundImage: `url(${game.logo})`,
       }}
-      className="mx-auto border-secondary w-2/3 max-sm:w-[90%] h-64 object-contain bg-cover bg-center bg-no-repeat rounded-lg shadow-md sm:min-w-[300px]"
+      className="mx-auto border-secondary w-2/3 max-sm:w-[90%] h-64 sm:h-96 object-contain bg-cover bg-center bg-no-repeat rounded-lg shadow-md sm:min-w-[300px]"
     >
       <CardContent className="py-4"></CardContent>
     </Card>

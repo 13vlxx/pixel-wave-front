@@ -19,8 +19,8 @@ export const EditProfileModal = (props: EditProfileModalProps) => {
   if (isMobile)
     return (
       <Drawer open={isOpen} onOpenChange={() => onClose(undefined)}>
-        <DialogTitle className="hidden">Auth</DialogTitle>
-        <DrawerContent aria-description="auth form" className="p-4">
+        <DialogTitle className="hidden">Edit profile</DialogTitle>
+        <DrawerContent aria-description="edit profile form" className="p-4">
           <EditProfileForm receiveEmails={receiveEmails} user={user} onPfpChange={onPfpChange} onSave={onClose} />
         </DrawerContent>
       </Drawer>

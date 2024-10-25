@@ -10,8 +10,8 @@ export const UserAvatar = (props: UserBadgeProps) => {
   const { user } = props;
 
   return (
-    <section className="flex items-center gap-2">
-      <Avatar>
+    <section className="flex items-center gap-1">
+      <Avatar className="border border-muted-foreground">
         <AvatarImage src={user.profilePicture} />
         <AvatarFallback>UserPP</AvatarFallback>
       </Avatar>

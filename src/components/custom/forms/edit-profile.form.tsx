@@ -79,10 +79,10 @@ export const EditProfileForm = (props: EditProfileFormProps) => {
         <h1 className="text-lg font-semibold">Modification du profil</h1>
         <div className="flex justify-center">
           <label htmlFor="profile-picture-input">
-            <Avatar className="size-16 border border-secondary relative cursor-pointer">
+            <Avatar className="size-16 border border-black dark:border-primary relative cursor-pointer">
               <AvatarImage src={user.profilePicture} />
               <AvatarFallback>UserPP</AvatarFallback>
-              <AiOutlinePicture className="absolute size-8 bg-secondary/50 backdrop-blur-[2px] w-full h-full p-4 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+              <AiOutlinePicture className="absolute size-8 bg-secondary/50 backdrop-blur-[1px] w-full h-full p-4 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
             </Avatar>
           </label>
           <input id="profile-picture-input" onChange={handlePFPChange} type="file" accept="image/*" className="hidden" />
@@ -97,11 +97,11 @@ export const EditProfileForm = (props: EditProfileFormProps) => {
         </div>
         <div>
           <Label htmlFor="lastpassword">Ancien mot de passe</Label>
-          <Input type="password" id="lastpassword" placeholder="..." {...register("oldPassword")} />
+          <Input type="password" id="lastpassword" placeholder="•••••••" {...register("oldPassword")} />
         </div>
         <div>
           <Label htmlFor="newpassword">Nouveau mot de passe</Label>
-          <Input type="password" id="newpassword" placeholder="..." {...register("newPassword")} />
+          <Input type="password" id="newpassword" placeholder="•••••••" {...register("newPassword")} />
           <p className="text-[12px] text-muted-foreground">
             Le mot de passe doit contenir au moins 8 caractères, 1 majuscule, 1 chiffre et un caractère special.
           </p>

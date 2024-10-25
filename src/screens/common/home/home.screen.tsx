@@ -22,6 +22,13 @@ export const HomeScreen = () => {
     });
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://badge.meexr.fr/scripts/badge.min.js";
+    script.defer = true;
+    document.body.appendChild(script);
+  }, []);
+
   return (
     <section className="mt-4 space-y-4">
       <GameCarousel title="Jeux du moment" games={games} />
@@ -30,6 +37,7 @@ export const HomeScreen = () => {
       <PostsBanner />
       <CategoryCarousel title="Categories" categories={categories} />
       <PlatformCarousel title="Plateformes" platforms={platforms} />
+      <div id="meexr-badge"></div>
     </section>
   );
 };

@@ -4,10 +4,11 @@ import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 
 interface GameMediaCarouselProps {
   media: MediaDto[];
+  onImageClick: (imageUrl: string) => void;
 }
 
 export const GameMediaCarousel = (props: GameMediaCarouselProps) => {
-  const { media } = props;
+  const { media, onImageClick } = props;
 
   return (
     <Carousel
@@ -18,7 +19,7 @@ export const GameMediaCarousel = (props: GameMediaCarouselProps) => {
     >
       <CarouselContent>
         {media.map((x) => (
-          <CarouselItem key={x.id} className="basis-2/3">
+          <CarouselItem onClick={() => onImageClick(x.path)} key={x.id} className="basis-2/3 cursor-pointer">
             <AspectRatio ratio={16 / 9} className="bg-muted rounded-md">
               <img src={x.path} alt="image" className="h-full w-full rounded-md object-cover" />
             </AspectRatio>

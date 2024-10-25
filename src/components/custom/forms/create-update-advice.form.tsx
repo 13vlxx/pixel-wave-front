@@ -61,7 +61,7 @@ export const CreateUpdateAdviceForm = (props: CreateUpdateAdviceFormProps) => {
             <Label htmlFor="advice">
               Mon avis sur <span className="capitalize">{game.name}</span>
             </Label>
-            <Textarea className="resize-none" placeholder="..." id="advice" {...register("advice")} />
+            <Textarea rows={4} className="resize-none" placeholder="..." id="advice" {...register("advice")} />
             <p className="text-sm text-muted-foreground">Une fois publié, il vous sera impossible de supprimer votre avis.</p>
           </div>
           <div className="space-y-2">

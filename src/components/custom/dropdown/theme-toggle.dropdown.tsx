@@ -1,11 +1,32 @@
 import { Moon, Sun } from "lucide-react";
 
 import { useTheme } from "@/_utils/theme-provider";
+import { useResponsive } from "@/_utils/use-responsive";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuShortcut, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { useEffect } from "react";
 
 export const ThemeToggleDropdown = () => {
   const { setTheme } = useTheme();
+  const { isMobile } = useResponsive();
+
+  useEffect(() => {
+    const handleChangeThemeShortcut = (event: KeyboardEvent) => {
+      if (event.shiftKey && event.key === "L") {
+        setTheme("light");
+      } else if (event.shiftKey && event.key === "D") {
+        setTheme("dark");
+      } else if (event.shiftKey && event.key === "S") {
+        setTheme("system");
+      }
+    };
+
+    window.addEventListener("keydown", handleChangeThemeShortcut);
+
+    return () => {
+      window.removeEventListener("keydown", handleChangeThemeShortcut);
+    };
+  }, [setTheme]);
 
   return (
     <DropdownMenu>
@@ -17,9 +38,9 @@ export const ThemeToggleDropdown = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>Light</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>Dark</DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>System</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("light")}>Light {!isMobile && <DropdownMenuShortcut>⇧L</DropdownMenuShortcut>}</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("dark")}>Dark {!isMobile && <DropdownMenuShortcut>⇧D</DropdownMenuShortcut>}</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => setTheme("system")}>System {!isMobile && <DropdownMenuShortcut>⇧S</DropdownMenuShortcut>}</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

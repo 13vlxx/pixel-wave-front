@@ -3,6 +3,7 @@ import { GameAdvicesCard } from "@/components/custom/cards/game-advices.card";
 import { GameImageCard } from "@/components/custom/cards/game-image.card";
 import { GameInfoCard } from "@/components/custom/cards/game-info.card";
 import { AdviceModal } from "@/components/custom/modals/advice.modal";
+import { ImagePreviewModal } from "@/components/custom/modals/image-preview.modal";
 import AdviceRequest from "@/stores/advice/advice.request";
 import { useAuthStore } from "@/stores/auth/auth.store";
 import { AdviceDto, GameDto } from "@/stores/game/game.model";
@@ -18,6 +19,7 @@ export const GameScreen = () => {
   const [alreadyPostedAdvice, setAlreadyPostedAdvice] = useState<AdviceDto | null>(null);
   const [isFavorite, setIsFavorite] = useState(false);
   const [showAdviceModal, setShowAdviceModal] = useState(false);
+  const [showImagePreview, setShowImagePreview] = useState<string | null>(null);
   const { token, toggleModal } = useAuthStore();
 
   useEffect(() => {
@@ -63,11 +65,12 @@ export const GameScreen = () => {
             <GameImageCard game={game} />
           </div>
           <div className="pt-36 space-y-4">
-            <GameInfoCard game={game} isFavorite={isFavorite} toggleFavorite={handleToggleFavorite} />
+            <GameInfoCard game={game} isFavorite={isFavorite} toggleFavorite={handleToggleFavorite} onImageClick={(x) => setShowImagePreview(x)} />
             <GameAdvicesCard advices={game.game_advice} userAdvice={alreadyPostedAdvice} toggleAdvice={handleToggleAdviceModal} />
           </div>
         </section>
         <AdviceModal isOpen={showAdviceModal} game={game} advice={alreadyPostedAdvice} onClose={handleCreateOrUpdateAdvice} />
+        <ImagePreviewModal isOpen={!!showImagePreview} imageUrl={showImagePreview ?? ""} onClose={() => setShowImagePreview(null)} />
       </>
     );
 
@@ -85,11 +88,13 @@ export const GameScreen = () => {
                 toggleFavorite={handleToggleFavorite}
                 userAdvice={alreadyPostedAdvice}
                 toggleAdvice={handleToggleAdviceModal}
+                onImageClick={(x) => setShowImagePreview(x)}
               />
             </section>
           </section>
         </section>
         <AdviceModal isOpen={showAdviceModal} game={game} advice={alreadyPostedAdvice} onClose={handleCreateOrUpdateAdvice} />
+        <ImagePreviewModal isOpen={!!showImagePreview} imageUrl={showImagePreview ?? ""} onClose={() => setShowImagePreview(null)} />
       </>
     );
 };
