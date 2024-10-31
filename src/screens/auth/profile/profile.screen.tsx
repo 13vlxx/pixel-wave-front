@@ -83,13 +83,38 @@ export const ProfileScreen = () => {
       </section>
     );
 
+  if (isMobile)
+    return (
+      <>
+        <section>
+          <UserProfileHeader bannerColor={bannerColor} user={data.user} onEditClick={handleEditClick} />
+          <div className="h-px mx-auto my-2 w-[96dvw] bg-muted"></div>
+          {data.favoriteGames.length > 0 && <GameCarousel title="Jeux favoris" games={data.favoriteGames} hideGameName />}
+          <PostFeed title="Posts" posts={data.posts} onDeletePost={handleDeletePost} onCommentPost={(x) => setIsNewCommentModalShowed(x)} />
+        </section>
+        <EditProfileModal
+          receiveEmails={data.receiveEmails}
+          user={data.user}
+          isOpen={showEditProfileModal}
+          onClose={(x) => {
+            setShowEditProfileModal(false);
+            if (x !== undefined) setData({ ...data, receiveEmails: x });
+          }}
+          onPfpChange={handlePFPChange}
+        />
+        <CreateCommentModal isOpen={!!isNewCommentModalShowed} onClose={() => setIsNewCommentModalShowed(undefined)} post={isNewCommentModalShowed} />
+      </>
+    );
+
   return (
     <>
       <section>
         <UserProfileHeader bannerColor={bannerColor} user={data.user} onEditClick={handleEditClick} />
         <div className="h-px mx-auto my-2 w-[96dvw] bg-muted"></div>
-        {data.favoriteGames.length > 0 && <GameCarousel title="Jeux favoris" games={data.favoriteGames} hideGameName />}
-        <PostFeed title="Posts" posts={data.posts} onDeletePost={handleDeletePost} onCommentPost={(x) => setIsNewCommentModalShowed(x)} />
+        <div className="grid grid-cols-2">
+          {data.favoriteGames.length > 0 && <GameCarousel title="Jeux favoris" games={data.favoriteGames} hideGameName displayInGrid />}
+          <PostFeed title="Posts" posts={data.posts} onDeletePost={handleDeletePost} onCommentPost={(x) => setIsNewCommentModalShowed(x)} />
+        </div>
       </section>
       <EditProfileModal
         receiveEmails={data.receiveEmails}

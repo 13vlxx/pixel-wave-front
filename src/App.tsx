@@ -1,14 +1,16 @@
-import { PagesAuth, PagesUnauth } from "@/_utils/router/routes";
+import { PagesAuth, PagesBackoffice, PagesUnauth } from "@/_utils/router/routes";
 import { Toaster } from "@/components/ui/sonner";
+import { BackofficeLayout } from "@/layouts/backoffice.layout";
 import { NavbarLayout } from "@/layouts/navbar.layout";
 import { ProfileByIdScreen } from "@/screens/auth/profile/profile-by-id.screen";
 import { ProfileScreen } from "@/screens/auth/profile/profile.screen";
 import { GameScreen } from "@/screens/common/game/game.screen";
 import { HomeScreen } from "@/screens/common/home/home.screen";
 import { PostFeedScreen } from "@/screens/common/post/post-feed.screen";
+import { PostScreen } from "@/screens/common/post/post.screen";
 import { useAuthStore } from "@/stores/auth/auth.store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { PostScreen } from "./screens/common/post/post.screen";
+import { BackofficeUsersScreen } from "./screens/auth/backoffice/users.screen";
 
 const authRouter = createBrowserRouter([
   {
@@ -27,26 +29,15 @@ const authRouter = createBrowserRouter([
       { path: PagesAuth.DEMO },
     ],
   },
-  // {
-  //   path: PagesBackoffice.DASHBOARD,
-  //   element: <AdminNavbarLayout />,
-  //   errorElement: <div>404</div>,
-  //   children: [
-  //     {
-  //       index: true,
-  //       element: <AdminDashboardScreen />,
-  //     },
-  //     {
-  //       path: PagesBackoffice.USERS,
-  //       element: <UsersTable />,
-  //     },
-  //     { path: PagesBackoffice.CATEGORIES, element: <CategoriesScreen /> },
-  //     { path: PagesBackoffice.PLATFORMS, element: <PlatformsTable /> },
-  //     { path: PagesBackoffice.GAMES, element: <GamesTable /> },
-  //     { path: PagesBackoffice.POSTS, element: <PostsTable /> },
-  //     { path: PagesBackoffice.STAFF_REQUESTS, element: <StaffRequestAdminScreen /> },
-  //   ],
-  // },
+  {
+    path: PagesBackoffice.BACKOFFICE,
+    element: <BackofficeLayout />,
+    errorElement: <div>404</div>,
+    children: [
+      { index: true, element: <p>Home</p> },
+      { path: "users", element: <BackofficeUsersScreen /> },
+    ],
+  },
 ]);
 
 const unauthRouter = createBrowserRouter([

@@ -19,14 +19,14 @@ export enum PagesUnauth {
 }
 
 export enum PagesBackoffice {
-  DASHBOARD = "admin/dashboard",
-  USERS = "users",
-  POSTS = "posts",
-  GAMES = "games",
-  PLATFORMS = "platforms",
-  CATEGORIES = "categories",
-  ADVICES = "advices",
-  STAFF_REQUESTS = "staff-requests",
+  BACKOFFICE = "backoffice",
+  USERS = "backoffice/users",
+  POSTS = "backoffice/posts",
+  GAMES = "backoffice/games",
+  PLATFORMS = "backoffice/platforms",
+  CATEGORIES = "backoffice/categories",
+  ADVICES = "backoffice/advices",
+  STAFF_REQUESTS = "backoffice/staff-requests",
 }
 
 export const useRouteMatch = (patterns: readonly string[] = []) => {

@@ -65,7 +65,13 @@ export const PostCard = (props: PostCardProps) => {
             <h1 className="max-w-[100%] text-muted-foreground text-[12px] text-ellipsis line-clamp-1">{dayjs(post.createdAt).fromNow()}</h1>
           </div>
           {id == post.user.id && !hideCTA && (
-            <FaTrash onClick={handleDeleteClick} className="text-sm text-muted-foreground hover:text-foreground transition-all duration-150" />
+            <FaTrash
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDeleteClick();
+              }}
+              className="text-sm text-muted-foreground hover:text-foreground transition-all duration-150"
+            />
           )}
         </section>
         <p className="text-sm">{post.content}</p>

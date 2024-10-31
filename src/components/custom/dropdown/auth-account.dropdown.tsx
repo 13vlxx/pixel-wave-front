@@ -1,4 +1,5 @@
-import { PagesAuth } from "@/_utils/router/routes";
+import { PagesAuth, PagesBackoffice } from "@/_utils/router/routes";
+import { useResponsive } from "@/_utils/use-responsive";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { useAuthStore } from "@/stores/auth/auth.store";
@@ -12,6 +13,7 @@ import { useEffectOnce } from "react-use";
 export const AuthAccountDropdown = () => {
   const { logout } = useAuthStore();
   const [role, setRole] = useState<GetRoleDto>();
+  const { isMobile } = useResponsive();
 
   useEffectOnce(() => {
     UserRequest.getRole().then(setRole);
@@ -30,8 +32,8 @@ export const AuthAccountDropdown = () => {
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => navigate(`/${PagesAuth.PROFILE}/me`)}>Profil</DropdownMenuItem>
         <DropdownMenuItem>Notifications</DropdownMenuItem>
-        {(role?.role === UserRole.ADMIN || role?.role === UserRole.MODERATOR) && (
-          <DropdownMenuItem onClick={() => navigate("/admin")}>Backoffice</DropdownMenuItem>
+        {(role?.role === UserRole.ADMIN || role?.role === UserRole.MODERATOR) && !isMobile && (
+          <DropdownMenuItem onClick={() => navigate(`/${PagesBackoffice.BACKOFFICE}`)}>Backoffice</DropdownMenuItem>
         )}
         <DropdownMenuItem className="text-destructive" onClick={logout}>
           Se deconnecter

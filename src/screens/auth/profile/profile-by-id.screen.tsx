@@ -2,6 +2,8 @@ import { useResponsive } from "@/_utils/use-responsive";
 import { PostFeed } from "@/components/custom/_utils/post.feed";
 import { UserProfileHeader, UserProfileHeaderSkeleton } from "@/components/custom/_utils/user-profile.header";
 import { GameCarousel } from "@/components/custom/carousels/game-carousel";
+import { CreateCommentModal } from "@/components/custom/modals/create-comment.modal";
+import { PostDto } from "@/stores/post/post.model";
 import { GetUserProfileDto } from "@/stores/user/user.model";
 import UserRequest from "@/stores/user/user.request";
 import { useUserStore } from "@/stores/user/user.store";
@@ -15,6 +17,7 @@ export const ProfileByIdScreen = () => {
   const { id } = useUserStore();
   const { isMobile } = useResponsive();
   const [data, setData] = useState<GetUserProfileDto | null>(null);
+  const [isNewCommentModalShowed, setIsNewCommentModalShowed] = useState<PostDto | undefined>(undefined);
   const [bannerColor, setBannerColor] = useState<string>("");
 
   const colorThief = useMemo(() => new ColorThief(), []);
@@ -55,7 +58,8 @@ export const ProfileByIdScreen = () => {
       <UserProfileHeader bannerColor={bannerColor} user={data.user} />
       <div className="h-px mx-auto my-2 w-[96dvw] bg-muted"></div>
       {data.favoriteGames.length > 0 && <GameCarousel title="Jeux favoris" games={data.favoriteGames} hideGameName />}
-      <PostFeed title="Posts" posts={data.posts} />
+      <PostFeed title="Posts" posts={data.posts} onCommentPost={(x) => setIsNewCommentModalShowed(x)} />
+      <CreateCommentModal isOpen={!!isNewCommentModalShowed} onClose={() => setIsNewCommentModalShowed(undefined)} post={isNewCommentModalShowed} />
     </section>
   );
 };
