@@ -2,7 +2,9 @@ import { useResponsive } from "@/_utils/use-responsive";
 import { PostFeed } from "@/components/custom/_utils/post.feed";
 import { UserProfileHeader, UserProfileHeaderSkeleton } from "@/components/custom/_utils/user-profile.header";
 import { GameCarousel } from "@/components/custom/carousels/game-carousel";
+import { CreateCommentModal } from "@/components/custom/modals/create-comment.modal";
 import { EditProfileModal } from "@/components/custom/modals/edit-profile.modal";
+import { PostDto } from "@/stores/post/post.model";
 import PostRequest from "@/stores/post/post.request";
 import { GetMeDto } from "@/stores/user/user.model";
 import UserRequest from "@/stores/user/user.request";
@@ -16,6 +18,7 @@ export const ProfileScreen = () => {
   const [data, setData] = useState<GetMeDto | null>(null);
   const [showEditProfileModal, setShowEditProfileModal] = useState(false);
   const [bannerColor, setBannerColor] = useState<string>("");
+  const [isNewCommentModalShowed, setIsNewCommentModalShowed] = useState<PostDto | undefined>(undefined);
   const { isMobile } = useResponsive();
   const { setProfilePicture } = useUserStore();
 
@@ -86,7 +89,7 @@ export const ProfileScreen = () => {
         <UserProfileHeader bannerColor={bannerColor} user={data.user} onEditClick={handleEditClick} />
         <div className="h-px mx-auto my-2 w-[96dvw] bg-muted"></div>
         {data.favoriteGames.length > 0 && <GameCarousel title="Jeux favoris" games={data.favoriteGames} hideGameName />}
-        <PostFeed title="Posts" posts={data.posts} onDeletePost={handleDeletePost} />
+        <PostFeed title="Posts" posts={data.posts} onDeletePost={handleDeletePost} onCommentPost={(x) => setIsNewCommentModalShowed(x)} />
       </section>
       <EditProfileModal
         receiveEmails={data.receiveEmails}
@@ -98,6 +101,7 @@ export const ProfileScreen = () => {
         }}
         onPfpChange={handlePFPChange}
       />
+      <CreateCommentModal isOpen={!!isNewCommentModalShowed} onClose={() => setIsNewCommentModalShowed(undefined)} post={isNewCommentModalShowed} />
     </>
   );
 };

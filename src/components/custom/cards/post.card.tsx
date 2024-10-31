@@ -15,11 +15,14 @@ import { toast } from "sonner";
 
 interface PostCardProps {
   post: PostDto;
+  hideCTA?: boolean;
+  onImageClick: (imageUrl: string) => void;
   onDelete?: (postId: string) => void;
+  onCommentClick?: (post: PostDto) => void;
 }
 
 export const PostCard = (props: PostCardProps) => {
-  const { post, onDelete } = props;
+  const { post, hideCTA = false, onImageClick, onDelete, onCommentClick } = props;
   const { token, toggleModal } = useAuthStore();
   const { id } = useUserStore();
   const [isLiked, setIsLiked] = useState(post.isLiked);
@@ -58,29 +61,31 @@ export const PostCard = (props: PostCardProps) => {
             <UserAvatar user={post.user} />
             <h1 className="max-w-[100%] text-muted-foreground text-[12px] text-ellipsis line-clamp-1">{dayjs(post.createdAt).fromNow()}</h1>
           </div>
-          {id == post.user.id && (
+          {id == post.user.id && !hideCTA && (
             <FaTrash onClick={handleDeleteClick} className="text-sm text-muted-foreground hover:text-foreground transition-all duration-150" />
           )}
         </section>
         <p className="text-sm">{post.content}</p>
         {post.photo && (
-          <AspectRatio ratio={16 / 9}>
-            <img src={post.photo} alt="image" className="h-full w-full rounded-md object-cover border border-secondary" />
+          <AspectRatio onClick={() => onImageClick(post.photo!)} ratio={16 / 9}>
+            <img src={post.photo} alt="image" className="h-full w-full rounded-md object-cover border border-secondary cursor-pointer" />
           </AspectRatio>
         )}
-        <section className="text-muted-foreground text-[12px] flex gap-4 justify-end">
-          <div className="flex items-center gap-1 cursor-pointer">
-            <BsChat />
-            <span>{post.comments}</span>
-          </div>
-          <div onClick={handleToggleLike} className="flex items-center gap-1 cursor-pointer">
-            <div className="flex items-center gap-1">{isLiked ? <FaHeart className="text-primary" /> : <LuHeart />}</div>
-            <span>{post.likes}</span>
-          </div>
-          <div className="flex items-center gap-1 cursor-pointer">
-            <PiShareFat />
-          </div>
-        </section>
+        {!hideCTA && (
+          <section className="text-muted-foreground text-[12px] flex gap-4 justify-end">
+            <div onClick={() => onCommentClick && onCommentClick(post)} className="flex items-center gap-1 cursor-pointer">
+              <BsChat />
+              <span>{post.comments}</span>
+            </div>
+            <div onClick={handleToggleLike} className="flex items-center gap-1 cursor-pointer">
+              <div className="flex items-center gap-1">{isLiked ? <FaHeart className="text-primary" /> : <LuHeart />}</div>
+              <span>{post.likes}</span>
+            </div>
+            <div className="flex items-center gap-1 cursor-pointer">
+              <PiShareFat />
+            </div>
+          </section>
+        )}
       </CardContent>
     </Card>
   );

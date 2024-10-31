@@ -1,5 +1,6 @@
 import { useResponsive } from "@/_utils/use-responsive";
 import { PostFeed } from "@/components/custom/_utils/post.feed";
+import { CreateCommentModal } from "@/components/custom/modals/create-comment.modal";
 import { CreatePostModal } from "@/components/custom/modals/create-post.modal";
 import { useAuthStore } from "@/stores/auth/auth.store";
 import { PostDto } from "@/stores/post/post.model";
@@ -13,7 +14,7 @@ export const PostFeedScreen = () => {
   const { id } = useUserStore();
   const [posts, setPosts] = useState<PostDto[]>([]);
   const [showPostCreationModal, setShowPostCreationModal] = useState<boolean>(false);
-  const [isNewCommentModalShowed, setIsNewCommentModalShowed] = useState<PostDto | null>(null);
+  const [isNewCommentModalShowed, setIsNewCommentModalShowed] = useState<PostDto | undefined>(undefined);
   const { isMobile } = useResponsive();
 
   useEffect(() => {
@@ -36,9 +37,16 @@ export const PostFeedScreen = () => {
   return (
     <>
       <section className="py-4 sm:px-[20dvw]">
-        <PostFeed posts={posts} title="Feed" onDeletePost={handleDeletePost} onCreatePost={handleShowPostCreationModal} />
+        <PostFeed
+          posts={posts}
+          title="Feed"
+          onDeletePost={handleDeletePost}
+          onCreatePost={handleShowPostCreationModal}
+          onCommentPost={(x) => setIsNewCommentModalShowed(x)}
+        />
       </section>
       <CreatePostModal isOpen={showPostCreationModal} onClose={handleShowPostCreationModal} />
+      <CreateCommentModal isOpen={!!isNewCommentModalShowed} onClose={() => setIsNewCommentModalShowed(undefined)} post={isNewCommentModalShowed} />
     </>
   );
 };
