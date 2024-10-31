@@ -12,7 +12,7 @@ export const UserAvatar = (props: UserBadgeProps) => {
   const { user } = props;
 
   return (
-    <Link to={`/${PagesAuth.PROFILE}/${user.id}`}>
+    <Link onClick={(e) => e.stopPropagation()} to={`/${PagesAuth.PROFILE}/${user.id}`}>
       <section className="flex items-center gap-1">
         <Avatar className="border border-muted-foreground">
           <AvatarImage src={user.profilePicture} />
