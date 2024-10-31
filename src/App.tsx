@@ -8,6 +8,7 @@ import { HomeScreen } from "@/screens/common/home/home.screen";
 import { PostFeedScreen } from "@/screens/common/post/post-feed.screen";
 import { useAuthStore } from "@/stores/auth/auth.store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { PostScreen } from "./screens/common/post/post.screen";
 
 const authRouter = createBrowserRouter([
   {
@@ -17,7 +18,7 @@ const authRouter = createBrowserRouter([
     children: [
       { index: true, element: <HomeScreen /> },
       { path: `/${PagesAuth.POSTS}`, element: <PostFeedScreen /> },
-      { path: `/${PagesAuth.POSTS}/:postId` },
+      { path: `/${PagesAuth.POSTS}/:postId`, element: <PostScreen /> },
       { path: `/${PagesAuth.GAME}/:name`, element: <GameScreen /> },
       { path: PagesAuth.NOTIFICATIONS },
       { path: `/${PagesAuth.PROFILE}/me`, element: <ProfileScreen /> },

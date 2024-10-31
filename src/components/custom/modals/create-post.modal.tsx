@@ -12,7 +12,7 @@ export const CreatePostModal = (props: CreatePostModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogTitle className="hidden">create post</DialogTitle>
-      <DialogContent aria-describedby="create post" className="w-[98dvw] sm:max-w-[500px] rounded-md">
+      <DialogContent aria-describedby="create post" className="w-[98dvw] sm:max-w-[500px] rounded-md p-4 pt-8">
         <CreatePostForm onSubmit={onClose} />
       </DialogContent>
     </Dialog>

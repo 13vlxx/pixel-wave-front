@@ -23,7 +23,7 @@ export const GameInfoCard = (props: GameInfoCardProps) => {
   const { isMobile } = useResponsive();
 
   return (
-    <Card className="mx-auto border-secondary w-2/3 max-sm:w-[90%] sm:min-w-[300px]">
+    <Card className="mx-auto w-2/3 max-sm:w-[90%] sm:min-w-[300px]">
       <CardContent className="py-4 space-y-2">
         <div className="flex justify-between w-full items-top">
           <div>

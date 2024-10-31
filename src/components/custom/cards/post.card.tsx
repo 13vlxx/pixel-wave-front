@@ -1,4 +1,5 @@
 import dayjs from "@/_utils/dayjs";
+import { PagesAuth } from "@/_utils/router/routes";
 import { UserAvatar } from "@/components/custom/_utils/user.avatar";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Card, CardContent } from "@/components/ui/card";
@@ -16,13 +17,15 @@ import { toast } from "sonner";
 interface PostCardProps {
   post: PostDto;
   hideCTA?: boolean;
+  removeMarginBottom?: boolean;
   onImageClick: (imageUrl: string) => void;
+  onPostClick?: (url: string) => void;
   onDelete?: (postId: string) => void;
   onCommentClick?: (post: PostDto) => void;
 }
 
 export const PostCard = (props: PostCardProps) => {
-  const { post, hideCTA = false, onImageClick, onDelete, onCommentClick } = props;
+  const { post, hideCTA = false, removeMarginBottom = false, onImageClick, onPostClick, onDelete, onCommentClick } = props;
   const { token, toggleModal } = useAuthStore();
   const { id } = useUserStore();
   const [isLiked, setIsLiked] = useState(post.isLiked);
@@ -54,7 +57,7 @@ export const PostCard = (props: PostCardProps) => {
   };
 
   return (
-    <Card className="pt-4 mb-4">
+    <Card onClick={() => onPostClick && onPostClick(`/${PagesAuth.POSTS}/${post.id}`)} className={`pt-4 ${!removeMarginBottom ? "mb-4" : ""}`}>
       <CardContent className="space-y-2">
         <section className="flex items-start justify-between">
           <div className="flex items-center gap-1">
@@ -67,13 +70,25 @@ export const PostCard = (props: PostCardProps) => {
         </section>
         <p className="text-sm">{post.content}</p>
         {post.photo && (
-          <AspectRatio onClick={() => onImageClick(post.photo!)} ratio={16 / 9}>
+          <AspectRatio
+            onClick={(e) => {
+              e.stopPropagation();
+              onImageClick(post.photo!);
+            }}
+            ratio={16 / 9}
+          >
             <img src={post.photo} alt="image" className="h-full w-full rounded-md object-cover border border-secondary cursor-pointer" />
           </AspectRatio>
         )}
         {!hideCTA && (
-          <section className="text-muted-foreground text-[12px] flex gap-4 justify-end">
-            <div onClick={() => onCommentClick && onCommentClick(post)} className="flex items-center gap-1 cursor-pointer">
+          <section className="text-muted-foreground text-[12px] flex gap-4 mt-1 justify-end">
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                if (onCommentClick) onCommentClick(post);
+              }}
+              className="flex items-center gap-1 cursor-pointer"
+            >
               <BsChat />
               <span>{post.comments}</span>
             </div>

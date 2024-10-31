@@ -13,7 +13,7 @@ export const GameAdvicesCard = (props: GameAdvicesCard) => {
   const { advices, userAdvice, toggleAdvice } = props;
 
   return (
-    <Card className="mx-auto border-secondary w-2/3 max-sm:w-[90%] sm:min-w-[300px]">
+    <Card className="mx-auto w-2/3 max-sm:w-[90%] sm:min-w-[300px]">
       <CardContent className="py-4 space-y-2">
         <h3 className="text-lg font-bold">{advices.length > 0 ? "Avis des joueurs" : "Aucun avis"}</h3>
         <AdviceCarousel advices={advices} showGameName={false} />
